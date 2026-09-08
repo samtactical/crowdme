@@ -1,0 +1,53 @@
+---
+const faqs = [
+  {
+    q: "Kostar analysen verkligen ingenting?",
+    a: "Ja. Ni får resultatet och åtgärdsförslagen oavsett om ni väljer att jobba vidare med oss. Vi gör den för att det är det bästa sättet att visa vad vi kan.",
+  },
+  {
+    q: "Vilka AI-tjänster testar ni?",
+    a: "ChatGPT, Perplexity, Google Gemini och Googles AI-svar i sökresultatet. Vilka som är mest relevanta beror på er bransch och era köpare.",
+  },
+  {
+    q: "Behöver vi byta webbplats?",
+    a: "Nästan aldrig. Det mesta av arbetet görs på den sajt ni redan har, med det innehåll ni redan har. Om plattformen står i vägen säger vi det rakt ut.",
+  },
+  {
+    q: "Hur skiljer sig det här från vår nuvarande SEO-byrå?",
+    a: "Det ersätter inte SEO — det ligger bredvid. Vi jobbar gärna mot er befintliga byrå och lämnar åtgärderna i en form de kan genomföra.",
+  },
+  {
+    q: "Hur lång tid tar det innan något händer?",
+    a: "Det varierar med hur ofta modellerna uppdaterar sitt underlag och hur er sajt ser ut idag. Vi lovar inga datum — vi mäter utgångsläget först och följer upp mot det.",
+  },
+  {
+    q: "Vad gör ni med våra uppgifter?",
+    a: "Vi använder dem bara för att göra analysen och kontakta er om den. Inga uppgifter säljs vidare, och ni kan när som helst be oss radera dem.",
+  },
+];
+---
+
+<section id="fragor" class="border-b border-line bg-paper-alt">
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-[0.8fr_1.2fr] lg:py-24">
+    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Vanliga frågor</h2>
+
+    <div class="divide-y divide-line border-y border-line">
+      {
+        faqs.map((f) => (
+          <details class="group">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium marker:hidden">
+              {f.q}
+              <span
+                aria-hidden="true"
+                class="shrink-0 font-mono text-xl leading-none text-accent transition-transform group-open:rotate-45"
+              >
+                +
+              </span>
+            </summary>
+            <p class="pb-6 pr-10 leading-relaxed text-ink-soft">{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

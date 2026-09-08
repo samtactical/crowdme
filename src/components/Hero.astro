@@ -1,0 +1,91 @@
+---
+// Illustrativ mock — medvetet generiska namn så inget läses som riktig data.
+const citations = [
+  { name: "Konkurrent A", cited: true },
+  { name: "Konkurrent B", cited: true },
+  { name: "Branschtidning", cited: true },
+  { name: "Ert företag", cited: false },
+];
+---
+
+<section class="border-b border-line">
+  <div class="mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-28">
+    <div>
+      <p class="mb-6 inline-block border border-line px-3 py-1 font-mono text-xs uppercase tracking-widest text-ink-soft">
+        AI-sökoptimering för B2B
+      </p>
+
+      <h1 class="text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+        Vad svarar ChatGPT när din kund frågar efter någon som er?
+      </h1>
+
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
+        Allt fler B2B-köpare börjar sin research i ChatGPT, Perplexity, Gemini
+        och Googles AI-svar. Där finns inga tio blå länkar — bara ett svar, med
+        ett fåtal namn i. Vi ser till att ert är ett av dem.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a
+          href="#analys"
+          class="inline-flex items-center justify-center bg-accent px-7 py-4 text-base font-semibold text-accent-ink transition-opacity hover:opacity-90"
+        >
+          Få en gratis AI-synlighetsanalys
+        </a>
+        <a
+          href="#analysen"
+          class="inline-flex items-center justify-center border border-line-strong px-7 py-4 text-base font-semibold transition-colors hover:bg-paper-alt"
+        >
+          Vad ingår i analysen?
+        </a>
+      </div>
+
+      <p class="mt-5 font-mono text-xs uppercase tracking-wider text-ink-soft">
+        Kostnadsfritt · Inga förkunskaper krävs · Ingen bindning
+      </p>
+    </div>
+
+    <!-- Illustration: hur ett AI-svar väljer sina källor -->
+    <figure class="border border-line-strong">
+      <figcaption class="flex items-center justify-between border-b border-line bg-paper-alt px-5 py-3">
+        <span class="font-mono text-xs uppercase tracking-widest text-ink-soft">
+          Illustration
+        </span>
+        <span class="font-mono text-xs text-ink-soft">AI-svar</span>
+      </figcaption>
+
+      <div class="space-y-5 p-6">
+        <p class="font-mono text-sm text-ink-soft">
+          &gt; "Vilka leverantörer av [er tjänst] i Sverige bör vi utvärdera?"
+        </p>
+
+        <div class="space-y-2" aria-hidden="true">
+          <div class="h-2.5 w-full bg-paper-alt"></div>
+          <div class="h-2.5 w-11/12 bg-paper-alt"></div>
+          <div class="h-2.5 w-8/12 bg-paper-alt"></div>
+        </div>
+
+        <ul class="divide-y divide-line border-t border-line">
+          {
+            citations.map((c) => (
+              <li class="flex items-center justify-between gap-4 py-3">
+                <span class={c.cited ? "font-medium" : "font-medium text-warn"}>
+                  {c.name}
+                </span>
+                {c.cited ? (
+                  <span class="bg-accent-soft px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-accent">
+                    Citerad
+                  </span>
+                ) : (
+                  <span class="bg-warn-soft px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-warn">
+                    Nämns inte
+                  </span>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </figure>
+  </div>
+</section>

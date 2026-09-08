@@ -1,0 +1,59 @@
+---
+const items = [
+  {
+    label: "Synlighetstest",
+    title: "Vi frågar modellerna om er",
+    body:
+      "Vi kör de köpfrågor era kunder faktiskt ställer genom ChatGPT, Perplexity, Gemini och Googles AI-svar — och dokumenterar om, hur och med vilka ord ni dyker upp.",
+  },
+  {
+    label: "Konkurrenter",
+    title: "Vilka nämns istället för er",
+    body:
+      "Ni får se vilka företag modellerna föreslår på era frågor, och vilka källor de lutar sig mot när de gör det.",
+  },
+  {
+    label: "Faktakoll",
+    title: "Vad AI:n tror om er — och vad den har fel om",
+    body:
+      "Föråldrade uppgifter, felaktiga tjänstebeskrivningar och sammanblandningar med andra bolag. Vi listar vad som behöver rättas.",
+  },
+  {
+    label: "Åtgärder",
+    title: "Tre konkreta saker att göra först",
+    body:
+      "Prioriterade åtgärder på er egen webbplats, formulerade så att de går att beställa av er byrå eller göra internt — även om ni aldrig anlitar oss.",
+  },
+];
+---
+
+<section id="analysen" class="border-b border-line">
+  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+    <div class="max-w-2xl">
+      <p class="font-mono text-xs uppercase tracking-widest text-ink-soft">
+        Den kostnadsfria analysen
+      </p>
+      <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+        Ni får veta exakt hur ni syns i AI-svar idag
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+        Ingen generell rapport ur ett verktyg. Vi tittar på ert företag, era
+        frågor och er bransch — och skickar tillbaka något ni kan agera på.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2">
+      {
+        items.map((item) => (
+          <article class="bg-paper p-8">
+            <span class="inline-block bg-accent-soft px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-accent">
+              {item.label}
+            </span>
+            <h3 class="mt-5 text-xl font-semibold leading-snug">{item.title}</h3>
+            <p class="mt-3 leading-relaxed text-ink-soft">{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

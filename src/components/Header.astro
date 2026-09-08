@@ -1,0 +1,36 @@
+---
+const nav = [
+  { href: "#problemet", label: "Problemet" },
+  { href: "#analysen", label: "Analysen" },
+  { href: "#sa-gar-det-till", label: "Så går det till" },
+  { href: "#fragor", label: "Vanliga frågor" },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+    <a href="/" class="text-lg font-bold tracking-tight" aria-label="Crowdme, till startsidan">
+      Crowdme<span class="text-accent">.</span>
+    </a>
+
+    <nav aria-label="Huvudmeny" class="hidden items-center gap-8 md:flex">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm text-ink-soft transition-colors hover:text-ink"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href="#analys"
+      class="bg-ink px-4 py-2.5 text-sm font-semibold text-ink-invert transition-colors hover:bg-accent hover:text-accent-ink"
+    >
+      Få gratis analys
+    </a>
+  </div>
+</header>

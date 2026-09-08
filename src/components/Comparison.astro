@@ -1,0 +1,65 @@
+---
+const rows = [
+  {
+    aspect: "Resultatet",
+    seo: "En lista med tio länkar att välja bland",
+    aeo: "Ett svar med några få namn i",
+  },
+  {
+    aspect: "Det som belönas",
+    seo: "Nyckelord, länkar, teknisk prestanda",
+    aeo: "Tydliga, kontrollerbara påståenden som går att citera",
+  },
+  {
+    aspect: "Er roll",
+    seo: "Ni rankar med en sida",
+    aeo: "Ni nämns i ett resonemang, ofta utan klick",
+  },
+  {
+    aspect: "Mätpunkt",
+    seo: "Position och trafik",
+    aeo: "Andel svar där ni nämns, och hur ni beskrivs",
+  },
+];
+---
+
+<section class="border-b border-line">
+  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+        AI-sökning är inte SEO med nytt namn
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+        Mycket av grundarbetet överlappar. Men det som avgör om ni hamnar i
+        svaret är något annat än det som avgör om ni rankar.
+      </p>
+    </div>
+
+    <div class="mt-12 overflow-x-auto">
+      <table class="w-full min-w-[40rem] border-collapse text-left">
+        <thead>
+          <tr class="border-b border-line-strong">
+            <th class="py-4 pr-6 font-mono text-xs uppercase tracking-widest text-ink-soft">
+              <span class="sr-only">Aspekt</span>
+            </th>
+            <th class="py-4 pr-6 text-base font-semibold">Klassisk SEO</th>
+            <th class="py-4 text-base font-semibold text-accent">Synlighet i AI-svar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map((r) => (
+              <tr class="border-b border-line align-top">
+                <th scope="row" class="w-40 py-5 pr-6 font-mono text-xs uppercase tracking-wider font-normal text-ink-soft">
+                  {r.aspect}
+                </th>
+                <td class="py-5 pr-6 text-ink-soft">{r.seo}</td>
+                <td class="py-5 font-medium">{r.aeo}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

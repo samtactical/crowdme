@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGNTOKENS — enda stället du behöver ändra vid omstyling.
+   Byt värdena här när DESIGN.md är klar; komponenterna
+   refererar bara till tokennamnen, aldrig till råa färger.
+   ============================================================ */
+@theme {
+  /* Ytor */
+  --color-paper: #ffffff;
+  --color-paper-alt: #f5f5f3;
+  --color-paper-invert: #101314;
+
+  /* Text */
+  --color-ink: #101314;
+  --color-ink-soft: #555d60;
+  --color-ink-invert: #f5f5f3;
+
+  /* Linjer */
+  --color-line: #e2e3df;
+  --color-line-strong: #101314;
+
+  /* Accent — PLATSHÅLLARE, ersätts av DESIGN.md */
+  --color-accent: #1226c8;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #e8eaff;
+
+  /* Signalfärg för "syns inte / frånvarande" */
+  --color-warn: #c0341a;
+  --color-warn-soft: #fdeeea;
+
+  /* Typografi */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Roboto Mono", Menlo, monospace;
+
+  /* Form */
+  --radius-token: 0px;
+
+  /* Rytm */
+  --spacing-section: 6rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

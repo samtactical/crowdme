@@ -1,0 +1,211 @@
+---
+const branscher = [
+  "SaaS / mjukvara",
+  "Konsult / byrå",
+  "Industri / tillverkning",
+  "Bygg / fastighet",
+  "Ekonomi / juridik",
+  "Rekrytering / bemanning",
+  "E-handel / handel",
+  "Vård / hälsa",
+  "Annat",
+];
+
+const fieldClass =
+  "w-full border border-line bg-paper px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 transition-colors focus:border-accent focus:outline-none";
+const labelClass = "block text-sm font-medium";
+const hintClass = "mt-1.5 block text-sm font-normal text-ink-soft";
+---
+
+<section id="analys" class="border-b border-line scroll-mt-20">
+  <div class="mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:py-24">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+        Få er gratis AI-synlighetsanalys
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+        Fyll i formuläret så gör vi analysen och hör av oss med resultatet.
+        Ingen betalning, inget säljmöte som villkor.
+      </p>
+
+      <ul class="mt-8 space-y-3 text-sm">
+        {
+          [
+            "Vi testar era köpfrågor mot flera AI-modeller",
+            "Ni ser vilka konkurrenter som nämns istället",
+            "Ni får tre prioriterade åtgärder att börja med",
+          ].map((item) => (
+            <li class="flex gap-3">
+              <span aria-hidden="true" class="font-mono text-accent">
+                —
+              </span>
+              <span class="text-ink-soft">{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="border border-line-strong p-6 sm:p-9">
+      <form id="lead-form" novalidate class="space-y-6">
+        <!-- Honeypot: dolt för människor, lockande för bottar -->
+        <div class="absolute -left-[9999px]" aria-hidden="true">
+          <label for="lead-org">Organisation</label>
+          <input id="lead-org" name="organisation" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label class={labelClass} for="foretag">Företagsnamn *</label>
+            <input class={`${fieldClass} mt-2`} id="foretag" name="foretag" type="text" required autocomplete="organization" />
+          </div>
+          <div>
+            <label class={labelClass} for="webbplats">Webbplats *</label>
+            <input class={`${fieldClass} mt-2`} id="webbplats" name="webbplats" type="text" required inputmode="url" placeholder="exempel.se" autocomplete="url" />
+          </div>
+          <div>
+            <label class={labelClass} for="namn">Ditt namn *</label>
+            <input class={`${fieldClass} mt-2`} id="namn" name="namn" type="text" required autocomplete="name" />
+          </div>
+          <div>
+            <label class={labelClass} for="epost">Jobbmejl *</label>
+            <input class={`${fieldClass} mt-2`} id="epost" name="epost" type="email" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div>
+          <label class={labelClass} for="bransch">Bransch</label>
+          <select class={`${fieldClass} mt-2`} id="bransch" name="bransch">
+            <option value="">Välj bransch</option>
+            {branscher.map((b) => <option value={b}>{b}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label class={labelClass} for="fragor">
+            Vad söker era kunder på?
+            <span class={hintClass}>
+              Skriv frågorna som de skulle ställa dem — t.ex. "bästa
+              lönesystemet för mindre tillverkande bolag". Vi testar dem rakt av.
+            </span>
+          </label>
+          <textarea class={`${fieldClass} mt-2`} id="fragor" name="fragor" rows="4"></textarea>
+        </div>
+
+        <div>
+          <label class={labelClass} for="konkurrenter">
+            Konkurrenter att jämföra med
+            <span class={hintClass}>Valfritt. Ett eller flera namn.</span>
+          </label>
+          <input class={`${fieldClass} mt-2`} id="konkurrenter" name="konkurrenter" type="text" />
+        </div>
+
+        <div class="flex gap-3">
+          <input
+            id="samtycke"
+            name="samtycke"
+            type="checkbox"
+            required
+            class="mt-1 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
+          />
+          <label for="samtycke" class="text-sm leading-relaxed text-ink-soft">
+            Jag godkänner att Crowdme sparar uppgifterna för att göra analysen
+            och kontakta mig om den. *
+          </label>
+        </div>
+
+        <p
+          id="lead-error"
+          role="alert"
+          hidden
+          class="border border-warn bg-warn-soft px-4 py-3 text-sm text-warn"
+        >
+        </p>
+
+        <button
+          type="submit"
+          id="lead-submit"
+          class="w-full bg-accent px-7 py-4 text-base font-semibold text-accent-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Skicka in — få analysen
+        </button>
+
+        <p class="text-center font-mono text-xs uppercase tracking-wider text-ink-soft">
+          Vi säljer aldrig vidare era uppgifter
+        </p>
+      </form>
+
+      <!-- Tackläge -->
+      <div id="lead-success" hidden class="py-6 text-center">
+        <p class="font-mono text-xs uppercase tracking-widest text-accent">
+          Inskickat
+        </p>
+        <h3 class="mt-4 text-2xl font-bold tracking-tight">Tack! Vi sätter igång.</h3>
+        <p class="mx-auto mt-4 max-w-md leading-relaxed text-ink-soft">
+          Vi hör av oss till adressen du angav när analysen är klar. Ligger det
+          något extra ni vill att vi tittar på går det bra att svara direkt på
+          det mejlet.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { submitLead, type Lead } from "../lib/submitLead";
+
+  const form = document.querySelector<HTMLFormElement>("#lead-form");
+  const success = document.querySelector<HTMLElement>("#lead-success");
+  const errorBox = document.querySelector<HTMLElement>("#lead-error");
+  const submitBtn = document.querySelector<HTMLButtonElement>("#lead-submit");
+
+  if (form && success && errorBox && submitBtn) {
+    const showError = (message: string) => {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorBox.hidden = true;
+
+      // Honeypot ifylld => bot. Låtsas lyckas, skicka ingenting.
+      const data = new FormData(form);
+      if (String(data.get("organisation") ?? "").trim() !== "") {
+        form.hidden = true;
+        success.hidden = false;
+        return;
+      }
+
+      if (!form.reportValidity()) return;
+
+      const lead: Lead = {
+        foretag: String(data.get("foretag") ?? "").trim(),
+        webbplats: String(data.get("webbplats") ?? "").trim(),
+        namn: String(data.get("namn") ?? "").trim(),
+        epost: String(data.get("epost") ?? "").trim(),
+        bransch: String(data.get("bransch") ?? ""),
+        fragor: String(data.get("fragor") ?? "").trim(),
+        konkurrenter: String(data.get("konkurrenter") ?? "").trim(),
+      };
+
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = "Skickar…";
+
+      try {
+        await submitLead(lead);
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (err) {
+        console.error(err);
+        showError(
+          "Något gick fel när formuläret skickades. Försök igen, eller mejla oss direkt."
+        );
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    });
+  }
+</script>

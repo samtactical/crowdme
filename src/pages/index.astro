@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Problem from "../components/Problem.astro";
+import Analysis from "../components/Analysis.astro";
+import Comparison from "../components/Comparison.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import LeadForm from "../components/LeadForm.astro";
+import Faq from "../components/Faq.astro";
+import Footer from "../components/Footer.astro";
+
+const title = "Crowdme — syns ditt företag i ChatGPT och AI-sökningar?";
+const description =
+  "Crowdme får svenska B2B-företag att synas och citeras i ChatGPT, Perplexity, Gemini och Googles AI-svar. Få en kostnadsfri analys av hur ni syns idag.";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main id="innehall">
+    <Hero />
+    <Problem />
+    <Analysis />
+    <Comparison />
+    <HowItWorks />
+    <LeadForm />
+    <Faq />
+  </main>
+  <Footer />
+</Layout>
