@@ -9,16 +9,42 @@ import path from "node:path";
  * logotypväggar helt, och de här får bara stå för "det här testar vi",
  * aldrig för partnerskap eller kunder). Lägg inte till något här utan
  * att först läsa den regeln.
+ *
+ * `label` är hela namnet och används där ikonen står ensam (omloppsbanorna,
+ * skärmläsare). `short` är den kortform som sätts när namnet står i text
+ * bredvid märket och hela namnet blir en upprepning — "Google AI Overviews"
+ * intill Google-G:et säger Google två gånger.
+ *
+ * AI Overviews och AI Mode är funktioner i Google-sökningen, inte egna
+ * varumärken. De har därför inget eget märke och delar Google-G:et med
+ * flit — de ligger bredvid varandra så paret läses som ett par.
  */
 export const AI_SURFACES = {
   chatgpt: { file: "openai", label: "ChatGPT" },
+  aioverviews: { file: "google", label: "Google AI Overviews", short: "AI Overviews" },
+  aimode: { file: "google", label: "Google AI Mode", short: "AI Mode" },
+  gemini: { file: "gemini", label: "Google Gemini", short: "Gemini" },
   perplexity: { file: "perplexity", label: "Perplexity" },
-  gemini: { file: "gemini", label: "Google Gemini" },
-  copilot: { file: "copilot", label: "Microsoft Copilot" },
+  copilot: { file: "copilot", label: "Microsoft Copilot", short: "Copilot" },
+  claude: { file: "claude", label: "Claude" },
+  grok: { file: "grok", label: "Grok" },
   deepseek: { file: "deepseek", label: "DeepSeek" },
+  lechat: { file: "mistral", label: "Mistral Le Chat" },
+  metaai: { file: "metaai", label: "Meta AI" },
 } as const;
 
 export type AiSurface = keyof typeof AI_SURFACES;
+
+/** Hela ordningen, som den ska läsas i hero-raden. */
+export const AI_SURFACE_ORDER = Object.keys(AI_SURFACES) as AiSurface[];
+
+export function surfaceLabel(
+  name: AiSurface,
+  form: "full" | "short" = "full",
+): string {
+  const entry = AI_SURFACES[name];
+  return form === "short" && "short" in entry ? entry.short : entry.label;
+}
 
 const ASSETS = path.join(
   process.cwd(),

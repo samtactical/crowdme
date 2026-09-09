@@ -3,10 +3,13 @@ import { brandIconBody, AI_SURFACES, type AiSurface } from "../../lib/brandIcons
 
 interface Props {
   name: AiSurface;
+  /** Sätt när namnet redan står som text bredvid — då ska märket vara
+   *  dekorativt, annars läser skärmläsaren upp namnet två gånger. */
+  decorative?: boolean;
   class?: string;
 }
 
-const { name, class: className } = Astro.props;
+const { name, decorative = false, class: className } = Astro.props;
 const body = brandIconBody(name);
 const { label } = AI_SURFACES[name];
 ---
@@ -16,8 +19,10 @@ const { label } = AI_SURFACES[name];
   fill="currentColor"
   fill-rule="evenodd"
   class={className}
-  role="img"
-  aria-label={label}
+  role={decorative ? undefined : "img"}
+  aria-hidden={decorative ? "true" : undefined}
+  focusable={decorative ? "false" : undefined}
+  aria-label={decorative ? undefined : label}
 >
   <Fragment set:html={body} />
 </svg>

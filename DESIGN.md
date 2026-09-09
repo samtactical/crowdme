@@ -444,6 +444,40 @@ Marks come from `@lobehub/icons-static-svg`, inlined at build time like the
 Phosphor icons — monochrome `currentColor`, no external requests, no runtime
 cost. Note that `simple-icons` no longer carries the OpenAI mark.
 
+### Surface row
+
+Sits directly under the hero's two CTAs: a small caption and the eleven AI
+answer surfaces, each as a monochrome mark with its name beside it.
+
+- **The caption carries the whole thing.** "Ytorna vi mäter er synlighet i" is
+  what makes eleven logos a scope statement rather than a logo wall. Never ship
+  the row without it, and never reword it into anything that could read as
+  partnership, endorsement or clientele.
+- **Marks, not wordmarks.** `@lobehub/icons-static-svg` ships `-text` wordmark
+  variants; they are not used here. Their aspect ratios differ wildly, they
+  cannot express "AI Overviews", and mixing real wordmarks with our own text
+  labels looks like a mistake. One 24×24 mark plus Inter Tight at 13 px is
+  consistent with everything else on the page.
+- **The mark is decorative.** The name is already there as text, so
+  `<BrandIcon decorative />` drops `role="img"` and the `aria-label` — otherwise
+  a screen reader reads every name twice.
+- **Two Google entries share one G.** AI Overviews and AI Mode are features of
+  Google search, not separately branded products, so inventing a mark for them
+  would be a lie. They sit next to each other and their labels are shortened to
+  "AI Overviews" / "AI Mode", so the repeated G reads as a pair rather than a
+  duplicate. Same reason Gemini shows as "Gemini": the mark already says Google.
+  `surfaceLabel(name, "short")` picks the display form; `label` stays the full
+  name for anywhere the mark stands alone.
+- **Width is tuned for a balanced wrap, not for one line.** Eleven items never
+  fit a single row at a readable size. `w-full max-w-[38rem]` breaks 6/5 on
+  desktop — the `w-full` is what keeps the wrap inside the container on narrow
+  screens, since a bare `max-w` on a `flex-col items-center` parent still sizes
+  to fit-content and overflows.
+
+Colour is deliberately flat: marks in `ink-faint`, labels in `ink-soft`. The
+colour variants exist in the package and are wrong here — eleven brand palettes
+under the headline would out-shout the hero.
+
 ### Feature card
 
 One card per group may be promoted. The treatment is fixed:

@@ -104,7 +104,10 @@ justera:
 - Bokningen frågar bara efter webbplats, namn och mejl. Steg 2 (mål, bransch,
   fritext) är helt valfritt — inget där får bli obligatoriskt utan att
   konverteringen mäts först.
-- Listan över AI-tjänster i FAQ och logotyperna i `Analysis.astro`
+- Listan över AI-tjänster: elva ytor i hero-raden (`Hero.astro`), samma elva
+  i FAQ, fem som grafik i `Analysis.astro`. Listan växte från sex till elva
+  på ägarens begäran — den utlovar att vi faktiskt tittar i alla elva.
+  Krymper omfattningen måste `AI_SURFACES`, hero-raden och FAQ ändras ihop.
 
 ## Konverteringsmålet är ett bokat möte
 

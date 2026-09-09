@@ -1,6 +1,8 @@
 ---
 import Globe from "./ui/Globe.astro";
 import Eyebrow from "./ui/Eyebrow.astro";
+import BrandIcon from "./ui/BrandIcon.astro";
+import { AI_SURFACE_ORDER, surfaceLabel } from "../lib/brandIcons";
 
 /**
  * Illustration, inte mätning: exempel på hur svenska köpare formulerar
@@ -16,6 +18,14 @@ const searches = [
   { id: "umea", location: [63.8258, 20.263] as [number, number], label: "takläggare Umeå omdömen" },
   { id: "lulea", location: [65.5848, 22.1547] as [number, number], label: "industriservice Luleå" },
 ];
+
+/**
+ * AI-ytorna under knapparna. Raden säger vad vi mäter i — inte vem vi
+ * samarbetar med och inte vilka som är kunder. Håll rubriken över raden
+ * explicit; utan den blir elva logotyper en logotypvägg, och sådana är
+ * förbjudna (AGENTS.md).
+ */
+const surfaces = AI_SURFACE_ORDER;
 
 ---
 
@@ -49,6 +59,24 @@ const searches = [
         >
           Vad vi tittar på
         </a>
+      </div>
+
+      <div class="mt-12 flex flex-col items-center md:mt-14">
+        <p class="eyebrow text-ink-faint">Ytorna vi mäter er synlighet i</p>
+        <ul class="mt-4 flex w-full max-w-[38rem] flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-6">
+          {
+            surfaces.map((name) => (
+              <li class="flex items-center gap-2 text-[13px] leading-none text-ink-soft">
+                <BrandIcon
+                  name={name}
+                  decorative
+                  class="h-[1.05rem] w-[1.05rem] shrink-0 text-ink-faint"
+                />
+                {surfaceLabel(name, "short")}
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </div>
 
