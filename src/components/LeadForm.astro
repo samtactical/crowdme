@@ -1,4 +1,7 @@
 ---
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+
 const branscher = [
   "SaaS / mjukvara",
   "Konsult / byrå",
@@ -12,70 +15,72 @@ const branscher = [
 ];
 
 const fieldClass =
-  "w-full border border-line bg-paper px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 transition-colors focus:border-accent focus:outline-none";
-const labelClass = "block text-sm font-medium";
-const hintClass = "mt-1.5 block text-sm font-normal text-ink-soft";
+  "w-full rounded-md border border-line-strong bg-paper-card px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint transition-colors focus:border-accent-ink focus:outline-none";
+const labelClass = "block text-[13px] font-medium";
+const hintClass = "mt-1 block text-[12px] font-normal leading-relaxed text-ink-soft";
 ---
 
-<section id="analys" class="border-b border-line scroll-mt-20">
-  <div class="mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:py-24">
-    <div class="lg:sticky lg:top-28 lg:self-start">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-        Få er gratis AI-synlighetsanalys
-      </h2>
-      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
-        Fyll i formuläret så gör vi analysen och hör av oss med resultatet.
-        Ingen betalning, inget säljmöte som villkor.
+<section id="boka" class="scroll-mt-24 border-b border-line">
+  <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal-group>
+      <Eyebrow data-reveal>Steg 4 · Boka</Eyebrow>
+      <h2 class="display-2 mt-8" data-reveal>Boka ett möte.</h2>
+      <p class="mt-6 max-w-md text-lg leading-relaxed text-ink-soft" data-reveal>
+        Fyll i formuläret så återkommer vi med tider som passar. Ni behöver
+        inte förbereda något.
       </p>
 
-      <ul class="mt-8 space-y-3 text-sm">
+      <ul class="mt-8 space-y-0" data-reveal>
         {
           [
-            "Vi testar era köpfrågor mot flera AI-modeller",
-            "Ni ser vilka konkurrenter som nämns istället",
-            "Ni får tre prioriterade åtgärder att börja med",
+            "Vi går igenom hur ni syns i AI-svar idag",
+            "Ni ser vilka konkurrenter som nämns istället för er",
+            "Ni bestämmer själva om ni vill gå vidare",
           ].map((item) => (
-            <li class="flex gap-3">
-              <span aria-hidden="true" class="font-mono text-accent">
-                —
+            <li class="flex items-start gap-3 border-b border-line py-3 last:border-b-0">
+              <span
+                aria-hidden="true"
+                class="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-pill bg-accent text-accent-ink"
+              >
+                <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
               </span>
-              <span class="text-ink-soft">{item}</span>
+              <span class="text-sm leading-relaxed text-ink-soft">{item}</span>
             </li>
           ))
         }
       </ul>
     </div>
 
-    <div class="border border-line-strong p-6 sm:p-9">
-      <form id="lead-form" novalidate class="space-y-6">
+    <div class="card-soft p-6 sm:p-8">
+      <form id="lead-form" novalidate class="space-y-5">
         <!-- Honeypot: dolt för människor, lockande för bottar -->
         <div class="absolute -left-[9999px]" aria-hidden="true">
           <label for="lead-org">Organisation</label>
           <input id="lead-org" name="organisation" type="text" tabindex="-1" autocomplete="off" />
         </div>
 
-        <div class="grid gap-6 sm:grid-cols-2">
+        <div class="grid gap-5 sm:grid-cols-2">
           <div>
             <label class={labelClass} for="foretag">Företagsnamn *</label>
-            <input class={`${fieldClass} mt-2`} id="foretag" name="foretag" type="text" required autocomplete="organization" />
+            <input class={`${fieldClass} mt-1.5`} id="foretag" name="foretag" type="text" required autocomplete="organization" />
           </div>
           <div>
             <label class={labelClass} for="webbplats">Webbplats *</label>
-            <input class={`${fieldClass} mt-2`} id="webbplats" name="webbplats" type="text" required inputmode="url" placeholder="exempel.se" autocomplete="url" />
+            <input class={`${fieldClass} mt-1.5`} id="webbplats" name="webbplats" type="text" required inputmode="url" placeholder="exempel.se" autocomplete="url" />
           </div>
           <div>
             <label class={labelClass} for="namn">Ditt namn *</label>
-            <input class={`${fieldClass} mt-2`} id="namn" name="namn" type="text" required autocomplete="name" />
+            <input class={`${fieldClass} mt-1.5`} id="namn" name="namn" type="text" required autocomplete="name" />
           </div>
           <div>
             <label class={labelClass} for="epost">Jobbmejl *</label>
-            <input class={`${fieldClass} mt-2`} id="epost" name="epost" type="email" required autocomplete="email" />
+            <input class={`${fieldClass} mt-1.5`} id="epost" name="epost" type="email" required autocomplete="email" />
           </div>
         </div>
 
         <div>
           <label class={labelClass} for="bransch">Bransch</label>
-          <select class={`${fieldClass} mt-2`} id="bransch" name="bransch">
+          <select class={`${fieldClass} mt-1.5`} id="bransch" name="bransch">
             <option value="">Välj bransch</option>
             {branscher.map((b) => <option value={b}>{b}</option>)}
           </select>
@@ -86,10 +91,11 @@ const hintClass = "mt-1.5 block text-sm font-normal text-ink-soft";
             Vad söker era kunder på?
             <span class={hintClass}>
               Skriv frågorna som de skulle ställa dem — t.ex. "bästa
-              lönesystemet för mindre tillverkande bolag". Vi testar dem rakt av.
+              lönesystemet för mindre tillverkande bolag". Vi använder dem för
+              att förbereda mötet.
             </span>
           </label>
-          <textarea class={`${fieldClass} mt-2`} id="fragor" name="fragor" rows="4"></textarea>
+          <textarea class={`${fieldClass} mt-1.5`} id="fragor" name="fragor" rows="4"></textarea>
         </div>
 
         <div>
@@ -97,20 +103,20 @@ const hintClass = "mt-1.5 block text-sm font-normal text-ink-soft";
             Konkurrenter att jämföra med
             <span class={hintClass}>Valfritt. Ett eller flera namn.</span>
           </label>
-          <input class={`${fieldClass} mt-2`} id="konkurrenter" name="konkurrenter" type="text" />
+          <input class={`${fieldClass} mt-1.5`} id="konkurrenter" name="konkurrenter" type="text" />
         </div>
 
-        <div class="flex gap-3">
+        <div class="flex gap-2.5">
           <input
             id="samtycke"
             name="samtycke"
             type="checkbox"
             required
-            class="mt-1 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
+            class="mt-0.5 h-4 w-4 shrink-0 rounded-sm accent-[var(--color-accent-ink)]"
           />
-          <label for="samtycke" class="text-sm leading-relaxed text-ink-soft">
-            Jag godkänner att Crowdme sparar uppgifterna för att göra analysen
-            och kontakta mig om den. *
+          <label for="samtycke" class="text-[13px] leading-relaxed text-ink-soft">
+            Jag godkänner att Crowdme sparar uppgifterna för att boka mötet
+            och kontakta mig om det. *
           </label>
         </div>
 
@@ -118,33 +124,33 @@ const hintClass = "mt-1.5 block text-sm font-normal text-ink-soft";
           id="lead-error"
           role="alert"
           hidden
-          class="border border-warn bg-warn-soft px-4 py-3 text-sm text-warn"
+          class="rounded-md border border-warn/30 bg-warn-soft px-3.5 py-2.5 text-[13px] text-warn"
         >
         </p>
 
         <button
           type="submit"
           id="lead-submit"
-          class="w-full bg-accent px-7 py-4 text-base font-semibold text-accent-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          class="w-full rounded-md bg-solid px-5 py-3 text-sm font-medium text-ink-invert transition-colors hover:bg-solid-hover disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Skicka in — få analysen
+          Boka möte
         </button>
 
-        <p class="text-center font-mono text-xs uppercase tracking-wider text-ink-soft">
-          Vi säljer aldrig vidare era uppgifter
-        </p>
+        <p class="eyebrow text-center">Vi säljer aldrig vidare era uppgifter</p>
       </form>
 
       <!-- Tackläge -->
-      <div id="lead-success" hidden class="py-6 text-center">
-        <p class="font-mono text-xs uppercase tracking-widest text-accent">
-          Inskickat
-        </p>
-        <h3 class="mt-4 text-2xl font-bold tracking-tight">Tack! Vi sätter igång.</h3>
-        <p class="mx-auto mt-4 max-w-md leading-relaxed text-ink-soft">
-          Vi hör av oss till adressen du angav när analysen är klar. Ligger det
-          något extra ni vill att vi tittar på går det bra att svara direkt på
-          det mejlet.
+      <div id="lead-success" hidden class="py-10 text-center">
+        <span
+          class="mx-auto grid h-10 w-10 place-items-center rounded-pill bg-accent text-accent-ink"
+          aria-hidden="true"
+        >
+          <Icon name="check" weight="bold" class="h-5 w-5" />
+        </span>
+        <h3 class="display-3 mt-5">Tack! Vi hör av oss.</h3>
+        <p class="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ink-soft">
+          Vi återkommer till adressen du angav med förslag på tider. Passar
+          ingen av dem går det bra att svara direkt på det mejlet.
         </p>
       </div>
     </div>

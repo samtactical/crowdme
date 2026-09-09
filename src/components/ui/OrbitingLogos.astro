@@ -1,0 +1,53 @@
+---
+import BrandIcon from "./BrandIcon.astro";
+import Icon from "../Icon.astro";
+import type { AiSurface } from "../../lib/brandIcons";
+
+/**
+ * Omloppsbanor, porterade från React till Astro.
+ *
+ * Statisk med flit: kortet är en stödgrafik, och hero-globen äger redan
+ * sidans rörelse. Utan animation behövs varken keyframes, motrotation
+ * per bildruta eller en reducerad-rörelse-variant — vinkeln sätts en
+ * gång i markupen och ikonen motroteras lika mycket så den står rakt.
+ *
+ * Ringarna sitter med centrum en bit ovanför panelens underkant, så de
+ * skärs av till bågar och delar mittpunkt med navet.
+ */
+interface Orbit {
+  /** Diameter som Tailwind-klass, t.ex. "w-[20rem]". */
+  size: string;
+  /** 0deg = rakt upp. Håll dig inom ±70 så ikonen inte hamnar i kanten. */
+  icons: { name: AiSurface; angle: number }[];
+}
+
+interface Props {
+  orbits: Orbit[];
+  /** Texten i navet som banorna utgår från. */
+  hub: string;
+  class?: string;
+}
+
+const { orbits, hub, class: className = "" } = Astro.props;
+---
+
+<div class={`orbit-field ${className}`}>
+  {
+    orbits.map((orbit) => (
+      <div class={`orbit ${orbit.size}`}>
+        {orbit.icons.map((icon) => (
+          <span class="orbit__spoke" style={`--a:${icon.angle}deg`}>
+            <span class="orbit__disc" style={`--a:${icon.angle}deg`}>
+              <BrandIcon name={icon.name} class="h-4 w-4 sm:h-[1.15rem] sm:w-[1.15rem]" />
+            </span>
+          </span>
+        ))}
+      </div>
+    ))
+  }
+
+  <span class="orbit__hub">
+    <Icon name="magnifying-glass" class="h-3 w-3 shrink-0 text-ink-faint" />
+    {hub}
+  </span>
+</div>

@@ -1,19 +1,28 @@
 ---
 const nav = [
   { href: "#problemet", label: "Problemet" },
+  { href: "#ai-sokningen", label: "AI-sökningen" },
   { href: "#analysen", label: "Analysen" },
   { href: "#sa-gar-det-till", label: "Så går det till" },
-  { href: "#fragor", label: "Vanliga frågor" },
 ];
 ---
 
-<header class="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-    <a href="/" class="text-lg font-bold tracking-tight" aria-label="Crowdme, till startsidan">
-      Crowdme<span class="text-accent">.</span>
+<header
+  data-header
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300 [&[data-scrolled]]:border-line [&[data-scrolled]]:bg-paper/85 [&[data-scrolled]]:backdrop-blur-md"
+>
+  <div class="mx-auto flex max-w-page items-center justify-between gap-6 px-4 py-4 sm:px-6">
+    <a href="/" class="shrink-0" aria-label="Crowdme, till startsidan">
+      <img
+        src="/logo/crowdme-logomark-dark-green.webp"
+        alt="Crowdme"
+        width="2650"
+        height="516"
+        class="h-[18px] w-auto sm:h-5"
+      />
     </a>
 
-    <nav aria-label="Huvudmeny" class="hidden items-center gap-8 md:flex">
+    <nav aria-label="Huvudmeny" class="hidden items-center gap-7 lg:flex">
       {
         nav.map((item) => (
           <a
@@ -26,11 +35,19 @@ const nav = [
       }
     </nav>
 
-    <a
-      href="#analys"
-      class="bg-ink px-4 py-2.5 text-sm font-semibold text-ink-invert transition-colors hover:bg-accent hover:text-accent-ink"
-    >
-      Få gratis analys
-    </a>
+    <div class="flex shrink-0 items-center gap-2">
+      <a
+        href="#fragor"
+        class="hidden rounded-md border border-line-strong px-5 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-alt hover:text-ink sm:inline-flex"
+      >
+        Vanliga frågor
+      </a>
+      <a
+        href="#boka"
+        class="inline-flex items-center rounded-md bg-solid px-5 py-2 text-sm font-medium text-ink-invert transition-colors hover:bg-solid-hover"
+      >
+        Boka möte
+      </a>
+    </div>
   </div>
 </header>

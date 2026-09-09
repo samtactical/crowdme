@@ -12,8 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@lobehub/icons-static-svg": "^1.95.0",
+    "@phosphor-icons/core": "^2.1.1",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
+    "cobe": "^2.0.1",
     "tailwindcss": "^4.3.3"
   },
   "allowScripts": {

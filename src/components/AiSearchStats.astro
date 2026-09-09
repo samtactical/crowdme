@@ -1,0 +1,113 @@
+---
+import Icon from "./Icon.astro";
+
+/**
+ * Marknadsstatistik, inte våra egna resultat.
+ *
+ * AGENTS.md förbjuder påhittade siffror och mätvärden om Crowdme. Det
+ * här är något annat: publicerad tredjepartsstatistik om hur svenskar
+ * söker, med källa och länk. Reglerna för den här ytan:
+ *
+ *   1. Varje siffra ska gå att slå upp i den länkade källan.
+ *   2. Ingen siffra får handla om Crowdmes egna resultat eller kunder.
+ *   3. Källa, år och urval ska stå utskrivet — numera samlat på
+ *      källraden i stället för att upprepas på varje kort.
+ *   4. Prognoser används inte — bara uppmätta värden. (Gartners
+ *      förutsägelse om 25 % tapp i söktrafik till 2026 slog inte in
+ *      och ska inte citeras här.)
+ *
+ * Siffrorna nedan är hämtade ur Internetstiftelsens "Svenskarna och
+ * internet 2025", publicerad 2025-09-29.
+ */
+const source = {
+  label: "Internetstiftelsen · Svenskarna och internet 2025",
+  href: "https://svenskarnaochinternet.se/rapporter/svenskarna-och-internet-2025/ai-artificiell-intelligens/",
+};
+
+const stats = [
+  {
+    icon: "sparkle",
+    label: "Använder AI-verktyg",
+    value: "40",
+    unit: "%",
+    of: "av svenskarna",
+  },
+  {
+    icon: "chat-circle-text",
+    label: "Använder ChatGPT",
+    value: "33",
+    unit: "%",
+    of: "av svenskarna",
+  },
+  {
+    icon: "magnifying-glass",
+    label: "Frågar AI i stället för en sökmotor",
+    value: "21",
+    unit: "%",
+    of: "av svenskarna",
+  },
+  {
+    icon: "users-three",
+    label: "Googlar inte först",
+    value: "50",
+    unit: "%+",
+    of: "av AI-användarna",
+  },
+];
+---
+
+<section id="ai-sokningen" data-invert class="bg-paper-invert text-ink-invert">
+  <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-24">
+    <div class="max-w-3xl" data-reveal-group>
+      <h2 class="display-2 text-ink-invert" data-reveal>
+        AI-sökningen är inte på väg.<br />
+        <span class="text-ink-invert-soft">Den är redan här.</span>
+      </h2>
+
+      <p class="mt-6 text-lg leading-relaxed text-ink-invert-soft" data-reveal>
+        Var femte svensk ställer sina frågor till en AI i stället för att
+        använda en sökmotor. Det är där svaret om er bransch formuleras.
+      </p>
+    </div>
+
+    <dl
+      class="mt-12 grid gap-px border-y border-line-invert bg-line-invert sm:grid-cols-2 md:mt-16 lg:grid-cols-4"
+      data-reveal-group
+    >
+      {
+        stats.map((stat) => (
+          <div data-reveal class="bg-paper-invert p-6">
+            <Icon name={stat.icon} class="h-5 w-5 text-accent" />
+
+            <dt class="mt-6 text-[0.9375rem] font-medium leading-snug text-ink-invert">
+              {stat.label}
+            </dt>
+
+            <dd class="mt-4">
+              <span class="flex items-baseline gap-0.5 text-5xl font-medium tracking-tight text-ink-invert">
+                {stat.value}
+                <span class="text-2xl">{stat.unit}</span>
+              </span>
+              <span class="mt-2 block text-[13px] text-ink-invert-soft">
+                {stat.of}
+              </span>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <p class="mt-6 text-right text-[12px] text-ink-invert-soft">
+      Svenskar 8 år och äldre, 2025. Källa:{" "}
+      <a
+        href={source.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1 text-ink-invert underline decoration-line-invert-strong underline-offset-4 transition-colors hover:decoration-accent"
+      >
+        {source.label}
+        <Icon name="arrow-up-right" class="h-3 w-3" />
+      </a>
+    </p>
+  </div>
+</section>

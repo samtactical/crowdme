@@ -1,0 +1,139 @@
+---
+/**
+ * Radardiagram, porterat från visx-komponenten.
+ *
+ * visx är React-renderare (<Group>, <LineRadial>, <Line>). Diagrammet
+ * här är statiskt, så all geometri räknas ut i frontmatter och skickas
+ * ut som vanlig SVG — ingen React, ingen runtime-JS, inget bibliotek.
+ * scaleLinear ersätts av en division; det är hela dess uppgift här.
+ *
+ * MEDVETET UTAN SIFFROR: inga axelvärden, inga procent, inga skalsteg.
+ * Crowdme har inga mätvärden att visa (AGENTS.md), så ytan får bära en
+ * form — inte ett påstått resultat. Namnen är generiska och panelen som
+ * innehåller diagrammet ska vara märkt "Illustration".
+ */
+interface Series {
+  id: string;
+  label: string;
+  /** Värden 0–1, ett per axel. Bara relativa, aldrig utskrivna. */
+  values: number[];
+  tone: "accent" | "warn";
+}
+
+interface Props {
+  series: Series[];
+  levels?: number;
+  class?: string;
+}
+
+const { series, levels = 4, class: className = "" } = Astro.props;
+
+const SIZE = 200;
+const C = SIZE / 2;
+const R = 90;
+
+const axes = series[0]?.values.length ?? 0;
+
+/** Index 0 rakt upp; y inverteras eftersom SVG räknar nedåt. */
+const point = (i: number, radius: number) => {
+  const a = (i / axes) * Math.PI * 2;
+  return {
+    x: C + radius * Math.sin(a),
+    y: C - radius * Math.cos(a),
+  };
+};
+
+const ring = (radius: number) =>
+  Array.from({ length: axes }, (_, i) => {
+    const p = point(i, radius);
+    return `${p.x.toFixed(2)},${p.y.toFixed(2)}`;
+  }).join(" ");
+
+const webs = Array.from({ length: levels }, (_, i) => ring(((i + 1) * R) / levels));
+const spokes = Array.from({ length: axes }, (_, i) => point(i, R));
+
+const shapes = series.map((s) => ({
+  ...s,
+  polygon: s.values
+    .map((v, i) => {
+      const p = point(i, Math.max(0, Math.min(1, v)) * R);
+      return `${p.x.toFixed(2)},${p.y.toFixed(2)}`;
+    })
+    .join(" "),
+  dots: s.values.map((v, i) => point(i, Math.max(0, Math.min(1, v)) * R)),
+  // Mot mörkgrönt bär limen den närvarande formen och den ljusa
+  // tegelröda den frånvarande — samma par som resten av sajten.
+  stroke: s.tone === "warn" ? "stroke-warn-invert" : "stroke-accent",
+  fill: s.tone === "warn" ? "fill-warn-invert/15" : "fill-accent/20",
+  dot: s.tone === "warn" ? "fill-warn-invert" : "fill-accent",
+  swatch: s.tone === "warn" ? "bg-warn-invert" : "bg-accent",
+}));
+---
+
+<div class={`flex h-full flex-col ${className}`}>
+  <div class="flex flex-1 items-center justify-center">
+    <svg
+      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      class="h-full max-h-[13rem] w-auto"
+      role="img"
+      aria-label={`Illustration: ${shapes
+        .map((s) => s.label)
+        .join(" jämfört med ")} över era köpfrågor. Schematisk, utan mätvärden.`}
+    >
+      {/* Nät och ekrar. non-scaling-stroke håller hårstrecken skarpa
+          när svg:n skalas ned i kortet. */}
+      {
+        webs.map((points) => (
+          <polygon
+            points={points}
+            fill="none"
+            class="stroke-line-invert"
+            stroke-width="1"
+            vector-effect="non-scaling-stroke"
+          />
+        ))
+      }
+      {
+        spokes.map((p) => (
+          <line
+            x1={C}
+            y1={C}
+            x2={p.x}
+            y2={p.y}
+            class="stroke-line-invert"
+            stroke-width="1"
+            vector-effect="non-scaling-stroke"
+          />
+        ))
+      }
+
+      {
+        shapes.map((s) => (
+          <polygon
+            points={s.polygon}
+            class={`${s.fill} ${s.stroke}`}
+            stroke-width="1.5"
+            stroke-linejoin="round"
+            vector-effect="non-scaling-stroke"
+          />
+        ))
+      }
+      {
+        shapes.map((s) =>
+          s.dots.map((p) => <circle cx={p.x} cy={p.y} r="3" class={s.dot} />),
+        )
+      }
+    </svg>
+  </div>
+
+  <ul class="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5">
+    {
+      shapes.map((s) => (
+        <li class="flex items-center gap-1.5 text-[11px] text-ink-invert-soft">
+          <span aria-hidden="true" class={`h-2 w-2 rounded-pill ${s.swatch}`} />
+          {s.label}
+        </li>
+      ))
+    }
+  </ul>
+</div>

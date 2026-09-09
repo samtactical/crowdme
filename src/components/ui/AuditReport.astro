@@ -1,0 +1,70 @@
+---
+import Icon from "../Icon.astro";
+
+/**
+ * Samma grepp som referensen: två lager, ett bakomliggande föremål och
+ * ett märkt dokument framför, avskuret av kortets underkant.
+ *
+ * Här är föremålet sajten som granskas och dokumentet granskningen.
+ * Domänen är en platshållare och punkterna beskriver vad vi tittar på —
+ * inga resultat, inga mätvärden.
+ */
+interface Props {
+  /** Vad granskningen tittar på. Håll dem korta, de ska rymmas på raden. */
+  checks: string[];
+  domain?: string;
+  title: string;
+}
+
+const { checks, domain = "ertforetag.se", title } = Astro.props;
+---
+
+<div class="audit" aria-hidden="true">
+  {/* Bakom: sajten som granskas */}
+  <div class="audit__window">
+    <div class="audit__chrome">
+      <span class="audit__dot"></span>
+      <span class="audit__dot"></span>
+      <span class="audit__dot"></span>
+      <span class="audit__url">{domain}</span>
+    </div>
+    <div class="audit__lines">
+      <span class="audit__line" style="width:82%"></span>
+      <span class="audit__line" style="width:64%"></span>
+      <span class="audit__line" style="width:73%"></span>
+    </div>
+  </div>
+
+  {/* Framför: granskningen, avskuren av underkanten */}
+  <div class="audit__report">
+    <p class="audit__brand">
+      <img
+        src="/logo/crowdme-icon-dark-green.webp"
+        alt=""
+        width="471"
+        height="516"
+        class="h-3 w-auto"
+      />
+      Crowdme
+    </p>
+    <p class="audit__title">{title}</p>
+    <ul class="audit__checks">
+      {
+        checks.map((check) => (
+          <li class="audit__check">
+            <span class="audit__tick">
+              <Icon name="check" weight="bold" class="h-2 w-2" />
+            </span>
+            {check}
+          </li>
+        ))
+      }
+    </ul>
+    {/* Antyder att listan fortsätter — och ger underkanten något att
+        skära av, som kuvertet i referensen. */}
+    <div class="audit__more">
+      <span class="audit__line" style="width:70%"></span>
+      <span class="audit__line" style="width:52%"></span>
+    </div>
+  </div>
+</div>

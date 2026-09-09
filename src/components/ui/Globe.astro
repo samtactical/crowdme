@@ -1,0 +1,357 @@
+---
+/**
+ * Cobe-globen, porterad från React till en Astro-ö.
+ *
+ * Varför inte React: projektet har ingen React-integration. Att lägga
+ * till @astrojs/react + react + react-dom för en dekorativ canvas hade
+ * skickat ~45 kB gzip till en sida som idag har 2,7 kB JS totalt.
+ * cobe är ramverksoberoende, så bara den kostar något här (~5 kB gzip).
+ * Propsen har samma namn och betydelse som i React-versionen, så en
+ * växling tillbaka är mekanisk.
+ *
+ * Etiketterna hänger INTE på CSS Anchor Positioning (bara Chromium).
+ * cobe lägger själv en 1x1-nod per markör i sin wrapper och flyttar den
+ * varje bildruta — vi hänger etiketten i den noden istället, vilket ger
+ * samma resultat i alla webbläsare utan en enda beräkning per ruta.
+ */
+export interface GlobeMarker {
+  id: string;
+  location: [number, number];
+  label: string;
+}
+
+interface Props {
+  markers: GlobeMarker[];
+  class?: string;
+  /** Startrotation. Väljs så att Sverige står mot betraktaren. */
+  phi?: number;
+  theta?: number;
+  /** Hur långt globen vaggar fram och tillbaka, i radianer. */
+  sway?: number;
+  markerSize?: number;
+  mapBrightness?: number;
+  diffuse?: number;
+  mapSamples?: number;
+  /** Zoom. >1 beskär globen som ett titthål mot kartan. */
+  scale?: number;
+  /** 0 = ljus glob, 1 = mörk. Styr cobes skuggsida. */
+  dark?: number;
+  mapBaseBrightness?: number;
+  /**
+   * Hur stor del av den kvadratiska canvasen som syns, uppifrån.
+   * 0.58 ger ungefär en halv glob som skärs av nedtill.
+   */
+  reveal?: number;
+  /** Färgerna läses ur tokenlagret vid körning, aldrig hårdkodade. */
+  baseToken?: string;
+  markerToken?: string;
+  glowToken?: string;
+  /** Millisekunder per sökfråga i slingan. */
+  cycleMs?: number;
+}
+
+const {
+  markers,
+  class: className = "",
+  phi = 3.9,
+  theta = 0.35,
+  sway = 0.32,
+  markerSize = 0.03,
+  mapBrightness = 4,
+  diffuse = 1.1,
+  mapSamples = 16000,
+  scale = 1,
+  dark = 0,
+  mapBaseBrightness = 0.1,
+  reveal = 0.58,
+  baseToken = "--color-brand-white",
+  markerToken = "--color-brand-green",
+  glowToken = "--color-brand-off-white",
+  cycleMs = 2600,
+} = Astro.props;
+
+const config = {
+  markers: markers.map((m) => ({ id: m.id, location: m.location })),
+  phi,
+  theta,
+  sway,
+  markerSize,
+  mapBrightness,
+  diffuse,
+  mapSamples,
+  scale,
+  dark,
+  mapBaseBrightness,
+  baseToken,
+  markerToken,
+  glowToken,
+  cycleMs,
+};
+---
+
+<div class={`globe ${className}`} data-globe data-globe-config={JSON.stringify(config)}>
+  <div class="globe__clip" style={`--globe-reveal:${reveal}`}>
+    <div class="globe__stage">
+      <canvas data-globe-canvas class="globe__canvas"></canvas>
+    </div>
+  </div>
+
+  {/*
+    Etiketterna renderas här och flyttas in i cobes markörnoder när
+    globen är igång. Ligger de kvar (ingen WebGL, ingen JS) är de dolda
+    och listan nedanför bär innehållet istället.
+  */}
+  <div hidden data-globe-labels>
+    {
+      markers.map((m) => (
+        <span
+          class="globe__label"
+          data-globe-label={m.id}
+          style={`--vis: var(--cobe-visible-${m.id}, 0)`}
+        >
+          {m.label}
+        </span>
+      ))
+    }
+  </div>
+
+  <ul class="globe__fallback" data-globe-fallback>
+    {
+      markers.map((m) => (
+        <li class="globe__chip">{m.label}</li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  import createGlobe from "cobe";
+
+  type Cfg = {
+    markers: { id: string; location: [number, number] }[];
+    phi: number;
+    theta: number;
+    sway: number;
+    markerSize: number;
+    mapBrightness: number;
+    diffuse: number;
+    mapSamples: number;
+    scale: number;
+    dark: number;
+    mapBaseBrightness: number;
+    baseToken: string;
+    markerToken: string;
+    glowToken: string;
+    cycleMs: number;
+  };
+
+  /** Färgerna kommer ur tokenlagret, aldrig ur den här filen. */
+  function token(name: string): [number, number, number] {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue(name)
+      .trim()
+      .replace("#", "");
+    if (raw.length !== 6) return [0, 0, 0];
+    return [
+      parseInt(raw.slice(0, 2), 16) / 255,
+      parseInt(raw.slice(2, 4), 16) / 255,
+      parseInt(raw.slice(4, 6), 16) / 255,
+    ];
+  }
+
+  function initGlobe(root: HTMLElement) {
+    const canvas = root.querySelector<HTMLCanvasElement>("[data-globe-canvas]");
+    const labelHost = root.querySelector<HTMLElement>("[data-globe-labels]");
+    if (!canvas || !labelHost) return;
+
+    const cfg: Cfg = JSON.parse(root.dataset.globeConfig ?? "{}");
+    if (!cfg.markers?.length) return;
+
+    // Ingen WebGL — behåll listan, rör inte canvasen.
+    const probe = document.createElement("canvas");
+    if (!probe.getContext("webgl") && !probe.getContext("experimental-webgl")) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const base = token(cfg.baseToken);
+    const marker = token(cfg.markerToken);
+    const glow = token(cfg.glowToken);
+
+    let globe: ReturnType<typeof createGlobe> | null = null;
+    let frame = 0;
+    let running = false;
+    let active = 0;
+    let cycleTimer = 0;
+
+    // Dragning
+    let pointerStart: { x: number; y: number } | null = null;
+    let dragPhi = 0;
+    let dragTheta = 0;
+    let heldPhi = 0;
+    let heldTheta = 0;
+
+    const start = performance.now();
+
+    function markerState() {
+      return cfg.markers.map((m, i) => ({
+        location: m.location,
+        // Den fråga som visas just nu får en större prick.
+        size: i === active ? cfg.markerSize * 1.9 : cfg.markerSize,
+        id: m.id,
+      }));
+    }
+
+    function render(now: number) {
+      if (!globe) return;
+      // Globen vaggar kring Sverige istället för att snurra runt —
+      // annars roterar landet ur bild och etiketterna tappar mening.
+      const drift = reduced ? 0 : Math.sin((now - start) * 0.00009) * cfg.sway;
+      globe.update({
+        phi: cfg.phi + drift + heldPhi + dragPhi,
+        theta: cfg.theta + heldTheta + dragTheta,
+        markers: markerState(),
+      });
+      frame = requestAnimationFrame(render);
+    }
+
+    function attachLabels() {
+      // cobe lägger en 1x1-nod per markör i sin wrapper, i markörernas
+      // ordning. Stämmer inte antalet hoppar vi över etiketterna hellre
+      // än att hänga dem på fel stad.
+      const wrapper = canvas.parentElement;
+      if (!wrapper) return false;
+      const anchors = Array.from(wrapper.children).filter(
+        (el) => el !== canvas,
+      ) as HTMLElement[];
+      if (anchors.length !== cfg.markers.length) return false;
+
+      labels = [];
+      cfg.markers.forEach((m, i) => {
+        const label = labelHost.querySelector<HTMLElement>(
+          `[data-globe-label="${m.id}"]`,
+        );
+        if (!label) return;
+        anchors[i].append(label);
+        labels.push(label);
+      });
+      labelHost.remove();
+      return labels.length === cfg.markers.length;
+    }
+
+    let labels: HTMLElement[] = [];
+
+    function setActive(i: number) {
+      active = i;
+      labels.forEach((el, n) => el.toggleAttribute("data-active", n === i));
+    }
+
+    function cycle() {
+      setActive((active + 1) % cfg.markers.length);
+      cycleTimer = window.setTimeout(cycle, cfg.cycleMs);
+    }
+
+    function boot() {
+      const width = canvas.offsetWidth;
+      if (!width || globe) return;
+
+      globe = createGlobe(canvas, {
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        width,
+        height: width,
+        phi: cfg.phi,
+        theta: cfg.theta,
+        dark: cfg.dark,
+        diffuse: cfg.diffuse,
+        mapSamples: cfg.mapSamples,
+        scale: cfg.scale,
+        mapBrightness: cfg.mapBrightness,
+        mapBaseBrightness: cfg.mapBaseBrightness,
+        baseColor: base,
+        markerColor: marker,
+        glowColor: glow,
+        markerElevation: 0.01,
+        markers: markerState(),
+        opacity: 1,
+      });
+
+      running = true;
+      frame = requestAnimationFrame(render);
+
+      // Första update:en måste ha kört innan markörnoderna finns.
+      requestAnimationFrame(() => {
+        if (!attachLabels()) return;
+        root.setAttribute("data-globe-ready", "");
+        setActive(0);
+        if (!reduced) cycleTimer = window.setTimeout(cycle, cfg.cycleMs);
+      });
+    }
+
+    if (canvas.offsetWidth > 0) {
+      boot();
+    } else {
+      const ro = new ResizeObserver((entries) => {
+        if ((entries[0]?.contentRect.width ?? 0) > 0) {
+          ro.disconnect();
+          boot();
+        }
+      });
+      ro.observe(canvas);
+    }
+
+    /* --- Dragning: samma känsla som React-versionen --- */
+    canvas.addEventListener("pointerdown", (e) => {
+      pointerStart = { x: e.clientX, y: e.clientY };
+      canvas.style.cursor = "grabbing";
+    });
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        if (!pointerStart) return;
+        dragPhi = (e.clientX - pointerStart.x) / 300;
+        dragTheta = Math.max(
+          -0.5,
+          Math.min(0.5, (e.clientY - pointerStart.y) / 1000),
+        );
+      },
+      { passive: true },
+    );
+    window.addEventListener(
+      "pointerup",
+      () => {
+        if (!pointerStart) return;
+        heldPhi += dragPhi;
+        heldTheta = Math.max(-0.45, Math.min(0.45, heldTheta + dragTheta));
+        dragPhi = 0;
+        dragTheta = 0;
+        pointerStart = null;
+        canvas.style.cursor = "grab";
+      },
+      { passive: true },
+    );
+
+    /* --- Utanför bild: sluta rita. En hero-canvas ska inte mala
+           medan någon läser resten av sidan. --- */
+    const vis = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !running && globe) {
+        running = true;
+        frame = requestAnimationFrame(render);
+      } else if (!entry.isIntersecting && running) {
+        running = false;
+        cancelAnimationFrame(frame);
+      }
+    });
+    vis.observe(root);
+
+    window.addEventListener(
+      "pagehide",
+      () => {
+        cancelAnimationFrame(frame);
+        clearTimeout(cycleTimer);
+        globe?.destroy();
+      },
+      { once: true },
+    );
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-globe]").forEach(initGlobe);
+</script>

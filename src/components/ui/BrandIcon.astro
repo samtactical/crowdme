@@ -1,0 +1,23 @@
+---
+import { brandIconBody, AI_SURFACES, type AiSurface } from "../../lib/brandIcons";
+
+interface Props {
+  name: AiSurface;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const body = brandIconBody(name);
+const { label } = AI_SURFACES[name];
+---
+
+<svg
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  fill-rule="evenodd"
+  class={className}
+  role="img"
+  aria-label={label}
+>
+  <Fragment set:html={body} />
+</svg>

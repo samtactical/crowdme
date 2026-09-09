@@ -1,0 +1,55 @@
+---
+/**
+ * Sektionsetikett: Crowdme-märket, texten i mening-case och en kort
+ * prickad linje under.
+ *
+ * Använder MEDVETET INTE .eyebrow-utilityn. Den är 10 px versaler och
+ * hör hemma på de små etiketterna inuti kort ("Ytor vi testar", "Varje
+ * månad", tabellrubriker). Sektionsetiketten är en annan sak — större,
+ * gemener, och den enda som bär märket. Att blanda ihop dem gör att
+ * märket upprepas tills det slutar betyda något.
+ */
+interface Props {
+  /** invert = mot mörkgrön botten, då bär märket limegrönt. */
+  tone?: "default" | "invert";
+  /** Den prickade linjen är ett vänsterställt grepp — stäng av den när
+   *  etiketten är centrerad. */
+  rule?: boolean;
+  align?: "start" | "center";
+  class?: string;
+}
+
+const {
+  tone = "default",
+  rule = true,
+  align = "start",
+  class: className = "",
+} = Astro.props;
+
+const mark =
+  tone === "invert"
+    ? "/logo/crowdme-icon-lime.webp"
+    : "/logo/crowdme-icon-dark-green.webp";
+---
+
+<div class={`${align === "center" ? "flex flex-col items-center" : ""} ${className}`}>
+  <p
+    class={`flex items-center gap-2.5 text-sm ${
+      tone === "invert" ? "text-ink-invert-soft" : "text-ink-soft"
+    }`}
+  >
+    <img src={mark} alt="" width="471" height="516" class="h-4 w-auto" />
+    <slot />
+  </p>
+
+  {
+    rule && (
+      <span
+        aria-hidden="true"
+        class={`mt-3 block w-full max-w-[22rem] ${
+          tone === "invert" ? "rule-dotted-invert" : "rule-dotted"
+        }`}
+      />
+    )
+  }
+</div>

@@ -1,59 +1,228 @@
 ---
-const items = [
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+import OrbitingLogos from "./ui/OrbitingLogos.astro";
+import RadarChart from "./ui/RadarChart.astro";
+import AuditReport from "./ui/AuditReport.astro";
+
+/**
+ * Bento enligt referensen: en tät rad om tre, sedan en högre rad om
+ * två. Copy uppe, grafik nere. Grafiken sitter på en tonad panel med
+ * vita element som flyter ovanpå — det är den layer-logiken som ger
+ * referensen sin karaktär.
+ *
+ * Panelernas ton bär betydelse, inte dekoration:
+ *   lime  = vad vi testar och vad ni får
+ *   green = vad vi hittar
+ *
+ * Grafik som namnger företag är märkt "Illustration" och använder
+ * generiska namn. Ingen av dem visar mätvärden.
+ */
+/**
+ * Bara AI-svarsytor får ligga här — se allowlisten i lib/brandIcons.ts.
+ * De står för "det här testar vi mot", aldrig för partnerskap eller kunder.
+ * 0deg är rakt upp; håll vinklarna inom ±70 så ikonerna inte skärs av.
+ */
+const orbits = [
   {
-    label: "Synlighetstest",
-    title: "Vi frågar modellerna om er",
-    body:
-      "Vi kör de köpfrågor era kunder faktiskt ställer genom ChatGPT, Perplexity, Gemini och Googles AI-svar — och dokumenterar om, hur och med vilka ord ni dyker upp.",
+    size: "orbit--inner",
+    icons: [
+      { name: "perplexity" as const, angle: -40 },
+      { name: "gemini" as const, angle: 40 },
+    ],
   },
   {
-    label: "Konkurrenter",
-    title: "Vilka nämns istället för er",
-    body:
-      "Ni får se vilka företag modellerna föreslår på era frågor, och vilka källor de lutar sig mot när de gör det.",
-  },
-  {
-    label: "Faktakoll",
-    title: "Vad AI:n tror om er — och vad den har fel om",
-    body:
-      "Föråldrade uppgifter, felaktiga tjänstebeskrivningar och sammanblandningar med andra bolag. Vi listar vad som behöver rättas.",
-  },
-  {
-    label: "Åtgärder",
-    title: "Tre konkreta saker att göra först",
-    body:
-      "Prioriterade åtgärder på er egen webbplats, formulerade så att de går att beställa av er byrå eller göra internt — även om ni aldrig anlitar oss.",
+    size: "orbit--outer",
+    icons: [
+      { name: "copilot" as const, angle: -62 },
+      { name: "chatgpt" as const, angle: 0 },
+      { name: "deepseek" as const, angle: 62 },
+    ],
   },
 ];
+
+/**
+ * Radarens två former: en konkurrent som täcker frågerymden, och ni som
+ * knappt syns i den. Värdena är 0–1 och skrivs aldrig ut — de finns bara
+ * för att ge formen. Namnen är generiska, panelen är märkt "Illustration".
+ */
+/** De fyra arbetsspåren. Beskriver arbetet, aldrig ett utfall. */
+const fixes = [
+  { icon: "article", label: "Omskrivna nyckelsidor" },
+  { icon: "brackets-curly", label: "Strukturerad data (schema)" },
+  { icon: "robot", label: "Tekniska hinder för AI-crawlare" },
+  { icon: "link-simple", label: "Externa omnämnanden" },
+];
+
+/** Det som rapporteras varje månad. Inga värden, bara vad som mäts. */
+const tracked = ["Synlighet", "Citeringsfrekvens", "Share of voice"];
+
+/** Vad granskningen tittar på. Beskriver arbetet, aldrig ett resultat. */
+const auditChecks = [
+  "Citerbara faktapåståenden",
+  "Struktur och rubriker",
+  "Teknik som blockerar läsning",
+];
+
+const coverage = [
+  {
+    id: "konkurrent",
+    label: "Konkurrent A",
+    tone: "accent" as const,
+    values: [0.86, 0.68, 0.9, 0.74, 0.8, 0.62],
+  },
+  {
+    id: "ni",
+    label: "Ert företag",
+    tone: "warn" as const,
+    values: [0.16, 0.3, 0.1, 0.22, 0.12, 0.26],
+  },
+];
+
 ---
 
 <section id="analysen" class="border-b border-line">
-  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
-    <div class="max-w-2xl">
-      <p class="font-mono text-xs uppercase tracking-widest text-ink-soft">
-        Den kostnadsfria analysen
-      </p>
-      <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-        Ni får veta exakt hur ni syns i AI-svar idag
-      </h2>
-      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+  <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
+    <div class="max-w-2xl" data-reveal-group>
+      <Eyebrow data-reveal>Steg 2 · Analysen</Eyebrow>
+      <h2 class="display-2 mt-8" data-reveal>Ni får veta exakt var ni står.</h2>
+      <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
         Ingen generell rapport ur ett verktyg. Vi tittar på ert företag, era
-        frågor och er bransch — och skickar tillbaka något ni kan agera på.
+        frågor och er bransch — och det är det vi går igenom när vi ses.
       </p>
     </div>
 
-    <div class="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2">
-      {
-        items.map((item) => (
-          <article class="bg-paper p-8">
-            <span class="inline-block bg-accent-soft px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-accent">
-              {item.label}
-            </span>
-            <h3 class="mt-5 text-xl font-semibold leading-snug">{item.title}</h3>
-            <p class="mt-3 leading-relaxed text-ink-soft">{item.body}</p>
-          </article>
-        ))
-      }
+    <div
+      class="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-16 lg:grid-cols-6"
+      data-reveal-group
+    >
+      {/*
+        Kortanatomin är vänd mot referensen: grafiken uppe, texten under.
+        Grafikzonerna ligger först i varje kort, så deras överkanter
+        hamnar automatiskt på samma linje oavsett hur lång texten är.
+      */}
+
+      {/* --- 1. Synlighetstest: en fråga fördelas ut på AI-ytorna --- */}
+      <article
+        data-reveal
+        class="card-soft flex flex-col overflow-hidden sm:col-span-2 lg:col-span-2"
+      >
+        <div class="relative min-h-[17.5rem] bg-lime-100">
+          <OrbitingLogos orbits={orbits} hub="er köpfråga" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-[1.0625rem] font-medium leading-snug">
+            Vi frågar modellerna om er
+          </h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+            Vi kör era köpfrågor genom de AI-ytor era kunder faktiskt
+            använder, och dokumenterar om och hur ni dyker upp.
+          </p>
+        </div>
+      </article>
+
+      {/* --- 2. Konkurrenter: vilka som ryms i svaret --- */}
+      <article
+        data-reveal
+        class="card-soft flex flex-col overflow-hidden sm:col-span-1 lg:col-span-2"
+      >
+        <div data-invert class="flex min-h-[17.5rem] flex-col bg-paper-invert p-5">
+          <RadarChart series={coverage} />
+        </div>
+        <div class="p-6">
+          <h3 class="text-[1.0625rem] font-medium leading-snug">
+            Vilka nämns istället för er
+          </h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+            Ni får se vilka företag modellerna föreslår på era frågor, och
+            vilka källor de lutar sig mot.
+          </p>
+        </div>
+      </article>
+
+      {/* --- 3. Granskningen: sajten som ska göra er citerbar --- */}
+      <article
+        data-reveal
+        class="card-soft flex flex-col overflow-hidden sm:col-span-1 lg:col-span-2"
+      >
+        <div class="relative min-h-[17.5rem] overflow-hidden bg-lime-100">
+          {/* Ytan visar ett påhittat granskningsdokument — den måste
+              förbli märkt någonstans även utan synlig etikett. */}
+          <p class="sr-only">
+            Illustration: exempel på hur granskningen levereras. Innehåller
+            inga verkliga resultat.
+          </p>
+          <AuditReport title="Teknisk granskning" checks={auditChecks} />
+        </div>
+        <div class="p-6">
+          <h3 class="text-[1.0625rem] font-medium leading-snug">
+            Teknisk granskning av er webbplats
+          </h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+            Vi går igenom sidorna som ska göra er citerbara: hur era fakta är
+            formulerade, hur innehållet är strukturerat och vad som hindrar
+            modellerna från att läsa er.
+          </p>
+        </div>
+      </article>
+
+      {/* --- 4. Åtgärder och uppföljning: bred, text till vänster --- */}
+      <article
+        data-reveal
+        class="card-soft overflow-hidden sm:col-span-2 lg:col-span-6"
+      >
+        <div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+          <div class="flex flex-col justify-center p-6 lg:p-8">
+            <h3 class="text-[1.0625rem] font-medium leading-snug">
+              Vi åtgärdar och följer upp
+            </h3>
+            <p class="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">
+              Vi skriver om nyckelsidor för att göra dem lätta att citera,
+              lägger till strukturerad data (schema), fixar tekniska hinder för
+              AI-crawlare, och arbetar med externa omnämnanden. Varje månad
+              rapporterar vi hur er synlighet, citeringsfrekvens och "share of
+              voice" utvecklas mot baseline.
+            </p>
+          </div>
+
+          <div class="bg-green-50 p-6 lg:p-8">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
+              <ul class="grid flex-1 gap-2 sm:grid-cols-2">
+                {
+                  fixes.map((fix) => (
+                    <li class="flex items-center gap-3 rounded-md bg-paper-card p-3 shadow-chip">
+                      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-lime-50 text-accent-ink">
+                        <Icon name={fix.icon} weight="light" class="h-[1.15rem] w-[1.15rem]" />
+                      </span>
+                      <span class="text-[13px] leading-snug">{fix.label}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+
+              <div class="rounded-md bg-paper-invert p-4 md:w-[15rem] md:shrink-0">
+                <p class="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.12em] text-ink-invert-soft">
+                  <Icon name="arrows-clockwise" class="h-3.5 w-3.5 text-accent" />
+                  Varje månad
+                </p>
+                <ul class="mt-3 border-t border-line-invert">
+                  {
+                    tracked.map((item) => (
+                      <li class="border-b border-line-invert py-2 text-[13px] text-ink-invert last:border-b-0">
+                        {item}
+                        <span class="mt-0.5 block text-[11px] text-ink-invert-soft">
+                          mot baseline
+                        </span>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>

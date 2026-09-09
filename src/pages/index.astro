@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
+import AiSearchStats from "../components/AiSearchStats.astro";
 import Problem from "../components/Problem.astro";
 import Analysis from "../components/Analysis.astro";
 import Comparison from "../components/Comparison.astro";
@@ -12,13 +13,14 @@ import Footer from "../components/Footer.astro";
 
 const title = "Crowdme — syns ditt företag i ChatGPT och AI-sökningar?";
 const description =
-  "Crowdme får svenska B2B-företag att synas och citeras i ChatGPT, Perplexity, Gemini och Googles AI-svar. Få en kostnadsfri analys av hur ni syns idag.";
+  "Crowdme får svenska B2B-företag att synas och citeras i ChatGPT, Perplexity, Gemini och Googles AI-svar. Boka ett möte om hur ni syns idag.";
 ---
 
 <Layout title={title} description={description}>
   <Header />
-  <main id="innehall">
+  <main id="innehall" class="w-full max-w-full">
     <Hero />
+    <AiSearchStats />
     <Problem />
     <Analysis />
     <Comparison />
@@ -28,3 +30,8 @@ const description =
   </main>
   <Footer />
 </Layout>
+
+<script>
+  import { initMotion } from "../scripts/motion";
+  initMotion();
+</script>

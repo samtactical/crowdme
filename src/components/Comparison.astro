@@ -1,60 +1,115 @@
 ---
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+
+/**
+ * Jämförelsematris. Raderna där klassisk SEO saknar bock är de som
+ * bär hela poängen, så de tonas — samma grepp som referensen.
+ *
+ * Det här är en beskrivning av två discipliners omfattning, inte en
+ * mätning: inga siffror, inga påståenden om resultat.
+ */
 const rows = [
-  {
-    aspect: "Resultatet",
-    seo: "En lista med tio länkar att välja bland",
-    aeo: "Ett svar med några få namn i",
-  },
-  {
-    aspect: "Det som belönas",
-    seo: "Nyckelord, länkar, teknisk prestanda",
-    aeo: "Tydliga, kontrollerbara påståenden som går att citera",
-  },
-  {
-    aspect: "Er roll",
-    seo: "Ni rankar med en sida",
-    aeo: "Ni nämns i ett resonemang, ofta utan klick",
-  },
-  {
-    aspect: "Mätpunkt",
-    seo: "Position och trafik",
-    aeo: "Andel svar där ni nämns, och hur ni beskrivs",
-  },
+  { label: "Sökordsarbete", seo: true },
+  { label: "Teknisk optimering", seo: true },
+  { label: "Placeringar i Google", seo: true },
+  { label: "Organisk söktrafik", seo: true },
+  { label: "Samtalande sökningar", seo: false },
+  { label: "AI-genererade svar", seo: false },
+  { label: "Utdrag i sökresultatet", seo: true },
+  { label: "Citeringar i AI-svar", seo: false },
+  { label: "Varumärkesomnämnanden", seo: true },
+  { label: "Entitetsoptimering", seo: false },
+  { label: "Auktoritet via länkar", seo: true },
+  { label: "Strukturerat innehåll", seo: true },
+  { label: "Svarsinriktat innehåll", seo: false },
+  { label: "Mätning av AI-synlighet", seo: false },
+  { label: "Optimering av klickfrekvens", seo: true },
+  { label: "Exponering utan klick", seo: false },
 ];
 ---
 
-<section class="border-b border-line">
-  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
-    <div class="max-w-2xl">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-        AI-sökning är inte SEO med nytt namn
+<section class="border-b border-line bg-paper-alt">
+  <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal-group>
+      <Eyebrow data-reveal>Skillnaden</Eyebrow>
+      <h2 class="display-2 mt-8" data-reveal>
+        Allt klassisk SEO gör.<br /><span class="text-ink-faint">Plus det som avgör i <span class="whitespace-nowrap">AI-svaren.</span></span>
       </h2>
-      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
-        Mycket av grundarbetet överlappar. Men det som avgör om ni hamnar i
-        svaret är något annat än det som avgör om ni rankar.
+      <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
+        Mycket av grundarbetet överlappar. Skillnaden ligger i vad som händer
+        när svaret formuleras av en modell i stället för av en resultatsida.
       </p>
     </div>
 
-    <div class="mt-12 overflow-x-auto">
-      <table class="w-full min-w-[40rem] border-collapse text-left">
+    <div class="card-soft overflow-hidden" data-reveal>
+      <table class="w-full border-collapse text-left">
+        <caption class="sr-only">
+          Jämförelse av vad klassisk SEO respektive arbete med synlighet i
+          AI-svar omfattar.
+        </caption>
         <thead>
-          <tr class="border-b border-line-strong">
-            <th class="py-4 pr-6 font-mono text-xs uppercase tracking-widest text-ink-soft">
-              <span class="sr-only">Aspekt</span>
+          <tr class="bg-paper-alt">
+            <th
+              scope="col"
+              class="eyebrow px-4 py-3.5 sm:px-6"
+            >
+              Funktion
             </th>
-            <th class="py-4 pr-6 text-base font-semibold">Klassisk SEO</th>
-            <th class="py-4 text-base font-semibold text-accent">Synlighet i AI-svar</th>
+            <th
+              scope="col"
+              class="eyebrow w-[6rem] px-2 py-3.5 text-center sm:w-[8.5rem]"
+            >
+              Klassisk SEO
+            </th>
+            <th
+              scope="col"
+              class="eyebrow w-[6rem] px-2 py-3.5 text-center text-accent-ink sm:w-[8.5rem]"
+            >
+              AI-synlighet
+            </th>
           </tr>
         </thead>
         <tbody>
           {
-            rows.map((r) => (
-              <tr class="border-b border-line align-top">
-                <th scope="row" class="w-40 py-5 pr-6 font-mono text-xs uppercase tracking-wider font-normal text-ink-soft">
-                  {r.aspect}
+            rows.map((row) => (
+              <tr
+                class={`border-t border-line ${row.seo ? "" : "bg-lime-50"}`}
+              >
+                <th
+                  scope="row"
+                  class="px-4 py-3 text-[13px] font-normal leading-snug sm:px-6 sm:text-sm"
+                >
+                  {row.label}
                 </th>
-                <td class="py-5 pr-6 text-ink-soft">{r.seo}</td>
-                <td class="py-5 font-medium">{r.aeo}</td>
+                <td class="px-2 py-3 text-center">
+                  {row.seo ? (
+                    <>
+                      <Icon
+                        name="check"
+                        weight="bold"
+                        class="mx-auto h-4 w-4 text-accent-ink"
+                      />
+                      <span class="sr-only">Ingår</span>
+                    </>
+                  ) : (
+                    <>
+                      <span
+                        aria-hidden="true"
+                        class="mx-auto block h-px w-3 bg-ink-faint"
+                      />
+                      <span class="sr-only">Ingår inte</span>
+                    </>
+                  )}
+                </td>
+                <td class="px-2 py-3 text-center">
+                  <Icon
+                    name="check"
+                    weight="bold"
+                    class="mx-auto h-4 w-4 text-accent-ink"
+                  />
+                  <span class="sr-only">Ingår</span>
+                </td>
               </tr>
             ))
           }

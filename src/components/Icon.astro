@@ -1,0 +1,30 @@
+---
+import { phosphorBody, type PhosphorWeight } from "../lib/phosphor";
+
+interface Props {
+  /** Phosphor-namn i kebab-case, t.ex. "arrow-up-right" */
+  name: string;
+  weight?: PhosphorWeight;
+  class?: string;
+  /**
+   * Sätt bara när ikonen bär betydelse på egen hand. Utan label
+   * döljs den för skärmläsare, vilket är rätt för dekor och för
+   * ikoner som sitter bredvid en text som redan säger samma sak.
+   */
+  label?: string;
+}
+
+const { name, weight = "regular", class: className, label } = Astro.props;
+const body = phosphorBody(name, weight);
+---
+
+<svg
+  viewBox="0 0 256 256"
+  fill="currentColor"
+  class={className}
+  role={label ? "img" : undefined}
+  aria-hidden={label ? undefined : "true"}
+>
+  {label && <title>{label}</title>}
+  <Fragment set:html={body} />
+</svg>

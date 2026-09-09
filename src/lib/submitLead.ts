@@ -16,6 +16,12 @@ export interface Lead {
  * bestämt var leads ska landa. Formuläret (LeadForm.astro) gör
  * inget annat än att anropa den här funktionen.
  *
+ * Alternativ 0 — Bokningsverktyg (Cal.com, Calendly, Tally):
+ *   Formuläret bokar ett möte. Vill ni att besökaren väljer tid direkt
+ *   i stället för att vi återkommer med förslag, är det här den enda
+ *   plats som behöver bytas — antingen POSTa hit och boka via API, eller
+ *   ersätt formuläret med verktygets inbäddning.
+ *
  * Alternativ 1 — Formspree / Tally / Web3Forms (ingen backend):
  *   const res = await fetch("https://formspree.io/f/DITT_ID", {
  *     method: "POST",

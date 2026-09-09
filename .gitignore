@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# tredjeparts-skills installerade via `npx skills add` — återskapas från skills-lock.json
+.agents/
+.claude/skills/

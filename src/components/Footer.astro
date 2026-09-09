@@ -1,35 +1,71 @@
 ---
 const year = new Date().getFullYear();
+
+const columns = [
+  {
+    heading: "Sidan",
+    links: [
+      { href: "#problemet", label: "Problemet" },
+      { href: "#ai-sokningen", label: "AI-sökningen" },
+      { href: "#analysen", label: "Analysen" },
+      { href: "#sa-gar-det-till", label: "Så går det till" },
+    ],
+  },
+  {
+    heading: "Kom igång",
+    links: [
+      { href: "#boka", label: "Boka möte" },
+      { href: "#fragor", label: "Vanliga frågor" },
+      { href: "mailto:hej@crowdme.se", label: "hej@crowdme.se" },
+    ],
+  },
+  {
+    heading: "Juridik",
+    links: [{ href: "/integritetspolicy", label: "Integritetspolicy" }],
+  },
+];
 ---
 
-<footer class="bg-paper-invert text-ink-invert">
-  <div class="mx-auto max-w-6xl px-6 py-16">
-    <div class="flex flex-col gap-10 border-b border-ink-invert/20 pb-10 md:flex-row md:items-end md:justify-between">
-      <div class="max-w-md">
-        <p class="text-xl font-bold tracking-tight">Crowdme<span class="text-accent">.</span></p>
-        <p class="mt-4 leading-relaxed text-ink-invert/70">
-          Vi hjälper svenska B2B-företag att synas när kunderna frågar AI istället
-          för att googla.
+<footer class="border-t border-line bg-paper">
+  <div class="mx-auto max-w-page px-4 py-16 sm:px-6 md:py-20">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)] md:gap-8">
+      <div class="max-w-xs">
+        <img
+          src="/logo/crowdme-logomark-dark-green.webp"
+          alt="Crowdme"
+          width="2650"
+          height="516"
+          class="h-6 w-auto"
+        />
+        <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+          Vi hjälper svenska B2B-företag att bli nämnda när kunderna frågar AI
+          istället för att googla.
         </p>
       </div>
-      <a
-        href="#analys"
-        class="inline-flex w-fit items-center justify-center bg-ink-invert px-6 py-3.5 font-semibold text-ink transition-opacity hover:opacity-90"
-      >
-        Få gratis analys
-      </a>
+
+      {
+        columns.map((column) => (
+          <nav aria-label={column.heading}>
+            <p class="eyebrow">{column.heading}</p>
+            <ul class="mt-4 space-y-2.5">
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-ink-soft transition-colors hover:text-ink"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
     </div>
 
-    <div class="mt-8 flex flex-col gap-4 text-sm text-ink-invert/60 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-14 flex flex-col gap-3 border-t border-line pt-6 text-[12px] text-ink-soft sm:flex-row sm:items-center sm:justify-between">
       <p>&copy; {year} Crowdme</p>
-      <nav aria-label="Sidfotsmeny" class="flex gap-6">
-        <a class="transition-colors hover:text-ink-invert" href="/integritetspolicy">
-          Integritetspolicy
-        </a>
-        <a class="transition-colors hover:text-ink-invert" href="mailto:hej@crowdme.se">
-          hej@crowdme.se
-        </a>
-      </nav>
     </div>
   </div>
 </footer>

@@ -1,45 +1,106 @@
 ---
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+
+/**
+ * Korten följer referensstilen: ikon uppe, stort andrum, rubrik,
+ * text, och en cirkulär pilknapp nere till vänster. Det sista kortet
+ * är framhävt med limton och en stor rundad hörnradie.
+ *
+ * Varje kort länkar till den sektion som svarar på just den frågan —
+ * pilen ska betyda något, inte bara vara dekor.
+ */
 const points = [
   {
-    n: "01",
+    icon: "chat-centered-text",
     title: "Köparen ser ett svar, inte en resultatsida",
     body:
       "I ett AI-svar finns ingen sida två. Modellen väljer ut ett fåtal företag och motiverar varför. Är ni inte med i urvalet är ni inte med i upphandlingen.",
+    href: "#ai-sokningen",
+    linkLabel: "Se hur många svenskar som redan frågar AI",
+    feature: false,
   },
   {
-    n: "02",
+    icon: "text-aa",
     title: "AI:n läser er sajt annorlunda än Google",
     body:
       "Språkmodeller plockar upp konkreta, tydligt formulerade fakta: vad ni gör, för vem, var, till vilket pris. Snygg men vag marknadsföringstext ger dem ingenting att citera.",
+    href: "#analysen",
+    linkLabel: "Se vad analysen går igenom",
+    feature: false,
   },
   {
-    n: "03",
+    icon: "warning-circle",
     title: "Det som sägs om er kan vara fel",
     body:
       "Modellerna svarar även när underlaget är tunt. Då fylls luckorna med gammal information, sammanblandningar eller konkurrenters beskrivningar.",
+    href: "#boka",
+    linkLabel: "Boka ett möte om er synlighet",
+    feature: true,
   },
 ];
 ---
 
-<section id="problemet" class="border-b border-line bg-paper-alt">
-  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
-    <div class="max-w-2xl">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-        Sökningen har flyttat. SEO-arbetet har inte hängt med.
+<section id="problemet" class="border-b border-line">
+  <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
+    <div class="max-w-2xl" data-reveal-group>
+      <Eyebrow data-reveal>Steg 1 · Vet var ni står</Eyebrow>
+      <h2 class="display-2 mt-8" data-reveal>
+        Sökningen har flyttat.<br /><span class="text-ink-faint">SEO-arbetet har inte hängt med.</span>
       </h2>
-      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+      <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
         Att ranka högt på Google betyder inte längre automatiskt att ni nämns
         när någon ställer samma fråga till en AI. Det är två olika spelplaner.
       </p>
     </div>
 
-    <div class="mt-14 grid gap-px border border-line bg-line sm:grid-cols-3">
+    <div class="mt-12 grid gap-3 md:mt-16 md:grid-cols-3" data-reveal-group>
       {
         points.map((p) => (
-          <article class="bg-paper p-7">
-            <span class="font-mono text-xs tracking-widest text-accent">{p.n}</span>
-            <h3 class="mt-4 text-lg font-semibold leading-snug">{p.title}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink-soft">{p.body}</p>
+          <article
+            data-reveal
+            class={`group relative flex flex-col p-6 transition-shadow duration-300 sm:p-7 ${
+              p.feature
+                ? "rounded-md rounded-tr-[4.5rem] border border-transparent bg-lime-200"
+                : "card-soft hover:shadow-hover"
+            }`}
+          >
+            <Icon
+              name={p.icon}
+              weight="light"
+              class={`h-8 w-8 ${p.feature ? "text-accent-ink" : "text-ink"}`}
+            />
+
+            <div class="mt-14">
+              <h3
+                class={`text-[1.0625rem] font-medium leading-snug ${
+                  p.feature ? "text-accent-ink" : ""
+                }`}
+              >
+                {p.title}
+              </h3>
+              <p
+                class={`mt-3 text-sm leading-relaxed ${
+                  p.feature ? "text-ink-on-tint" : "text-ink-soft"
+                }`}
+              >
+                {p.body}
+              </p>
+            </div>
+
+
+            {/* Pilen är länken. after:inset-0 gör hela kortet klickbart. */}
+            <a
+              href={p.href}
+              class={`mt-8 grid h-10 w-10 place-items-center rounded-pill transition-colors duration-300 after:absolute after:inset-0 after:content-[''] ${
+                p.feature
+                  ? "bg-accent-ink text-accent hover:bg-green-600"
+                  : "border border-line-strong text-ink group-hover:bg-solid group-hover:text-ink-invert"
+              }`}
+            >
+              <Icon name="arrow-up-right" class="h-4 w-4" />
+              <span class="sr-only">{p.linkLabel}</span>
+            </a>
           </article>
         ))
       }

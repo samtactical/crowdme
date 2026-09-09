@@ -1,12 +1,15 @@
 ---
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+
 const faqs = [
   {
-    q: "Kostar analysen verkligen ingenting?",
-    a: "Ja. Ni får resultatet och åtgärdsförslagen oavsett om ni väljer att jobba vidare med oss. Vi gör den för att det är det bästa sättet att visa vad vi kan.",
+    q: "Vad kostar ett första möte?",
+    a: "Ingenting. Vi bokar det för att se om vi passar er — och ni oss. Ni får våra tankar om er synlighet oavsett om ni väljer att gå vidare.",
   },
   {
-    q: "Vilka AI-tjänster testar ni?",
-    a: "ChatGPT, Perplexity, Google Gemini och Googles AI-svar i sökresultatet. Vilka som är mest relevanta beror på er bransch och era köpare.",
+    q: "Vilka AI-tjänster tittar ni på?",
+    a: "ChatGPT, Perplexity, Google Gemini, Microsoft Copilot, DeepSeek och Googles AI-svar i sökresultatet. Vilka som är mest relevanta beror på er bransch och era köpare.",
   },
   {
     q: "Behöver vi byta webbplats?",
@@ -22,29 +25,36 @@ const faqs = [
   },
   {
     q: "Vad gör ni med våra uppgifter?",
-    a: "Vi använder dem bara för att göra analysen och kontakta er om den. Inga uppgifter säljs vidare, och ni kan när som helst be oss radera dem.",
+    a: "Vi använder dem bara för att boka och förbereda mötet, och för att kontakta er om det. Inga uppgifter säljs vidare, och ni kan när som helst be oss radera dem.",
   },
 ];
 ---
 
 <section id="fragor" class="border-b border-line bg-paper-alt">
-  <div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-[0.8fr_1.2fr] lg:py-24">
-    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Vanliga frågor</h2>
+  <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
+    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal-group>
+      <Eyebrow data-reveal>Vanliga frågor</Eyebrow>
+      <h2 class="display-2 mt-8" data-reveal>Det ni brukar undra.</h2>
+      <p class="mt-6 max-w-xs text-sm leading-relaxed text-ink-soft" data-reveal>
+        Hittar ni inte svaret här går det bra att fråga i formuläret — vi svarar
+        innan ni bestämmer er.
+      </p>
+    </div>
 
-    <div class="divide-y divide-line border-y border-line">
+    <div class="card-soft divide-y divide-line px-6" data-reveal-group>
       {
         faqs.map((f) => (
-          <details class="group">
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium marker:hidden">
+          <details data-reveal class="group">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-base font-medium transition-colors marker:hidden hover:text-ink-soft">
               {f.q}
               <span
                 aria-hidden="true"
-                class="shrink-0 font-mono text-xl leading-none text-accent transition-transform group-open:rotate-45"
+                class="grid h-6 w-6 shrink-0 place-items-center rounded-sm bg-lime-50 text-ink-soft transition-transform duration-300 ease-out group-open:rotate-45"
               >
-                +
+                <Icon name="plus" weight="bold" class="h-3 w-3" />
               </span>
             </summary>
-            <p class="pb-6 pr-10 leading-relaxed text-ink-soft">{f.a}</p>
+            <p class="max-w-2xl pb-6 text-sm leading-relaxed text-ink-soft">{f.a}</p>
           </details>
         ))
       }
