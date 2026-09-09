@@ -486,6 +486,43 @@ Marks come from `@lobehub/icons-static-svg`, inlined at build time like the
 Phosphor icons — monochrome `currentColor`, no external requests, no runtime
 cost. Note that `simple-icons` no longer carries the OpenAI mark.
 
+### Rotating headline
+
+The hero H1 is "Bli företaget som syns i" followed by one AI surface that
+changes every 2.2 s, and the matching mark in the surface row below lights up
+with it.
+
+- **The word gets its own line.** Inline, the line would recentre on every
+  change and drag "Bli företaget som syns i" sideways with it. On its own line
+  nothing else on the page moves.
+- **All words are in the markup, stacked in one grid cell**
+  (`grid-area: 1 / 1`). The cell is therefore already as wide and as tall as the
+  widest word, so a change animates `opacity`, `translate` and `filter` only —
+  compositor properties, never layout. There is no width measurement and no
+  reflow.
+- **The outgoing word needs `data-leaving`.** Its resting state sits *below* the
+  cell, so without the flag it falls back down while the incoming word rises,
+  and both appear to move the same way. `data-leaving` flips it upward for the
+  360 ms it is fading.
+- **Nothing depends on JS to be readable.**
+  `.rotator:not([data-ready]) .rotator__word:first-child` shows the first word;
+  JS adds `data-ready` and takes over. A failed bundle leaves a complete
+  sentence, same rule as scroll-reveal (§6).
+- **The H1 is aria-hidden where it rotates**, with the full list as `sr-only`
+  text after it. A heading whose text changes under a screen reader is a
+  genuine problem; a heading that reads "…syns i ChatGPT, Perplexity, Google
+  Gemini … och Mistral Le Chat" is not.
+- **`prefers-reduced-motion` stops the rotation entirely** — not just the
+  transition. The headline holds the first word, which is a complete sentence.
+- **The timer stops when it is not being watched**: an IntersectionObserver on
+  the rotator plus `visibilitychange`. An animation nobody can see should not
+  hold a timer open.
+
+**Lit state costs nothing in layout.** Padding and radius sit on *every* row of
+the surface list, not just the lit one; only `background-color` and `color`
+change. Put the padding on `[data-lit]` instead and the whole row jumps every
+2.2 s.
+
 ### Surface row
 
 Sits directly under the hero's two CTAs: the eleven AI answer surfaces, each as

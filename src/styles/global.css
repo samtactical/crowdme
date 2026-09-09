@@ -1021,3 +1021,75 @@
     transition-duration: 0.01ms;
   }
 }
+
+/* ============================================================
+   ROTERANDE ORD I HERO (src/components/Hero.astro)
+   Orden ligger staplade i samma rutnätscell. Cellen får därmed
+   den bredaste ytans mått en gång för alla, och ingenting
+   flyttar sig när ordet byts — bara opacity och translate
+   ändras, vilket aldrig utlöser layout.
+   ============================================================ */
+.rotator {
+  display: grid;
+  justify-items: center;
+  color: var(--color-accent-ink);
+}
+.rotator__word {
+  grid-area: 1 / 1;
+  opacity: 0;
+  translate: 0 0.32em;
+  filter: blur(6px);
+  transition:
+    opacity 0.34s ease,
+    translate 0.34s ease,
+    filter 0.34s ease;
+}
+/* Utan JS syns det första ordet. En utebliven bundle får inte
+   lämna rubriken tom (samma regel som scroll-reveal). */
+.rotator:not([data-ready]) .rotator__word:first-child,
+.rotator[data-ready] .rotator__word[data-active] {
+  opacity: 1;
+  translate: 0 0;
+  filter: blur(0);
+}
+/* Ordet på väg ut lämnar uppåt, inte nedåt — annars ser de två
+   orden ut att röra sig åt samma håll. */
+.rotator[data-ready] .rotator__word[data-leaving] {
+  translate: 0 -0.32em;
+}
+
+/* AI-ytan i raden under lyser när rubriken står på den. Vaddering
+   och radie ligger på ALLA rader, annars hoppar raden när en av
+   dem tänds. */
+.surface {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.5rem;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--color-ink-soft);
+  transition:
+    background-color 0.34s ease,
+    color 0.34s ease;
+}
+.surface svg {
+  color: var(--color-ink-faint);
+  transition: color 0.34s ease;
+}
+.surface[data-lit] {
+  background-color: var(--color-lime-100);
+  color: var(--color-accent-ink);
+}
+.surface[data-lit] svg {
+  color: var(--color-accent-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotator__word,
+  .surface,
+  .surface svg {
+    transition-duration: 0.01ms;
+  }
+}

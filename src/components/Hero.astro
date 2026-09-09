@@ -2,7 +2,12 @@
 import Globe from "./ui/Globe.astro";
 import Eyebrow from "./ui/Eyebrow.astro";
 import BrandIcon from "./ui/BrandIcon.astro";
-import { AI_SURFACE_ORDER, surfaceLabel } from "../lib/brandIcons";
+import {
+  AI_SURFACE_ORDER,
+  AI_SURFACES,
+  surfaceLabel,
+  type AiSurface,
+} from "../lib/brandIcons";
 
 /**
  * Illustration, inte mätning: exempel på hur svenska köpare formulerar
@@ -27,6 +32,28 @@ const searches = [
  */
 const surfaces = AI_SURFACE_ORDER;
 
+/**
+ * Orden som roterar i rubriken. Nycklarna är desamma som i raden
+ * nedanför, så att rubriken kan tända rätt logotyp utan någon
+ * separat mappning. Google AI Overviews, AI Mode och Meta AI ingår
+ * inte — de ligger kvar i raden men tänds aldrig. Se README.
+ */
+const rotation: AiSurface[] = [
+  "chatgpt",
+  "perplexity",
+  "gemini",
+  "copilot",
+  "claude",
+  "grok",
+  "deepseek",
+  "lechat",
+];
+
+/** Det skärmläsare och sökmotorer får i stället för det ord som
+ *  roterar: hela listan, med svenskt "och" före det sista namnet. */
+const names = rotation.map((name) => AI_SURFACES[name].label);
+const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
+
 ---
 
 <section data-hero class="border-b border-line">
@@ -37,8 +64,25 @@ const surfaces = AI_SURFACE_ORDER;
     <div class="text-center" data-reveal>
       <Eyebrow align="center" rule={false}>AI-synlighet för svensk B2B</Eyebrow>
 
-      <h1 class="display-1 mt-5 md:whitespace-nowrap">
-        Bli företaget AI:n nämner.
+      <h1 class="display-1 mt-5 text-balance">
+        <span class="block">Bli företaget som syns i</span>
+
+        {/* Orden är aria-hidden och hela listan ligger i klartext
+            efter dem — annars läser en skärmläsare upp en rubrik
+            som byter innehåll under fötterna på den. */}
+        <span class="rotator mt-1.5" data-rotator aria-hidden="true">
+          {rotation.map((name, i) => (
+            <span
+              class="rotator__word"
+              data-word={name}
+              data-active={i === 0 ? "" : undefined}
+            >
+              {surfaceLabel(name, "short")}
+            </span>
+          ))}
+        </span>
+
+        <span class="sr-only">{srList}.</span>
       </h1>
 
       <p class="mx-auto mt-6 max-w-[34rem] text-lg leading-relaxed text-ink-soft">
@@ -63,14 +107,14 @@ const surfaces = AI_SURFACE_ORDER;
 
       <div class="mt-10 flex flex-col items-center md:mt-12">
         <p class="sr-only">Ytorna vi mäter er synlighet i</p>
-        <ul class="flex w-full max-w-[38rem] flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-6">
+        <ul class="flex w-full max-w-[41rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 sm:gap-x-3">
           {
             surfaces.map((name) => (
-              <li class="flex items-center gap-2 text-[13px] leading-none text-ink-soft">
+              <li class="surface" data-surface={name}>
                 <BrandIcon
                   name={name}
                   decorative
-                  class="h-[1.05rem] w-[1.05rem] shrink-0 text-ink-faint"
+                  class="h-[1.05rem] w-[1.05rem] shrink-0"
                 />
                 {surfaceLabel(name, "short")}
               </li>
@@ -102,3 +146,86 @@ const surfaces = AI_SURFACE_ORDER;
   </div>
 
 </section>
+
+<script>
+  /**
+   * Roterande ord i rubriken, plus tändningen av motsvarande logotyp
+   * i raden under.
+   *
+   * Kostnaden är medvetet nära noll: orden ligger redan i markupen,
+   * och varje varv byter bara ett attribut. Övergången animerar
+   * opacity, translate och blur — allt tre kompositoregenskaper, så
+   * ingen layout räknas om. Rotationen pausas när fliken är dold
+   * eller rubriken har rullat ur bild; en osynlig animation ska inte
+   * hålla igång en timer.
+   *
+   * prefers-reduced-motion stänger av bytet helt. Rubriken står då
+   * kvar på det första ordet, vilket är en fullständig mening — och
+   * hela listan finns ändå i den sr-only-text som ligger efter.
+   */
+  const rotator = document.querySelector<HTMLElement>("[data-rotator]");
+
+  if (rotator) {
+    const words = Array.from(
+      rotator.querySelectorAll<HTMLElement>(".rotator__word"),
+    );
+    const lamps = new Map(
+      Array.from(document.querySelectorAll<HTMLElement>("[data-surface]")).map(
+        (el) => [el.dataset.surface ?? "", el],
+      ),
+    );
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const lamp = (i: number) => lamps.get(words[i]?.dataset.word ?? "");
+
+    let index = 0;
+    let timer = 0;
+    let inView = true;
+
+    lamp(0)?.setAttribute("data-lit", "");
+
+    function advance() {
+      const leaving = words[index];
+      leaving.removeAttribute("data-active");
+      /* Det utgående ordet ska lämna uppåt. Utan den här flaggan
+         faller det tillbaka mot sitt viloläge nedanför, och båda
+         orden ser ut att röra sig åt samma håll. */
+      leaving.setAttribute("data-leaving", "");
+      window.setTimeout(() => leaving.removeAttribute("data-leaving"), 360);
+      lamp(index)?.removeAttribute("data-lit");
+
+      index = (index + 1) % words.length;
+      words[index].setAttribute("data-active", "");
+      lamp(index)?.setAttribute("data-lit", "");
+    }
+
+    function sync() {
+      const run = inView && !document.hidden && !reduced.matches;
+      if (run && !timer) timer = window.setInterval(advance, 2200);
+      if (!run && timer) {
+        window.clearInterval(timer);
+        timer = 0;
+      }
+    }
+
+    if (!reduced.matches) rotator.setAttribute("data-ready", "");
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(
+        ([entry]) => {
+          inView = entry.isIntersecting;
+          sync();
+        },
+        { threshold: 0 },
+      ).observe(rotator);
+    }
+
+    document.addEventListener("visibilitychange", sync);
+    reduced.addEventListener("change", () => {
+      rotator.toggleAttribute("data-ready", !reduced.matches);
+      sync();
+    });
+
+    sync();
+  }
+</script>

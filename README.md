@@ -90,6 +90,17 @@ sida är det ett medvetet val att göra — säg till om de ska översättas.
 er. Resten av regeln — inga kunder, case, testimonials eller påhittade
 mätvärden — gäller fortfarande.
 
+## Tre ytor i raden tänds aldrig
+
+Rubriken roterar mellan åtta AI-ytor — ChatGPT, Perplexity, Gemini, Copilot,
+Claude, Grok, DeepSeek och Mistral Le Chat — och tänder motsvarande logotyp i
+raden under. Raden innehåller elva. Google AI Overviews, Google AI Mode och
+Meta AI står med men tänds aldrig, vilket kan läsas som att de inte ingår.
+
+Antingen läggs de tre till i `rotation` i `Hero.astro` (ett varv blir då 24 s i
+stället för 18 s), eller så får de stå kvar som de gör. Byt inte lista utan att
+FAQ:n och `AI_SURFACES` fortsätter säga samma sak.
+
 ## Menyn lovar en sida som inte finns
 
 `Header.astro` har en "Om oss"-post med `href="#"` — den beställdes med
