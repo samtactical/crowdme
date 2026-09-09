@@ -492,6 +492,12 @@ The hero H1 is "Bli företaget som syns i" followed by one AI surface that
 changes every 2.2 s, and the matching mark in the surface row below lights up
 with it.
 
+- **It rotates through `AI_SURFACE_ORDER` itself**, not a hand-written list, so
+  the headline and the row can never name different surfaces. Walking them in
+  the same order also makes the lit mark travel left to right instead of
+  jumping around. The row can shorten a name because the mark says who made it;
+  the headline has no mark, so it prints the full label — "Google AI Overviews",
+  not "AI Overviews".
 - **The word gets its own line.** Inline, the line would recentre on every
   change and drag "Bli företaget som syns i" sideways with it. On its own line
   nothing else on the page moves.
@@ -518,6 +524,13 @@ with it.
   the rotator plus `visibilitychange`. An animation nobody can see should not
   hold a timer open.
 
+**Colour: `--color-accent-ink-bright`, not `accent-ink`.** The brand dark green
+is 15:1 against cream and reads as black next to the rest of the heading, which
+defeats the point. The bright variant is a lighter green at 5.7:1 — clearly a
+different colour, still AA as body text. Lime is not an option here: it is a
+fill, never text on a light ground, and a headline-sized lime pill is the "large
+lime fill against paper" that §2 rules out.
+
 **Lit state costs nothing in layout.** Padding and radius sit on *every* row of
 the surface list, not just the lit one; only `background-color` and `color`
 change. Put the padding on `[data-lit]` instead and the whole row jumps every
@@ -525,12 +538,12 @@ change. Put the padding on `[data-lit]` instead and the whole row jumps every
 
 ### Surface row
 
-Sits directly under the hero's two CTAs: the eleven AI answer surfaces, each as
+Sits directly under the hero's two CTAs: the ten AI answer surfaces, each as
 a monochrome mark with its name beside it.
 
 - **The caption is `sr-only`, not gone.** "Ytorna vi mäter er synlighet i" was
   removed from the visible design at the owner's request; it stays in the markup
-  because it is what makes eleven logos a scope statement rather than the logo
+  because it is what makes ten logos a scope statement rather than the logo
   wall `AGENTS.md` bans. Keep it there, and never reword it into anything that
   could read as partnership, endorsement or clientele. The row itself must also
   never be moved next to copy about customers or results — with no visible
@@ -557,7 +570,7 @@ a monochrome mark with its name beside it.
   to fit-content and overflows.
 
 Colour is deliberately flat: marks in `ink-faint`, labels in `ink-soft`. The
-colour variants exist in the package and are wrong here — eleven brand palettes
+colour variants exist in the package and are wrong here — ten brand palettes
 under the headline would out-shout the hero.
 
 ### Feature card

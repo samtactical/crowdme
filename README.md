@@ -90,17 +90,6 @@ sida är det ett medvetet val att göra — säg till om de ska översättas.
 er. Resten av regeln — inga kunder, case, testimonials eller påhittade
 mätvärden — gäller fortfarande.
 
-## Tre ytor i raden tänds aldrig
-
-Rubriken roterar mellan åtta AI-ytor — ChatGPT, Perplexity, Gemini, Copilot,
-Claude, Grok, DeepSeek och Mistral Le Chat — och tänder motsvarande logotyp i
-raden under. Raden innehåller elva. Google AI Overviews, Google AI Mode och
-Meta AI står med men tänds aldrig, vilket kan läsas som att de inte ingår.
-
-Antingen läggs de tre till i `rotation` i `Hero.astro` (ett varv blir då 24 s i
-stället för 18 s), eller så får de stå kvar som de gör. Byt inte lista utan att
-FAQ:n och `AI_SURFACES` fortsätter säga samma sak.
-
 ## Menyn lovar en sida som inte finns
 
 `Header.astro` har en "Om oss"-post med `href="#"` — den beställdes med
@@ -126,10 +115,12 @@ justera:
 - Bokningen frågar bara efter webbplats, namn och mejl. Steg 2 (mål, bransch,
   fritext) är helt valfritt — inget där får bli obligatoriskt utan att
   konverteringen mäts först.
-- Listan över AI-tjänster: elva ytor i hero-raden (`Hero.astro`), samma elva
-  i FAQ, fem som grafik i `Analysis.astro`. Listan växte från sex till elva
-  på ägarens begäran — den utlovar att vi faktiskt tittar i alla elva.
-  Krymper omfattningen måste `AI_SURFACES`, hero-raden och FAQ ändras ihop.
+- Listan över AI-tjänster: tio ytor, definierade en gång i `AI_SURFACES`.
+  Hero-raden, det roterande ordet i rubriken och FAQ läser alla ur den
+  listan, så de kan inte glida isär; `Analysis.astro` visar fem av dem som
+  grafik. Listan gick från sex till elva och sedan till tio på ägarens
+  begäran (Meta AI togs bort). Den utlovar att vi faktiskt tittar i alla
+  tio — ändra `AI_SURFACES`, inte kopian.
 
 ## Konverteringsmålet är ett bokat möte
 

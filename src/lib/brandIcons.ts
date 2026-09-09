@@ -30,7 +30,6 @@ export const AI_SURFACES = {
   grok: { file: "grok", label: "Grok" },
   deepseek: { file: "deepseek", label: "DeepSeek" },
   lechat: { file: "mistral", label: "Mistral Le Chat" },
-  metaai: { file: "metaai", label: "Meta AI" },
 } as const;
 
 export type AiSurface = keyof typeof AI_SURFACES;

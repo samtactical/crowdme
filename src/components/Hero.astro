@@ -27,31 +27,25 @@ const searches = [
 /**
  * AI-ytorna under knapparna. Raden säger vad vi mäter i — inte vem vi
  * samarbetar med och inte vilka som är kunder. Håll rubriken över raden
- * explicit; utan den blir elva logotyper en logotypvägg, och sådana är
+ * explicit; utan den blir tio logotyper en logotypvägg, och sådana är
  * förbjudna (AGENTS.md).
  */
 const surfaces = AI_SURFACE_ORDER;
 
 /**
- * Orden som roterar i rubriken. Nycklarna är desamma som i raden
- * nedanför, så att rubriken kan tända rätt logotyp utan någon
- * separat mappning. Google AI Overviews, AI Mode och Meta AI ingår
- * inte — de ligger kvar i raden men tänds aldrig. Se README.
+ * Rubriken roterar genom exakt samma lista, i samma ordning, som
+ * raden under den. Det är därför den tända logotypen vandrar snyggt
+ * från vänster till höger — och det gör att de två inte kan glida
+ * isär. Lägg inte en egen ordning här.
+ *
+ * I raden bär märket avsändaren, så där räcker "AI Overviews". I
+ * rubriken finns inget märke, och då måste hela namnet stå ut.
  */
-const rotation: AiSurface[] = [
-  "chatgpt",
-  "perplexity",
-  "gemini",
-  "copilot",
-  "claude",
-  "grok",
-  "deepseek",
-  "lechat",
-];
-
-/** Det skärmläsare och sökmotorer får i stället för det ord som
- *  roterar: hela listan, med svenskt "och" före det sista namnet. */
+const rotation: AiSurface[] = AI_SURFACE_ORDER;
 const names = rotation.map((name) => AI_SURFACES[name].label);
+
+/** Det skärmläsare och sökmotorer får i stället för det roterande
+ *  ordet: hela listan, med svenskt "och" före det sista namnet. */
 const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
 
 ---
@@ -77,7 +71,7 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
               data-word={name}
               data-active={i === 0 ? "" : undefined}
             >
-              {surfaceLabel(name, "short")}
+              {AI_SURFACES[name].label}
             </span>
           ))}
         </span>
@@ -107,7 +101,7 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
 
       <div class="mt-10 flex flex-col items-center md:mt-12">
         <p class="sr-only">Ytorna vi mäter er synlighet i</p>
-        <ul class="flex w-full max-w-[41rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 sm:gap-x-3">
+        <ul class="flex w-full max-w-[34rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 sm:gap-x-3">
           {
             surfaces.map((name) => (
               <li class="surface" data-surface={name}>

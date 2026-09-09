@@ -57,6 +57,11 @@
   /* Text ovanpå lime, och accentfärg för text på ljus yta. */
   --color-accent-ink: var(--color-brand-green);
   --color-accent-soft: var(--color-lime-100);
+  /* Ljusare syskon till accent-ink. Finns för det roterande ordet i
+     hero, som ska skilja sig från den svarta rubriken utan att bryta
+     limregeln — lime bär aldrig text på ljus botten. 5.70:1 mot
+     paper, 5.25:1 mot paper-alt, så den klarar AA även som brödtext. */
+  --color-accent-ink-bright: #2a6b62;
 
   /* --- Signalfärg: "nämns inte". Lika sparsam som limen.
          Egen variant för mörkgrön botten där den mörka
@@ -1032,7 +1037,7 @@
 .rotator {
   display: grid;
   justify-items: center;
-  color: var(--color-accent-ink);
+  color: var(--color-accent-ink-bright);
 }
 .rotator__word {
   grid-area: 1 / 1;
