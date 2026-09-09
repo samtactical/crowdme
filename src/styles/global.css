@@ -38,7 +38,9 @@
 
   /* --- Text --- */
   --color-ink: var(--color-brand-black);
-  --color-ink-soft: #6a6e6b;
+  /* Måste klara AA mot BÅDE paper (#f6f5f0) och paper-alt (#edece4).
+     6a6e6b gav 4.37:1 mot den tonade bottnen — under gränsen. */
+  --color-ink-soft: #666a67;
   --color-ink-faint: #858883;
   --color-ink-invert: var(--color-brand-white);
   --color-ink-invert-soft: #9aaba7;

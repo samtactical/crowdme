@@ -14,8 +14,19 @@ Core principles:
 2. **Medium weight, never bold.** Headings are `font-weight: 500` with tight negative tracking. There is essentially no bold display type.
 3. **One accent, used sparingly.** `#D6E07F` appears in a handful of places sitewide — status, the "citerad" state, the dark-section CTA. Never as a large filled CTA on light backgrounds, and never as text on light backgrounds.
 4. **Data as decoration.** Tables, sparklines, percentage deltas, and prompt rows *are* the hero imagery.
-5. **Alternating light/dark rhythm.** Off-white section → dark green section → off-white section, creating narrative chapters ("Step 1 · Know where you stand", "Why AI search matters").
-6. **Micro-motion, not animation.** Sub-pixel bobbing, blinking cursors, marquees, dash-flow strokes, ping dots. Nothing bounces or slides in aggressively.
+5. **No two adjacent sections share a ground.** Off-white → tinted →
+   off-white between the dark chapters, so every section boundary is visible
+   without needing a rule. Two consecutive sections on the same ground read
+   as one long section, and the `border-line` hairline is far too faint to
+   separate them on its own. **And ground alone is not enough** — a pair that
+   also shares a layout and a material (heading left, big white card right)
+   still reads as one. Vary at least two of the three.
+
+   `--color-ink-soft` clears AA on the tinted ground as well (4.64:1); check
+   any new body colour against **both** grounds, not just paper.
+
+6. **Alternating light/dark rhythm.** Off-white section → dark green section → off-white section, creating narrative chapters ("Step 1 · Know where you stand", "Why AI search matters").
+7. **Micro-motion, not animation.** Sub-pixel bobbing, blinking cursors, marquees, dash-flow strokes, ping dots. Nothing bounces or slides in aggressively.
 
 ---
 

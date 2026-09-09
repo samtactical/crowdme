@@ -32,7 +32,7 @@ const faqs = [
 
 <section id="fragor" class="border-b border-line bg-paper-alt">
   <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
-    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal-group>
+    <div data-reveal-group>
       <Eyebrow data-reveal>Vanliga frågor</Eyebrow>
       <h2 class="display-2 mt-8" data-reveal>Det ni brukar undra.</h2>
       <p class="mt-6 max-w-xs text-sm leading-relaxed text-ink-soft" data-reveal>
@@ -41,7 +41,7 @@ const faqs = [
       </p>
     </div>
 
-    <div class="card-soft divide-y divide-line px-6" data-reveal-group>
+    <div class="divide-y divide-line-strong border-y border-line-strong" data-reveal-group>
       {
         faqs.map((f) => (
           <details data-reveal class="group">
@@ -49,7 +49,7 @@ const faqs = [
               {f.q}
               <span
                 aria-hidden="true"
-                class="grid h-6 w-6 shrink-0 place-items-center rounded-sm bg-lime-50 text-ink-soft transition-transform duration-300 ease-out group-open:rotate-45"
+                class="grid h-6 w-6 shrink-0 place-items-center rounded-sm bg-paper-card text-ink-soft transition-transform duration-300 ease-out group-open:rotate-45"
               >
                 <Icon name="plus" weight="bold" class="h-3 w-3" />
               </span>
