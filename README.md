@@ -1,7 +1,7 @@
 # Crowdme — landningssida
 
 Astro 7 + Tailwind 4. Statisk sida på svenska med ett mål: få besökaren att
-fylla i formuläret för en kostnadsfri AI-synlighetsanalys.
+boka ett möte. Startsidan säljer mötet; själva bokningen sker på `/boka`.
 
 ```bash
 npm run dev      # http://localhost:4321
@@ -21,13 +21,13 @@ src/
     Problem.astro             varför AI-sökning skiljer sig
     Analysis.astro            vad den gratis analysen innehåller
     Comparison.astro          klassisk SEO vs synlighet i AI-svar
-    HowItWorks.astro          tre steg (anthracite-kapitel)
-    LeadForm.astro            konverteringsformuläret
+    BookingCta.astro          avslutande CTA -> /boka (mörkgrönt kapitel)
     Faq.astro                 sex frågor
     Footer.astro
   components/ui/                interaktiva primitiver (ej sektioner)
     Icon.astro                Phosphor-ikoner, inlinade vid bygget
     Globe.astro               cobe-globen i hero, med fallback
+    MultiStepForm.astro       bokningen i tre steg
     OrbitingLogos.astro       AI-ytorna i omloppsbanor (statisk)
     RadarChart.astro          täckningsdiagram, ren SVG utan siffror
     AuditReport.astro         granskningen som föremål, avskuren nedtill
@@ -38,6 +38,7 @@ src/
   scripts/motion.ts           ← scroll-reveal (IntersectionObserver)
 public/logo/                  logotyper i fyra färgvarianter (webp, alfa)
   pages/index.astro
+  pages/boka.astro            bokningssidan, minimal header
   pages/integritetspolicy.astro   UTKAST, noindex, innehåller [FYLL I]
   styles/global.css           ← alla designtokens
 DESIGN.md                     ← designsystemet, källan för allt ovan
@@ -76,7 +77,7 @@ justera:
 - "Ni får våra tankar om er synlighet oavsett om ni väljer att gå vidare" (FAQ)
 - "Vi återkommer med tider som passar" (formuläret) — förutsätter att någon
   faktiskt gör det, eller att ett bokningsverktyg kopplas in
-- "Vi sätter oss in i er bransch och era köpfrågor innan vi ses" (Steg 3)
+- "Vi tittar på hur den syns i AI-svar innan vi ses" (steg 1 i bokningen)
 - Listan över AI-tjänster i FAQ och logotyperna i `Analysis.astro`
 
 ## Konverteringsmålet är ett bokat möte
@@ -87,9 +88,13 @@ gratisanalysen marknadsförs inte alls — den görs som förberedelse inför m�
 och nämns ingenstans i copyn. Uppdatera `AGENTS.md` innan nästa person läser
 den, annars optimeras sidan tillbaka mot fel mål.
 
-Formuläret ligger kvar på `src/lib/submitLead.ts`. Ankaret heter numera
-`#boka` (tidigare `#analys`), vilket också löste den gamla förväxlingsrisken
-mot `#analysen`.
+Startsidan har ingen formulärsektion längre. Alla CTA:er pekar på `/boka`,
+där `MultiStepForm.astro` tar bokningen i tre steg. Backend-sömmen är
+oförändrad: `src/lib/submitLead.ts`.
+
+Sektionerna "Så går det till" och "Kom igång" är borttagna från startsidan
+och ersatta av `BookingCta.astro`. Stegnumreringen i etiketterna är därför
+bara 1 och 2 — den avslutande sektionen heter "Nästa steg".
 
 ## Statistiken i `AiSearchStats.astro`
 

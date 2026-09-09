@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import MultiStepForm from "../components/ui/MultiStepForm.astro";
+
+const title = "Boka ett möte — Crowdme";
+const description =
+  "Boka ett kostnadsfritt möte om hur ert företag syns i ChatGPT, Perplexity, Gemini och Googles AI-svar. Tre steg, under två minuter.";
+---
+
+<Layout title={title} description={description}>
+  <Header minimal={true} />
+
+  <main id="innehall" class="mx-auto max-w-page px-4 pb-24 pt-32 sm:px-6 md:pt-40">
+    <div class="mx-auto mb-10 max-w-xl text-center">
+      <h1 class="display-2">Boka ett möte.</h1>
+      <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+        Vi går igenom hur ni syns när era köpare frågar en AI — och vad ni kan
+        göra åt det.
+      </p>
+    </div>
+
+    <MultiStepForm />
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto flex max-w-page flex-col gap-3 px-4 py-8 text-[12px] text-ink-soft sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <p>&copy; {new Date().getFullYear()} Crowdme</p>
+      <nav aria-label="Sidfotsmeny" class="flex flex-wrap gap-6">
+        <a class="transition-colors hover:text-ink" href="/">Startsidan</a>
+        <a class="transition-colors hover:text-ink" href="/integritetspolicy">Integritetspolicy</a>
+        <a class="transition-colors hover:text-ink" href="mailto:hej@crowdme.se">hej@crowdme.se</a>
+      </nav>
+    </div>
+  </footer>
+</Layout>

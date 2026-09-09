@@ -723,3 +723,89 @@
     transition: none;
   }
 }
+
+/* ============================================================
+   FLERSTEGSFORMULÄR (src/components/ui/MultiStepForm.astro)
+   Stegen ligger i samma grid-cell så höjden sätts av det längsta
+   och kortet inte hoppar när man klickar vidare.
+   ============================================================ */
+.steps {
+  display: grid;
+  /* Utan start sträcks varje panel till radens höjd, och då mäter
+     JS det längsta steget oavsett vilket som är aktivt. */
+  align-items: start;
+  overflow: hidden;
+  /* Höjden sätts av JS till aktivt steg, annars låser grid-cellen
+     kortet vid det längsta steget och korta steg får ett tomrum. */
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.step {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(1.5rem, 0, 0);
+  transition:
+    opacity 0.3s cubic-bezier(0, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0, 0, 0.2, 1),
+    visibility 0s linear 0.3s;
+}
+.step[data-active] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s, 0s, 0s;
+}
+/* Bakåt: kommer in från andra hållet. */
+.steps[data-dir="back"] .step:not([data-active]) {
+  transform: translate3d(-1.5rem, 0, 0);
+}
+
+.step-rail {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-line-strong);
+  overflow: hidden;
+}
+.step-rail__fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent-ink);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.step-dot {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-line-strong);
+  background-color: var(--color-paper-card);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--color-ink-faint);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+.step-dot[data-state="current"] {
+  border-color: var(--color-accent-ink);
+  background-color: var(--color-accent-ink);
+  color: var(--color-ink-invert);
+}
+.step-dot[data-state="done"] {
+  border-color: transparent;
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .steps,
+  .step,
+  .step-rail__fill,
+  .step-dot {
+    transition: none;
+  }
+}

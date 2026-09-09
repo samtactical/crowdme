@@ -1,9 +1,15 @@
 ---
+interface Props {
+  /** Bokningssidan visar bara ordbilden — inga vägar bort från flödet. */
+  minimal?: boolean;
+}
+
+const { minimal = false } = Astro.props;
+
 const nav = [
   { href: "#problemet", label: "Problemet" },
   { href: "#ai-sokningen", label: "AI-sökningen" },
   { href: "#analysen", label: "Analysen" },
-  { href: "#sa-gar-det-till", label: "Så går det till" },
 ];
 ---
 
@@ -22,6 +28,7 @@ const nav = [
       />
     </a>
 
+    {!minimal && (
     <nav aria-label="Huvudmeny" class="hidden items-center gap-7 lg:flex">
       {
         nav.map((item) => (
@@ -34,7 +41,9 @@ const nav = [
         ))
       }
     </nav>
+    )}
 
+    {!minimal && (
     <div class="flex shrink-0 items-center gap-2">
       <a
         href="#fragor"
@@ -43,11 +52,12 @@ const nav = [
         Vanliga frågor
       </a>
       <a
-        href="#boka"
+        href="/boka"
         class="inline-flex items-center rounded-md bg-solid px-5 py-2 text-sm font-medium text-ink-invert transition-colors hover:bg-solid-hover"
       >
         Boka möte
       </a>
     </div>
+    )}
   </div>
 </header>

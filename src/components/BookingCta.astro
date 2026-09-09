@@ -1,0 +1,35 @@
+---
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+---
+
+<section data-invert id="kom-igang" class="bg-paper-invert text-ink-invert">
+  <div class="mx-auto max-w-page px-4 py-24 sm:px-6 md:py-32">
+    <div class="max-w-2xl" data-reveal-group>
+      <Eyebrow tone="invert" data-reveal>Nästa steg</Eyebrow>
+
+      <h2 class="display-2 mt-8 text-ink-invert" data-reveal>
+        Boka ett möte.<br />
+        <span class="text-ink-invert-soft">Det tar två minuter.</span>
+      </h2>
+
+      <p class="mt-6 text-lg leading-relaxed text-ink-invert-soft" data-reveal>
+        Tre korta steg: vilken sajt det gäller, vad era köpare frågar om, och
+        var vi når er. Vi återkommer med tider.
+      </p>
+
+      <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center" data-reveal>
+        <a
+          href="/boka"
+          class="inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3.5 text-sm font-medium text-accent-ink transition-opacity hover:opacity-90"
+        >
+          Kom igång
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+        <span class="text-[13px] text-ink-invert-soft">
+          Kostnadsfritt och utan förpliktelser.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,474 @@
+---
+import Icon from "../Icon.astro";
+
+/**
+ * Bokningsformuläret i tre steg, porterat från en React-komponent.
+ *
+ * Ingen React: flerstegslogik är tillståndshantering, och paketen som
+ * originalet lutar sig mot (framer-motion, radix, lucide, shadcn) hade
+ * kostat ~120 kB gzip för en sida vars enda jobb är att ta emot fyra
+ * fält. Rörelsen ligger i CSS, ikonerna är Phosphor, fälten återanvänder
+ * .field-stilarna från engångsformuläret.
+ *
+ * Ordningen är medveten: lättaste frågan först (er webbplats), kontakt
+ * sist. Steg 2 är helt valfritt — den som vill bara boka klickar förbi.
+ */
+const branscher = [
+  "SaaS / mjukvara",
+  "Konsult / byrå",
+  "Industri / tillverkning",
+  "Bygg / fastighet",
+  "Ekonomi / juridik",
+  "Rekrytering / bemanning",
+  "E-handel / handel",
+  "Vård / hälsa",
+  "Annat",
+];
+
+const steps = [
+  { id: "foretaget", label: "Ert företag" },
+  { id: "kopare", label: "Era köpare" },
+  { id: "kontakt", label: "Kontakt" },
+];
+
+const labelClass = "block text-[13px] font-medium";
+const hintClass =
+  "mt-1 block text-[12px] font-normal leading-relaxed text-ink-soft";
+---
+
+<div class="mx-auto w-full max-w-xl" data-wizard>
+  {/* Framsteg */}
+  <div class="mb-8">
+    <ol class="mb-3 flex items-center justify-between gap-2">
+      {
+        steps.map((step, i) => (
+          <li class="flex items-center gap-2.5">
+            <span class="step-dot" data-dot={i} data-state={i === 0 ? "current" : undefined}>
+              <span data-dot-num>{i + 1}</span>
+              <span class="hidden" data-dot-check>
+                <Icon name="check" weight="bold" class="h-3 w-3" />
+              </span>
+            </span>
+            <span
+              class="hidden text-[13px] text-ink-soft sm:block"
+              data-dot-label={i}
+            >
+              {step.label}
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="step-rail">
+      <div class="step-rail__fill" data-rail style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="card-soft p-6 sm:p-8">
+    <form id="boka-form" novalidate>
+      {/* Honeypot: dolt för människor, lockande för bottar */}
+      <div class="absolute -left-[9999px]" aria-hidden="true">
+        <label for="boka-org">Organisation</label>
+        <input id="boka-org" name="organisation" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="steps" data-steps>
+        {/* --- 1 --- */}
+        <section class="step" data-step="0" data-active>
+          <h2 class="display-3">Vilken sajt gäller det?</h2>
+          <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+            Vi tittar på hur den syns i AI-svar innan vi ses.
+          </p>
+
+          <div class="mt-6 space-y-5">
+            <div class="field">
+              <label class={labelClass} for="webbplats">Er webbplats</label>
+              <input
+                class="field__input mt-1.5"
+                id="webbplats"
+                name="webbplats"
+                type="text"
+                inputmode="url"
+                placeholder="exempel.se"
+                autocomplete="url"
+                aria-describedby="webbplats-fel"
+              />
+              <span class="field__tick" aria-hidden="true">
+                <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+              </span>
+              <p class="field__error" id="webbplats-fel"></p>
+            </div>
+
+            <div class="field">
+              <label class={labelClass} for="foretag">
+                Företagsnamn
+                <span class={hintClass}>Valfritt — vi hittar det oftast själva.</span>
+              </label>
+              <input class="field__input mt-1.5" id="foretag" name="foretag" type="text" autocomplete="organization" />
+            </div>
+          </div>
+        </section>
+
+        {/* --- 2 --- */}
+        <section class="step" data-step="1">
+          <h2 class="display-3">Vad frågar era köpare om?</h2>
+          <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+            Allt här är valfritt. Ju mer vi vet, desto mer hinner vi
+            förbereda — men hoppa gärna vidare.
+          </p>
+
+          <div class="mt-6 space-y-5">
+            <div class="field">
+              <label class={labelClass} for="bransch">Bransch</label>
+              <select class="field__input mt-1.5" id="bransch" name="bransch">
+                <option value="">Välj bransch</option>
+                {branscher.map((b) => <option value={b}>{b}</option>)}
+              </select>
+            </div>
+
+            <div class="field field--area">
+              <label class={labelClass} for="fragor">
+                Vad söker era kunder på?
+                <span class={hintClass}>
+                  T.ex. "bästa lönesystemet för mindre tillverkande bolag".
+                </span>
+              </label>
+              <textarea class="field__input mt-1.5" id="fragor" name="fragor" rows="3"></textarea>
+            </div>
+
+            <div class="field field--area">
+              <label class={labelClass} for="konkurrenter">
+                Konkurrenter att jämföra med
+              </label>
+              <input class="field__input mt-1.5" id="konkurrenter" name="konkurrenter" type="text" />
+            </div>
+          </div>
+        </section>
+
+        {/* --- 3 --- */}
+        <section class="step" data-step="2">
+          <h2 class="display-3">Var når vi dig?</h2>
+          <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+            Vi återkommer med förslag på tider. Inget säljmöte som villkor.
+          </p>
+
+          <div class="mt-6 space-y-5">
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="field">
+                <label class={labelClass} for="namn">Ditt namn</label>
+                <input
+                  class="field__input mt-1.5"
+                  id="namn"
+                  name="namn"
+                  type="text"
+                  autocomplete="name"
+                  aria-describedby="namn-fel"
+                />
+                <span class="field__tick" aria-hidden="true">
+                  <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+                </span>
+                <p class="field__error" id="namn-fel"></p>
+              </div>
+
+              <div class="field">
+                <label class={labelClass} for="epost">Jobbmejl</label>
+                <input
+                  class="field__input mt-1.5"
+                  id="epost"
+                  name="epost"
+                  type="email"
+                  autocomplete="email"
+                  aria-describedby="epost-fel"
+                />
+                <span class="field__tick" aria-hidden="true">
+                  <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+                </span>
+                <p class="field__error" id="epost-fel"></p>
+              </div>
+            </div>
+
+            <div class="field" data-consent>
+              <div class="flex gap-2.5">
+                <input
+                  id="samtycke"
+                  name="samtycke"
+                  type="checkbox"
+                  class="mt-0.5 h-4 w-4 shrink-0 rounded-sm accent-[var(--color-accent-ink)]"
+                  aria-describedby="samtycke-fel"
+                />
+                <label for="samtycke" class="text-[13px] leading-relaxed text-ink-soft">
+                  Jag godkänner att Crowdme sparar uppgifterna för att boka
+                  mötet och kontakta mig om det.
+                </label>
+              </div>
+              <p class="field__error ml-[1.625rem]" id="samtycke-fel"></p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <p
+        id="boka-error"
+        role="alert"
+        hidden
+        class="mt-6 rounded-md border border-warn/30 bg-warn-soft px-3.5 py-2.5 text-[13px] text-warn"
+      >
+      </p>
+
+      <div class="mt-8 flex items-center justify-between gap-3 border-t border-line pt-6">
+        <button
+          type="button"
+          data-back
+          hidden
+          class="inline-flex items-center gap-1.5 rounded-md border border-line-strong px-4 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-alt hover:text-ink"
+        >
+          <Icon name="caret-left" class="h-3.5 w-3.5" />
+          Tillbaka
+        </button>
+        <span data-back-spacer></span>
+
+        <button
+          type="submit"
+          data-next
+          class="inline-flex items-center gap-1.5 rounded-md bg-solid px-5 py-2.5 text-sm font-medium text-ink-invert transition-colors hover:bg-solid-hover disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <span data-next-label>Nästa</span>
+          <Icon name="caret-right" class="h-3.5 w-3.5" data-next-icon />
+        </button>
+      </div>
+    </form>
+
+    {/* Tackläge */}
+    <div id="boka-success" hidden class="py-10 text-center">
+      <span
+        class="mx-auto grid h-10 w-10 place-items-center rounded-pill bg-accent text-accent-ink"
+        aria-hidden="true"
+      >
+        <Icon name="check" weight="bold" class="h-5 w-5" />
+      </span>
+      <h2 class="display-3 mt-5">Tack! Vi hör av oss.</h2>
+      <p class="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ink-soft">
+        Vi återkommer till adressen du angav med förslag på tider. Passar
+        ingen av dem går det bra att svara direkt på det mejlet.
+      </p>
+      <a
+        href="/"
+        class="mt-8 inline-flex items-center gap-1.5 rounded-md border border-line-strong px-5 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-alt hover:text-ink"
+      >
+        <Icon name="caret-left" class="h-3.5 w-3.5" />
+        Tillbaka till startsidan
+      </a>
+    </div>
+  </div>
+
+  <p class="mt-4 text-center text-[13px] text-ink-soft" data-counter>
+    Steg 1 av {steps.length}
+  </p>
+</div>
+
+<script>
+  import { submitLead, type Lead } from "../../lib/submitLead";
+
+  type Rule = { test: (v: string) => boolean; message: string };
+
+  /** Vilka fält som måste vara ifyllda för att lämna respektive steg. */
+  const rulesByStep: Record<number, Record<string, Rule>> = {
+    0: {
+      webbplats: {
+        test: (v) => /^[^\s]+\.[^\s]{2,}$/.test(v.trim().replace(/^https?:\/\//, "")),
+        message: "Skriv adressen till er sajt, t.ex. exempel.se",
+      },
+    },
+    1: {},
+    2: {
+      namn: { test: (v) => v.trim().length >= 2, message: "Skriv ditt namn." },
+      epost: {
+        test: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
+        message: "Kontrollera mejladressen.",
+      },
+    },
+  };
+
+  const root = document.querySelector<HTMLElement>("[data-wizard]");
+  const form = document.querySelector<HTMLFormElement>("#boka-form");
+  const success = document.querySelector<HTMLElement>("#boka-success");
+  const errorBox = document.querySelector<HTMLElement>("#boka-error");
+
+  if (root && form && success && errorBox) {
+    const stepsWrap = root.querySelector<HTMLElement>("[data-steps]")!;
+    const panels = Array.from(root.querySelectorAll<HTMLElement>(".step"));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>("[data-dot]"));
+    const rail = root.querySelector<HTMLElement>("[data-rail]")!;
+    const counter = root.querySelector<HTMLElement>("[data-counter]")!;
+    const backBtn = root.querySelector<HTMLButtonElement>("[data-back]")!;
+    const nextBtn = root.querySelector<HTMLButtonElement>("[data-next]")!;
+    const nextLabel = root.querySelector<HTMLElement>("[data-next-label]")!;
+    const nextIcon = root.querySelector<SVGElement>("[data-next-icon]")!;
+    const consent = root.querySelector<HTMLElement>("[data-consent]")!;
+    const consentBox = root.querySelector<HTMLInputElement>("#samtycke")!;
+
+    const last = panels.length - 1;
+    let current = 0;
+    const touched = new Set<string>();
+
+    function paint(input: HTMLInputElement, rule: Rule, show: boolean) {
+      const wrap = input.closest<HTMLElement>(".field");
+      if (!wrap) return true;
+      const valid = rule.test(input.value);
+      const message = wrap.querySelector<HTMLElement>(".field__error");
+
+      if (valid) {
+        wrap.dataset.state = "ok";
+        input.removeAttribute("aria-invalid");
+      } else if (show) {
+        wrap.dataset.state = "error";
+        input.setAttribute("aria-invalid", "true");
+        if (message) message.textContent = rule.message;
+      } else {
+        delete wrap.dataset.state;
+        input.removeAttribute("aria-invalid");
+      }
+      return valid;
+    }
+
+    // Bocken kvitterar direkt, felet först när fältet lämnats.
+    Object.values(rulesByStep).forEach((rules) => {
+      Object.entries(rules).forEach(([name, rule]) => {
+        const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+        if (!input) return;
+        input.addEventListener("input", () => paint(input, rule, touched.has(name)));
+        input.addEventListener("blur", () => {
+          touched.add(name);
+          paint(input, rule, true);
+        });
+      });
+    });
+
+    function paintConsent(show: boolean) {
+      const message = consent.querySelector<HTMLElement>(".field__error");
+      if (consentBox.checked) {
+        delete consent.dataset.state;
+        return true;
+      }
+      if (show) {
+        consent.dataset.state = "error";
+        if (message)
+          message.textContent = "Vi behöver ditt godkännande för att kunna höra av oss.";
+      }
+      return false;
+    }
+    consentBox.addEventListener("change", () => paintConsent(true));
+
+    /** Validerar aktuellt steg och returnerar första ogiltiga fältet. */
+    function validateStep(index: number): HTMLElement | null {
+      let firstBad: HTMLElement | null = null;
+      Object.entries(rulesByStep[index] ?? {}).forEach(([name, rule]) => {
+        const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+        if (!input) return;
+        touched.add(name);
+        if (!paint(input, rule, true) && !firstBad) firstBad = input;
+      });
+      if (index === last && !paintConsent(true) && !firstBad) firstBad = consentBox;
+      return firstBad;
+    }
+
+    function render(dir: "next" | "back") {
+      stepsWrap.dataset.dir = dir;
+      panels.forEach((p, i) => p.toggleAttribute("data-active", i === current));
+
+      dots.forEach((dot, i) => {
+        const state = i < current ? "done" : i === current ? "current" : "";
+        if (state) dot.dataset.state = state;
+        else delete dot.dataset.state;
+        dot.querySelector("[data-dot-num]")?.classList.toggle("hidden", i < current);
+        dot.querySelector("[data-dot-check]")?.classList.toggle("hidden", i >= current);
+      });
+
+      // Kortet följer aktivt steg i höjd i stället för att stå kvar
+      // på det längsta stegets mått.
+      stepsWrap.style.height = `${panels[current].offsetHeight}px`;
+
+      rail.style.width = `${(current / last) * 100}%`;
+      counter.textContent = `Steg ${current + 1} av ${panels.length}`;
+      backBtn.hidden = current === 0;
+      nextLabel.textContent = current === last ? "Boka möte" : "Nästa";
+      nextIcon.classList.toggle("hidden", current === last);
+
+      // Flytta fokus till stegets rubrik så skärmläsare följer med.
+      panels[current].querySelector("h2")?.setAttribute("tabindex", "-1");
+      (panels[current].querySelector("h2") as HTMLElement | null)?.focus({
+        preventScroll: true,
+      });
+    }
+
+    backBtn.addEventListener("click", () => {
+      if (current === 0) return;
+      current -= 1;
+      errorBox.hidden = true;
+      render("back");
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorBox.hidden = true;
+
+      const bad = validateStep(current);
+      if (bad) {
+        bad.focus({ preventScroll: true });
+        bad.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      if (current < last) {
+        current += 1;
+        render("next");
+        return;
+      }
+
+      const data = new FormData(form);
+      // Honeypot ifylld => bot. Låtsas lyckas, skicka ingenting.
+      if (String(data.get("organisation") ?? "").trim() !== "") {
+        form.hidden = true;
+        success.hidden = false;
+        return;
+      }
+
+      const lead: Lead = {
+        foretag: String(data.get("foretag") ?? "").trim(),
+        webbplats: String(data.get("webbplats") ?? "").trim(),
+        namn: String(data.get("namn") ?? "").trim(),
+        epost: String(data.get("epost") ?? "").trim(),
+        bransch: String(data.get("bransch") ?? ""),
+        fragor: String(data.get("fragor") ?? "").trim(),
+        konkurrenter: String(data.get("konkurrenter") ?? "").trim(),
+      };
+
+      nextBtn.disabled = true;
+      nextLabel.textContent = "Bokar…";
+
+      try {
+        await submitLead(lead);
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (err) {
+        console.error(err);
+        errorBox.textContent =
+          "Något gick fel när formuläret skickades. Försök igen, eller mejla oss direkt.";
+        errorBox.hidden = false;
+        nextBtn.disabled = false;
+        nextLabel.textContent = "Boka möte";
+      }
+    });
+
+    render("next");
+
+    // Fälten kan byta höjd (felmeddelanden, textarea som växer).
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => {
+        stepsWrap.style.height = `${panels[current].offsetHeight}px`;
+      });
+      panels.forEach((panel) => ro.observe(panel));
+    }
+  }
+</script>

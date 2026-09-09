@@ -536,6 +536,29 @@ Lead paragraph.                   ← --color-ink-soft, text-lg
 ### Data card (the signature component)
 `bg-white rounded-md border border-black/[0.05] shadow-[0_6px_18px_rgba(0,0,0,0.06)] p-6`, containing a micro-header (`text-[11px] text-neutral-500`), then a dense faux-table with `text-[10px]`–`text-[12px]` rows, brand favicons, right-aligned numerals (`text-right`), and green percentages.
 
+### Multi-step form
+
+Used on `/boka`. The order is deliberate: easiest question first (your
+website), contact details last, and the middle step entirely optional so
+nobody is trapped by a question they cannot answer.
+
+- **Animate the container height.** Stacking steps in one grid cell stops the
+  card jumping, but it then locks to the *tallest* step and short steps get a
+  dead band. Set the container height to the active step and transition it.
+- That measurement needs `align-items: start` on the grid. Without it every
+  panel stretches to the row height, so `offsetHeight` returns the tallest
+  step no matter which one is active — the bug looks like the height code
+  simply not working.
+- Progress is a numbered dot per step plus a fill rail. Completed steps swap
+  their number for a check; that and the per-field tick are the whole reward
+  loop.
+- Validation is per step, not per form: leaving a step runs only that step's
+  rules, so nobody is told about a field they have not reached.
+- Move focus to the new step's heading on advance, or a screen reader stays
+  where the old step was.
+- The page uses a minimal header — logo only, no nav, no CTA. A booking flow
+  should not offer exits.
+
 ### Comparison matrix
 
 A feature grid with one column per discipline. Light version of the dark
