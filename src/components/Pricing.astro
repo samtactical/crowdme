@@ -1,0 +1,189 @@
+---
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+
+/**
+ * Priserna kommer från ägaren, inte från oss. AGENTS.md förbjuder
+ * påhittade siffror — de här är uppgivna och märkta som vägledande,
+ * precis som i underlaget ("Indicative price", "From").
+ *
+ * OBS: underlaget angav "Free or 5 000–10 000 SEK" för analysen. Den
+ * gratis varianten är medvetet inte med här — gratisanalysen ska enligt
+ * tidigare beslut inte marknadsföras, den görs som förberedelse inför
+ * mötet. Se README.
+ */
+const tiers = [
+  {
+    name: "AI Visibility Audit",
+    bestFor: "Företag som vill veta var de står idag",
+    price: "5 000–10 000",
+    unit: "kr · engångs",
+    features: [
+      "Genomgång av er synlighet i AI-svar",
+      "Jämförelse mot konkurrenter",
+      "Prioriterad åtgärdsplan",
+    ],
+    tone: "plain" as const,
+  },
+  {
+    name: "AI SEO Foundation",
+    bestFor: "Mindre bolag och fokuserade webbplatser",
+    price: "Från 12 000",
+    unit: "kr/mån",
+    features: [
+      "Entitets- och teknikgenomgång",
+      "Innehållsrekommendationer",
+      "Citerbara sidor",
+      "Månadsrapportering",
+    ],
+    tone: "plain" as const,
+  },
+  {
+    name: "AI Search Growth",
+    bestFor: "Bolag som konkurrerar i en tydlig kategori",
+    price: "Från 25 000",
+    unit: "kr/mån",
+    features: [
+      "Allt i Foundation",
+      "Innehållsproduktion",
+      "Digital PR och omnämnanden",
+      "Löpande optimering",
+      "Konkurrentbevakning",
+    ],
+    tone: "featured" as const,
+  },
+  {
+    name: "Enterprise",
+    bestFor: "Större, flermarknads- eller reglerade varumärken",
+    price: "Offert",
+    unit: "från 40 000 kr/mån",
+    features: [
+      "Skräddarsydd strategi",
+      "Implementationsstöd",
+      "Rapportering per marknad",
+      "Workshops och styrning",
+    ],
+    tone: "dark" as const,
+  },
+];
+---
+
+<section id="priser" class="border-b border-line bg-paper-alt">
+  <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
+    <div class="max-w-2xl" data-reveal-group>
+      <Eyebrow data-reveal>Priser</Eyebrow>
+      <h2 class="display-2 mt-8" data-reveal>
+        Vad det kostar.<br />
+        <span class="text-ink-faint">Och vad som ingår.</span>
+      </h2>
+      <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
+        Vägledande priser. Vad ni behöver beror på er bransch och hur ni syns
+        idag — det går vi igenom på mötet innan något bestäms.
+      </p>
+    </div>
+
+    <div
+      class="mt-12 grid gap-3 sm:grid-cols-2 md:mt-16 xl:grid-cols-4"
+      data-reveal-group
+    >
+      {
+        tiers.map((tier) => {
+          const dark = tier.tone === "dark";
+          const featured = tier.tone === "featured";
+          return (
+            <article
+              data-reveal
+              data-invert={dark ? "" : undefined}
+              class={`relative flex flex-col rounded-md p-6 ${
+                dark
+                  ? "bg-paper-invert"
+                  : featured
+                    ? "card-soft ring-1 ring-accent-ink/25"
+                    : "card-soft"
+              }`}
+            >
+              {featured && (
+                <span class="absolute -top-2.5 left-6 rounded-sm bg-accent px-2 py-0.5 text-[11px] font-medium text-accent-ink">
+                  Vanligast
+                </span>
+              )}
+
+              <h3
+                class={`text-[1.0625rem] font-medium ${dark ? "text-ink-invert" : ""}`}
+              >
+                {tier.name}
+              </h3>
+              <p
+                class={`mt-2 min-h-[2.75rem] text-[13px] leading-snug ${
+                  dark ? "text-ink-invert-soft" : "text-ink-soft"
+                }`}
+              >
+                {tier.bestFor}
+              </p>
+
+              <p
+                class={`mt-5 text-2xl font-medium tracking-tight ${
+                  dark ? "text-ink-invert" : ""
+                }`}
+              >
+                {tier.price}
+              </p>
+              <p
+                class={`mt-1 text-[12px] ${
+                  dark ? "text-ink-invert-soft" : "text-ink-soft"
+                }`}
+              >
+                {tier.unit}
+              </p>
+
+              <ul
+                class={`mt-6 flex-1 space-y-2.5 border-t pt-5 ${
+                  dark ? "border-line-invert" : "border-line"
+                }`}
+              >
+                {tier.features.map((feature) => (
+                  <li class="flex items-start gap-2.5">
+                    <span
+                      aria-hidden="true"
+                      class={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-pill ${
+                        dark ? "bg-accent text-accent-ink" : "bg-accent-soft text-accent-ink"
+                      }`}
+                    >
+                      <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+                    </span>
+                    <span
+                      class={`text-[13px] leading-relaxed ${
+                        dark ? "text-ink-invert-soft" : "text-ink-soft"
+                      }`}
+                    >
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="/boka"
+                class={`mt-6 inline-flex items-center justify-center gap-1.5 rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
+                  dark
+                    ? "bg-accent text-accent-ink hover:opacity-90"
+                    : featured
+                      ? "bg-solid text-ink-invert hover:bg-solid-hover"
+                      : "border border-line-strong text-ink-soft hover:bg-paper-alt hover:text-ink"
+                }`}
+              >
+                Boka möte
+                <Icon name="arrow-right" class="h-3.5 w-3.5" />
+              </a>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <p class="mt-6 text-[13px] text-ink-soft">
+      Alla priser är exklusive moms och vägledande. Ingen bindningstid utöver
+      löpande månad om inget annat avtalas.
+    </p>
+  </div>
+</section>

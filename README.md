@@ -19,8 +19,9 @@ src/
     Hero.astro                rubrik och globen
     AiSearchStats.astro       källbelagd statistik (mörkgrönt kapitel)
     Problem.astro             varför AI-sökning skiljer sig
-    Analysis.astro            vad den gratis analysen innehåller
+    Analysis.astro            vad analysen omfattar
     Comparison.astro          klassisk SEO vs synlighet i AI-svar
+    Pricing.astro             fyra paket, vägledande priser
     BookingCta.astro          avslutande CTA -> /boka (mörkgrönt kapitel)
     Faq.astro                 sex frågor
     Footer.astro
@@ -66,6 +67,28 @@ DESIGN.md                     ← designsystemet, källan för allt ovan
 6. **Favikonerna** är genererade ur `public/logo/crowdme-icon-lime.webp` på en
    mörkgrön platta (`favicon-32.png`, `apple-touch-icon.png`, `icon-512.png`).
    Finns en riktig vektorversion av märket är en `favicon.svg` att föredra.
+
+## Priserna i `Pricing.astro`
+
+Uppgivna av ägaren, inte framräknade av oss. De är märkta **vägledande** i
+copyn, precis som i underlaget ("Indicative price", "From").
+
+Två avvikelser från underlaget, båda medvetna:
+
+1. **"Free or 5 000–10 000 SEK" blev bara "5 000–10 000 kr".** Gratisvarianten
+   är utelämnad eftersom gratisanalysen enligt tidigare beslut inte ska
+   marknadsföras — den görs som förberedelse inför mötet. Vill ni ändå visa
+   den är det en rad att lägga till.
+2. **Ingen års- eller kvartalsväxling.** Paketen har olika grund (ett engångs,
+   tre löpande per månad), så en gemensam periodväxlare hade inte gått ihop.
+   Varje kort anger sin egen grund i stället.
+
+Paketnamnen står kvar på engelska som i underlaget. På en i övrigt svensk
+sida är det ett medvetet val att göra — säg till om de ska översättas.
+
+`AGENTS.md` säger fortfarande "no ... pricing". Den regeln är överspelad i och
+med att ni själva lämnat prislistan; resten av regeln (inga kunder, case,
+testimonials eller påhittade mätvärden) gäller fortfarande.
 
 ## Påståenden att bekräfta
 
