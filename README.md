@@ -86,9 +86,9 @@ Två avvikelser från underlaget, båda medvetna:
 Paketnamnen står kvar på engelska som i underlaget. På en i övrigt svensk
 sida är det ett medvetet val att göra — säg till om de ska översättas.
 
-`AGENTS.md` säger fortfarande "no ... pricing". Den regeln är överspelad i och
-med att ni själva lämnat prislistan; resten av regeln (inga kunder, case,
-testimonials eller påhittade mätvärden) gäller fortfarande.
+`AGENTS.md` listar priser som ett tillåtet undantag, eftersom de kommer från
+er. Resten av regeln — inga kunder, case, testimonials eller påhittade
+mätvärden — gäller fortfarande.
 
 ## Påståenden att bekräfta
 
@@ -105,11 +105,9 @@ justera:
 
 ## Konverteringsmålet är ett bokat möte
 
-**`AGENTS.md` säger fortfarande att målet är formuläret för en kostnadsfri
-AI-synlighetsanalys. Det stämmer inte längre.** Sidan säljer nu ett möte, och
-gratisanalysen marknadsförs inte alls — den görs som förberedelse inför mötet
-och nämns ingenstans i copyn. Uppdatera `AGENTS.md` innan nästa person läser
-den, annars optimeras sidan tillbaka mot fel mål.
+Sidan säljer ett möte. Gratisanalysen marknadsförs inte alls — den görs som
+förberedelse inför mötet och nämns ingenstans i copyn. `AGENTS.md` är
+uppdaterad och stämmer med sidan.
 
 Startsidan har ingen formulärsektion längre. Alla CTA:er pekar på `/boka`,
 där `MultiStepForm.astro` tar bokningen i tre steg. Backend-sömmen är
