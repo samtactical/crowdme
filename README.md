@@ -28,7 +28,7 @@ src/
   components/ui/                interaktiva primitiver (ej sektioner)
     Icon.astro                Phosphor-ikoner, inlinade vid bygget
     Globe.astro               cobe-globen i hero, med fallback
-    MultiStepForm.astro       bokningen i tre steg
+    MultiStepForm.astro       bokningen i tre steg (sajt -> mål -> kontakt)
     OrbitingLogos.astro       AI-ytorna i omloppsbanor (statisk)
     RadarChart.astro          täckningsdiagram, ren SVG utan siffror
     AuditReport.astro         granskningen som föremål, avskuren nedtill
@@ -101,6 +101,9 @@ justera:
 - "Vi återkommer med tider som passar" (formuläret) — förutsätter att någon
   faktiskt gör det, eller att ett bokningsverktyg kopplas in
 - "Vi tittar på hur den syns i AI-svar innan vi ses" (steg 1 i bokningen)
+- Bokningen frågar bara efter webbplats, namn och mejl. Steg 2 (mål, bransch,
+  fritext) är helt valfritt — inget där får bli obligatoriskt utan att
+  konverteringen mäts först.
 - Listan över AI-tjänster i FAQ och logotyperna i `Analysis.astro`
 
 ## Konverteringsmålet är ett bokat möte

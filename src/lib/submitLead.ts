@@ -1,11 +1,13 @@
 export interface Lead {
-  foretag: string;
+  /** Obligatoriska: det enda som krävs för att boka. */
   webbplats: string;
   namn: string;
   epost: string;
+  /** Frivilliga: hjälper oss förbereda mötet, blockerar aldrig bokningen. */
   bransch: string;
-  fragor: string;
-  konkurrenter: string;
+  /** Flerval — vad besökaren vill uppnå. Kan vara tom. */
+  mal: string[];
+  beskrivning: string;
 }
 
 /**

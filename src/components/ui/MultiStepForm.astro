@@ -25,9 +25,24 @@ const branscher = [
   "Annat",
 ];
 
+/**
+ * Vad besökaren vill uppnå. Flerval, inget skrivande — det är den
+ * frågan som faktiskt styr samtalet. Sista alternativet finns för att
+ * många hör av sig just för att de INTE vet hur de syns.
+ */
+const goals = [
+  "Fler leads och förfrågningar",
+  "Sälja en specifik tjänst eller produkt",
+  "Mer trafik till sajten",
+  "Synas när köpare jämför oss med andra",
+  "Bli citerade som källa i AI-svar",
+  "Lyfta det som gör oss unika",
+  "Vet inte än — vi vill förstå läget",
+];
+
 const steps = [
-  { id: "foretaget", label: "Ert företag" },
-  { id: "kopare", label: "Era köpare" },
+  { id: "sajten", label: "Er sajt" },
+  { id: "malet", label: "Ert mål" },
   { id: "kontakt", label: "Kontakt" },
 ];
 
@@ -99,25 +114,35 @@ const hintClass =
               <p class="field__error" id="webbplats-fel"></p>
             </div>
 
-            <div class="field">
-              <label class={labelClass} for="foretag">
-                Företagsnamn
-                <span class={hintClass}>Valfritt — vi hittar det oftast själva.</span>
-              </label>
-              <input class="field__input mt-1.5" id="foretag" name="foretag" type="text" autocomplete="organization" />
-            </div>
           </div>
         </section>
 
         {/* --- 2 --- */}
         <section class="step" data-step="1">
-          <h2 class="display-3">Vad frågar era köpare om?</h2>
+          <h2 class="display-3">Vad vill ni lyfta?</h2>
           <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-            Allt här är valfritt. Ju mer vi vet, desto mer hinner vi
-            förbereda — men hoppa gärna vidare.
+            Välj det som stämmer. Allt på det här steget är valfritt — hoppa
+            vidare om ni hellre tar det på mötet.
           </p>
 
-          <div class="mt-6 space-y-5">
+          <div class="mt-6 space-y-6">
+            <fieldset>
+              <legend class="sr-only">Vad ni vill lyfta</legend>
+              <div class="flex flex-wrap gap-2">
+                {
+                  goals.map((goal) => (
+                    <label class="chip">
+                      <input type="checkbox" name="mal" value={goal} />
+                      <span class="chip__mark" aria-hidden="true">
+                        <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+                      </span>
+                      {goal}
+                    </label>
+                  ))
+                }
+              </div>
+            </fieldset>
+
             <div class="field">
               <label class={labelClass} for="bransch">Bransch</label>
               <select class="field__input mt-1.5" id="bransch" name="bransch">
@@ -127,20 +152,15 @@ const hintClass =
             </div>
 
             <div class="field field--area">
-              <label class={labelClass} for="fragor">
-                Vad söker era kunder på?
+              <label class={labelClass} for="beskrivning">
+                Något mer vi bör veta?
                 <span class={hintClass}>
-                  T.ex. "bästa lönesystemet för mindre tillverkande bolag".
+                  Till exempel vad som gör er unika, en tjänst ni vill lyfta,
+                  eller konkurrenter som brukar dyka upp i stället för er.
+                  Vet ni inte — lämna tomt, det är ofta det vi tar reda på.
                 </span>
               </label>
-              <textarea class="field__input mt-1.5" id="fragor" name="fragor" rows="3"></textarea>
-            </div>
-
-            <div class="field field--area">
-              <label class={labelClass} for="konkurrenter">
-                Konkurrenter att jämföra med
-              </label>
-              <input class="field__input mt-1.5" id="konkurrenter" name="konkurrenter" type="text" />
+              <textarea class="field__input mt-1.5" id="beskrivning" name="beskrivning" rows="3"></textarea>
             </div>
           </div>
         </section>
@@ -434,13 +454,12 @@ const hintClass =
       }
 
       const lead: Lead = {
-        foretag: String(data.get("foretag") ?? "").trim(),
         webbplats: String(data.get("webbplats") ?? "").trim(),
         namn: String(data.get("namn") ?? "").trim(),
         epost: String(data.get("epost") ?? "").trim(),
         bransch: String(data.get("bransch") ?? ""),
-        fragor: String(data.get("fragor") ?? "").trim(),
-        konkurrenter: String(data.get("konkurrenter") ?? "").trim(),
+        mal: data.getAll("mal").map(String),
+        beskrivning: String(data.get("beskrivning") ?? "").trim(),
       };
 
       nextBtn.disabled = true;
