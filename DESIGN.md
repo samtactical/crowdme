@@ -446,13 +446,16 @@ cost. Note that `simple-icons` no longer carries the OpenAI mark.
 
 ### Surface row
 
-Sits directly under the hero's two CTAs: a small caption and the eleven AI
-answer surfaces, each as a monochrome mark with its name beside it.
+Sits directly under the hero's two CTAs: the eleven AI answer surfaces, each as
+a monochrome mark with its name beside it.
 
-- **The caption carries the whole thing.** "Ytorna vi mäter er synlighet i" is
-  what makes eleven logos a scope statement rather than a logo wall. Never ship
-  the row without it, and never reword it into anything that could read as
-  partnership, endorsement or clientele.
+- **The caption is `sr-only`, not gone.** "Ytorna vi mäter er synlighet i" was
+  removed from the visible design at the owner's request; it stays in the markup
+  because it is what makes eleven logos a scope statement rather than the logo
+  wall `AGENTS.md` bans. Keep it there, and never reword it into anything that
+  could read as partnership, endorsement or clientele. The row itself must also
+  never be moved next to copy about customers or results — with no visible
+  caption, the surrounding copy is the only thing framing it.
 - **Marks, not wordmarks.** `@lobehub/icons-static-svg` ships `-text` wordmark
   variants; they are not used here. Their aspect ratios differ wildly, they
   cannot express "AI Overviews", and mixing real wordmarks with our own text
