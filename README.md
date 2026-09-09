@@ -90,6 +90,17 @@ sida är det ett medvetet val att göra — säg till om de ska översättas.
 er. Resten av regeln — inga kunder, case, testimonials eller påhittade
 mätvärden — gäller fortfarande.
 
+## Menyn lovar en sida som inte finns
+
+`Header.astro` har en "Om oss"-post med `href="#"` — den beställdes med
+navbaren, men det finns ingen om-sida att peka på. Den scrollar till toppen och
+ser trasig ut. Antingen skrivs `/om-oss`, eller så tas posten bort; låt den inte
+gå till lansering som den är.
+
+"Resurser" pekar på tre ankare på startsidan (vanliga frågor, jämförelsen med
+SEO, statistiken). Det är ärligt så länge sajten är en sida, men en resursmeny
+antyder normalt guider eller en blogg — bygg dem eller behåll menyn kort.
+
 ## Påståenden att bekräfta
 
 Sidan innehåller inga påhittade kunder, case, siffror eller logotyper. Däremot

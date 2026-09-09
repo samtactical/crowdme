@@ -873,3 +873,151 @@
   outline: 2px solid var(--color-accent-ink);
   outline-offset: 2px;
 }
+
+/* ============================================================
+   NAVIGERING (src/components/Header.astro)
+   Megameny i full bredd under headern. Panelen ligger som barn
+   till <header> så att den ärver dess fixed-position och
+   z-index — annars hamnar den under nästa sektion.
+   ============================================================ */
+.nav__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.7rem;
+  margin-inline: -0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--color-ink-soft);
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+.nav__trigger:hover {
+  color: var(--color-ink);
+}
+/* Öppen trigger får samma tonade platta som referensen. */
+.nav__trigger[aria-expanded="true"] {
+  color: var(--color-ink);
+  background-color: var(--color-paper-alt);
+}
+.nav__trigger svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  transition: rotate 0.2s ease;
+}
+.nav__trigger[aria-expanded="true"] svg {
+  rotate: 180deg;
+}
+
+/* Panelen. Dold med visibility (inte display) så att övergången
+   går att animera och tabbordningen ändå hoppar över den. */
+.nav__panel {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  background-color: var(--color-paper);
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -0.5rem;
+  transition:
+    opacity 0.18s ease,
+    translate 0.18s ease,
+    visibility 0s linear 0.18s;
+}
+.nav__panel[data-open] {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  transition-delay: 0s;
+}
+
+/* Kompakt variant: en enda kolumn behöver ingen fullbredd — den
+   lämnar bara död yta. Hänger under sin egen trigger i stället. */
+.nav__panel--menu {
+  inset-inline: auto;
+  left: -0.7rem;
+  width: 17rem;
+  margin-top: 0.4rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 1px 2px rgb(25 25 25 / 0.04),
+    0 12px 32px -12px rgb(25 25 25 / 0.14);
+}
+
+[data-nav-toggle][aria-expanded="true"] .nav__icon--open,
+[data-nav-toggle][aria-expanded="false"] .nav__icon--close {
+  display: none;
+}
+
+.nav__col-title {
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-faint);
+}
+
+.nav__link {
+  display: block;
+  padding-block: 0.4rem;
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+  transition: color 0.2s ease;
+}
+.nav__link:hover {
+  color: var(--color-accent-ink);
+}
+
+/* Ytorna i menyn är text, inte länkar — de säger vad vi mäter i. */
+.nav__surface {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.25rem;
+  font-size: 0.8125rem;
+  color: var(--color-ink-soft);
+}
+
+/* Mobilpanelen scrollar själv i stället för att växa förbi rutan. */
+.nav__mobile {
+  max-height: calc(100dvh - 4.25rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.nav__disclosure > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.85rem;
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+  cursor: pointer;
+  list-style: none;
+}
+.nav__disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+.nav__disclosure > summary svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--color-ink-faint);
+  transition: rotate 0.2s ease;
+}
+.nav__disclosure[open] > summary svg {
+  rotate: 180deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__panel,
+  .nav__trigger,
+  .nav__trigger svg,
+  .nav__disclosure > summary svg {
+    transition-duration: 0.01ms;
+  }
+}

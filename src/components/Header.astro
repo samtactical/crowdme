@@ -1,4 +1,8 @@
 ---
+import Icon from "./Icon.astro";
+import BrandIcon from "./ui/BrandIcon.astro";
+import { AI_SURFACE_ORDER, surfaceLabel } from "../lib/brandIcons";
+
 interface Props {
   /** Bokningssidan visar bara ordbilden — inga vägar bort från flödet. */
   minimal?: boolean;
@@ -6,19 +10,39 @@ interface Props {
 
 const { minimal = false } = Astro.props;
 
-const nav = [
-  { href: "#problemet", label: "Problemet" },
-  { href: "#ai-sokningen", label: "AI-sökningen" },
-  { href: "#analysen", label: "Analysen" },
-  { href: "#priser", label: "Priser" },
+/**
+ * Ankarna är rotrelativa (/#...) med flit. Headern renderas även på
+ * integritetspolicyn, och ett blott "#priser" pekar då på en sektion
+ * som inte finns på den sidan.
+ */
+const solutionLinks = [
+  { href: "/#problemet", label: "Problemet" },
+  { href: "/#ai-sokningen", label: "AI-sökningen i siffror" },
+  { href: "/#analysen", label: "Analysen" },
+  { href: "/#skillnaden", label: "Skillnaden mot SEO" },
+  { href: "/#priser", label: "Paket och priser" },
+];
+
+const resourceLinks = [
+  { href: "/#fragor", label: "Vanliga frågor" },
+  { href: "/#skillnaden", label: "AI-sökning vs. SEO" },
+  { href: "/#ai-sokningen", label: "AI-sök i Sverige" },
+];
+
+/** Om oss saknar destination — sidan finns inte än. Se README. */
+const flatLinks = [
+  { href: "#", label: "Om oss" },
+  { href: "/#priser", label: "Priser" },
 ];
 ---
 
 <header
   data-header
-  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300 [&[data-scrolled]]:border-line [&[data-scrolled]]:bg-paper/85 [&[data-scrolled]]:backdrop-blur-md"
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300 [&[data-menu-open]]:border-line [&[data-menu-open]]:bg-paper [&[data-scrolled]]:border-line [&[data-scrolled]]:bg-paper/85 [&[data-scrolled]]:backdrop-blur-md"
 >
-  <div class="mx-auto flex max-w-page items-center justify-between gap-6 px-4 py-4 sm:px-6">
+  {/* Tre spalter i stället för justify-between: högergruppen är bredare
+      än ordbilden, och med flex hamnar menyn då synligt vänster om mitten. */}
+  <div class="mx-auto grid max-w-page grid-cols-[1fr_auto] items-center gap-6 px-4 py-4 sm:px-6 lg:grid-cols-[1fr_auto_1fr]">
     <a href="/" class="shrink-0" aria-label="Crowdme, till startsidan">
       <img
         src="/logo/crowdme-logomark-dark-green.webp"
@@ -30,35 +54,286 @@ const nav = [
     </a>
 
     {!minimal && (
-    <nav aria-label="Huvudmeny" class="hidden items-center gap-7 lg:flex">
-      {
-        nav.map((item) => (
-          <a
-            href={item.href}
-            class="text-sm text-ink-soft transition-colors hover:text-ink"
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </nav>
+      <nav aria-label="Huvudmeny" class="hidden lg:block">
+        <ul class="flex items-center gap-7">
+          <li>
+            <button
+              type="button"
+              class="nav__trigger"
+              data-menu-trigger="losningar"
+              aria-controls="menu-losningar"
+              aria-expanded="false"
+            >
+              Lösningar
+              <Icon name="caret-down" weight="bold" />
+            </button>
+          </li>
+
+          <li class="relative">
+            <button
+              type="button"
+              class="nav__trigger"
+              data-menu-trigger="resurser"
+              aria-controls="menu-resurser"
+              aria-expanded="false"
+            >
+              Resurser
+              <Icon name="caret-down" weight="bold" />
+            </button>
+
+            <div id="menu-resurser" class="nav__panel nav__panel--menu bg-paper-card p-2">
+              {resourceLinks.map((item) => (
+                <a href={item.href} class="nav__link rounded-md px-3 hover:bg-paper-alt">
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </li>
+
+          {flatLinks.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-ink-soft transition-colors hover:text-ink">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     )}
 
     {!minimal && (
-    <div class="flex shrink-0 items-center gap-2">
-      <a
-        href="#fragor"
-        class="hidden rounded-md border border-line-strong px-5 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-alt hover:text-ink sm:inline-flex"
-      >
-        Vanliga frågor
-      </a>
+      <div class="flex shrink-0 items-center gap-2 justify-self-end">
+        <a
+          href="/#fragor"
+          class="hidden rounded-md border border-line-strong px-5 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-alt hover:text-ink sm:inline-flex"
+        >
+          Vanliga frågor
+        </a>
+        <a
+          href="/boka"
+          class="inline-flex items-center rounded-md bg-solid px-5 py-2 text-sm font-medium text-ink-invert transition-colors hover:bg-solid-hover"
+        >
+          Boka möte
+        </a>
+
+        <button
+          type="button"
+          data-nav-toggle
+          aria-controls="nav-mobile"
+          aria-expanded="false"
+          aria-label="Meny"
+          class="-mr-1.5 grid h-10 w-10 place-items-center rounded-md text-ink transition-colors hover:bg-paper-alt lg:hidden"
+        >
+          <Icon name="list" class="nav__icon--open h-5 w-5" />
+          <Icon name="x" class="nav__icon--close h-5 w-5" />
+        </button>
+      </div>
+    )}
+  </div>
+
+  {/* Fullbreddspanelen ligger som barn till <header> för att ärva dess
+      fixed-position; i en <li> skulle den ankra fel. */}
+  {!minimal && (
+    <div id="menu-losningar" class="nav__panel hidden lg:block">
+      <div class="mx-auto grid max-w-page gap-y-10 px-4 py-10 sm:px-6 lg:grid-cols-[0.75fr_1.05fr_1.2fr] lg:gap-x-12">
+        <div>
+          <p class="nav__col-title">Så går det till</p>
+          <div class="mt-5 grid">
+            {solutionLinks.map((item) => (
+              <a href={item.href} class="nav__link">{item.label}</a>
+            ))}
+          </div>
+        </div>
+
+        <div class="lg:border-l lg:border-line lg:pl-12">
+          <p class="nav__col-title">AI-ytor vi mäter</p>
+          <ul class="mt-5 grid grid-cols-2 gap-x-6">
+            {AI_SURFACE_ORDER.map((name) => (
+              <li class="nav__surface">
+                <BrandIcon
+                  name={name}
+                  decorative
+                  class="h-4 w-4 shrink-0 text-ink-faint"
+                />
+                {surfaceLabel(name, "short")}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div data-invert class="rounded-lg bg-paper-invert p-6 text-ink-invert lg:p-7">
+          <p class="text-[1.0625rem] font-medium leading-snug">
+            Se hur ni syns idag
+          </p>
+          <p class="mt-3 text-sm leading-relaxed text-ink-invert-soft">
+            Vi går igenom era köpfrågor i AI-ytorna ovan och visar vad
+            modellerna svarar om er — och om vem de svarar i stället.
+          </p>
+          <a
+            href="/boka"
+            class="mt-6 inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-ink transition-opacity hover:opacity-90"
+          >
+            Boka ett möte
+            <Icon name="arrow-up-right" weight="bold" class="h-3.5 w-3.5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {!minimal && (
+    <div
+      id="nav-mobile"
+      hidden
+      class="nav__mobile border-y border-line bg-paper px-4 pb-8 shadow-float sm:px-6 lg:hidden"
+    >
+      <details class="nav__disclosure border-b border-line">
+        <summary>
+          Lösningar
+          <Icon name="caret-down" weight="bold" />
+        </summary>
+        <div class="grid pb-3">
+          {solutionLinks.map((item) => (
+            <a href={item.href} class="nav__link text-ink-soft">{item.label}</a>
+          ))}
+        </div>
+      </details>
+
+      <details class="nav__disclosure border-b border-line">
+        <summary>
+          Resurser
+          <Icon name="caret-down" weight="bold" />
+        </summary>
+        <div class="grid pb-3">
+          {resourceLinks.map((item) => (
+            <a href={item.href} class="nav__link text-ink-soft">{item.label}</a>
+          ))}
+        </div>
+      </details>
+
+      {flatLinks.map((item) => (
+        <a href={item.href} class="block border-b border-line py-[0.85rem] text-[0.9375rem]">
+          {item.label}
+        </a>
+      ))}
+
       <a
         href="/boka"
-        class="inline-flex items-center rounded-md bg-solid px-5 py-2 text-sm font-medium text-ink-invert transition-colors hover:bg-solid-hover"
+        class="mt-6 flex items-center justify-center rounded-md bg-solid px-5 py-3 text-sm font-medium text-ink-invert"
       >
         Boka möte
       </a>
     </div>
-    )}
-  </div>
+  )}
 </header>
+
+<script>
+  /**
+   * Megamenyn. Hover öppnar på desktop, klick fungerar överallt, och
+   * Escape lämnar tillbaka fokus till triggern. Panelerna göms med
+   * visibility i CSS — inte display — så att övergången går att
+   * animera utan att de ligger kvar i tabbordningen.
+   */
+  const header = document.querySelector<HTMLElement>("[data-header]");
+
+  if (header) {
+    const triggers = Array.from(
+      header.querySelectorAll<HTMLButtonElement>("[data-menu-trigger]"),
+    );
+    const burger = header.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+    const mobile = document.getElementById("nav-mobile");
+
+    const isDesktop = () => window.matchMedia("(min-width: 1024px)").matches;
+    const panelFor = (t: HTMLButtonElement) =>
+      document.getElementById(t.getAttribute("aria-controls") ?? "");
+
+    let openId: string | null = null;
+    let timer = 0;
+
+    /* Bakgrunden ska vara solid så länge NÅGON panel är öppen. */
+    const syncHeader = () =>
+      header.toggleAttribute(
+        "data-menu-open",
+        openId !== null || burger?.getAttribute("aria-expanded") === "true",
+      );
+
+    function setOpen(id: string | null) {
+      openId = id;
+      triggers.forEach((t) => {
+        const on = t.dataset.menuTrigger === id;
+        t.setAttribute("aria-expanded", String(on));
+        panelFor(t)?.toggleAttribute("data-open", on);
+      });
+      syncHeader();
+    }
+
+    function setMobile(open: boolean) {
+      if (!burger || !mobile) return;
+      burger.setAttribute("aria-expanded", String(open));
+      mobile.hidden = !open;
+      syncHeader();
+    }
+
+    triggers.forEach((t) => {
+      const id = t.dataset.menuTrigger ?? null;
+
+      t.addEventListener("click", () => setOpen(openId === id ? null : id));
+
+      t.addEventListener("pointerenter", () => {
+        if (!isDesktop()) return;
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => setOpen(id), 90);
+      });
+    });
+
+    /* Fördröjningen gör att muspekaren hinner korsa glappet mellan
+       triggern och panelen utan att menyn blinkar igen. */
+    header.addEventListener("pointerleave", () => {
+      if (!isDesktop() || openId === null) return;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setOpen(null), 160);
+    });
+    header.addEventListener("pointerenter", () => window.clearTimeout(timer));
+
+    header.addEventListener("focusout", (e) => {
+      if (openId === null) return;
+      if (!header.contains(e.relatedTarget as Node | null)) setOpen(null);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (header.contains(e.target as Node)) return;
+      setOpen(null);
+      setMobile(false);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      if (openId !== null) {
+        const active = triggers.find((t) => t.dataset.menuTrigger === openId);
+        setOpen(null);
+        active?.focus();
+      } else if (burger?.getAttribute("aria-expanded") === "true") {
+        setMobile(false);
+        burger.focus();
+      }
+    });
+
+    header.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => {
+        setOpen(null);
+        setMobile(false);
+      }),
+    );
+
+    burger?.addEventListener("click", () =>
+      setMobile(burger.getAttribute("aria-expanded") !== "true"),
+    );
+
+    /* Panelen är en desktopsak. Krymper fönstret medan den är öppen
+       lämnar den annars kvar ett tomt band. */
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", () => {
+      setOpen(null);
+      setMobile(false);
+    });
+  }
+</script>

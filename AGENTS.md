@@ -163,7 +163,11 @@ Section order on the landing page, and the ground each sits on:
 is far too faint to divide them, and they read as one long band. Adding or
 reordering a section means rechecking that column.
 
-Anchors: `#problemet`, `#ai-sokningen`, `#analysen`, `#priser`, `#fragor`.
+Anchors: `#problemet`, `#ai-sokningen`, `#skillnaden`, `#analysen`,
+`#priser`, `#fragor`. The header's mega menu links to all six, so removing
+or renaming a section id breaks navigation as well as a CTA — grep
+`Header.astro` first. Nav anchors are root-relative (`/#priser`) because
+the header also renders on the privacy page.
 Every booking CTA points at `/boka` — a page, not an anchor. (The
 first two Problem cards carry navigational arrows to sections instead.) `Layout.astro` derives
 `canonical` and `og:url` from `site` in `astro.config.mjs` (currently

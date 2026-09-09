@@ -247,7 +247,49 @@ Rule of thumb: motion is **always looping and ambient** (product feels alive) or
 ## 7. Component Patterns
 
 ### Navigation
-Fixed full-width bar (`fixed top-0 inset-x-0 z-50`) over the cream hero, transparent → subtle surface on scroll. Mega-menu lists product modules as text links ("AI Visibility Tracking", "Prompt Research", "Query Fanouts", "AI Search Attribution"). Top-right pairing: a bordered secondary button + a dark solid primary.
+
+Fixed full-width bar (`fixed top-0 inset-x-0 z-50`) over the cream hero,
+transparent → subtle surface on scroll. Top-right pairing: a bordered secondary
+button + a dark solid primary. Implemented in `Header.astro`; the CSS lives in
+the NAVIGERING block of `global.css`.
+
+**Two panel shapes, picked by how much there is to say.**
+
+- `.nav__panel` — full-bleed, for "Lösningar". Three columns: links, the AI
+  surfaces as plain text with their marks, and a dark-green booking card where
+  the reference system puts a customer card. **A customer card is not available
+  to us** — Crowdme has no clients to show (`AGENTS.md`), so that slot carries
+  the offer instead.
+- `.nav__panel--menu` — a 17rem card hanging under its own trigger, for
+  "Resurser". A single column of three links stretched across 1360px is the
+  dead-space failure this site has already been corrected for once; below about
+  two columns of content, use the compact shape.
+
+**The full-bleed panel must be a child of `<header>`.** It inherits the header's
+`fixed` positioning and z-index that way. Nested inside the `<li>` it would
+anchor to the trigger and stop being full-bleed — which is exactly what the
+compact variant wants, and why that one *is* nested.
+
+**Panels hide with `visibility`, not `display`.** `display: none` cannot be
+transitioned, and `opacity: 0` alone leaves the links in the tab order. The
+`visibility 0s linear 0.18s` delay is what lets the fade finish before the panel
+leaves the accessibility tree.
+
+**Interaction rules.** Hover opens on desktop only (≥90rem), after 90 ms; the
+header's `pointerleave` closes after 160 ms so the pointer can cross the gap
+between trigger and panel without the menu flickering. Click works at every
+width. Escape closes and returns focus to the trigger. `focusout` off the header
+closes. A viewport crossing the desktop breakpoint closes everything — otherwise
+a resize leaves an empty band pinned under the bar.
+
+**Mobile is `<details>`, not JS.** The accordions need no script, so they get
+none; only the hamburger is wired. The panel scrolls itself
+(`max-height: calc(100dvh - 4.25rem)`, `overscroll-behavior: contain`) and
+carries `border-y` plus `shadow-float`, because it sits on the same cream as
+the hero behind it and would otherwise have no visible edge.
+
+**Anchors are root-relative (`/#priser`).** The header renders on the privacy
+page too, where a bare `#priser` points at a section that does not exist there.
 
 ### Buttons
 
