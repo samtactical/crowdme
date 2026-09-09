@@ -14,8 +14,6 @@ const branscher = [
   "Annat",
 ];
 
-const fieldClass =
-  "w-full rounded-md border border-line-strong bg-paper-card px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint transition-colors focus:border-accent-ink focus:outline-none";
 const labelClass = "block text-[13px] font-medium";
 const hintClass = "mt-1 block text-[12px] font-normal leading-relaxed text-ink-soft";
 ---
@@ -59,65 +57,131 @@ const hintClass = "mt-1 block text-[12px] font-normal leading-relaxed text-ink-s
           <input id="lead-org" name="organisation" type="text" tabindex="-1" autocomplete="off" />
         </div>
 
+        {/*
+          Tre synliga fält. Allt annat ligger bakom "Berätta gärna mer" —
+          det som avgör om någon bokar är namn, mejl och sajt. Resten är
+          förberedelsematerial och får inte stå i vägen.
+        */}
         <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label class={labelClass} for="foretag">Företagsnamn *</label>
-            <input class={`${fieldClass} mt-1.5`} id="foretag" name="foretag" type="text" required autocomplete="organization" />
-          </div>
-          <div>
-            <label class={labelClass} for="webbplats">Webbplats *</label>
-            <input class={`${fieldClass} mt-1.5`} id="webbplats" name="webbplats" type="text" required inputmode="url" placeholder="exempel.se" autocomplete="url" />
-          </div>
-          <div>
-            <label class={labelClass} for="namn">Ditt namn *</label>
-            <input class={`${fieldClass} mt-1.5`} id="namn" name="namn" type="text" required autocomplete="name" />
-          </div>
-          <div>
-            <label class={labelClass} for="epost">Jobbmejl *</label>
-            <input class={`${fieldClass} mt-1.5`} id="epost" name="epost" type="email" required autocomplete="email" />
-          </div>
-        </div>
-
-        <div>
-          <label class={labelClass} for="bransch">Bransch</label>
-          <select class={`${fieldClass} mt-1.5`} id="bransch" name="bransch">
-            <option value="">Välj bransch</option>
-            {branscher.map((b) => <option value={b}>{b}</option>)}
-          </select>
-        </div>
-
-        <div>
-          <label class={labelClass} for="fragor">
-            Vad söker era kunder på?
-            <span class={hintClass}>
-              Skriv frågorna som de skulle ställa dem — t.ex. "bästa
-              lönesystemet för mindre tillverkande bolag". Vi använder dem för
-              att förbereda mötet.
+          <div class="field">
+            <label class={labelClass} for="namn">Ditt namn</label>
+            <input
+              class="field__input mt-1.5"
+              id="namn"
+              name="namn"
+              type="text"
+              required
+              autocomplete="name"
+              aria-describedby="namn-fel"
+            />
+            <span class="field__tick" aria-hidden="true">
+              <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
             </span>
-          </label>
-          <textarea class={`${fieldClass} mt-1.5`} id="fragor" name="fragor" rows="4"></textarea>
+            <p class="field__error" id="namn-fel"></p>
+          </div>
+
+          <div class="field">
+            <label class={labelClass} for="epost">Jobbmejl</label>
+            <input
+              class="field__input mt-1.5"
+              id="epost"
+              name="epost"
+              type="email"
+              required
+              autocomplete="email"
+              aria-describedby="epost-fel"
+            />
+            <span class="field__tick" aria-hidden="true">
+              <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+            </span>
+            <p class="field__error" id="epost-fel"></p>
+          </div>
         </div>
 
-        <div>
-          <label class={labelClass} for="konkurrenter">
-            Konkurrenter att jämföra med
-            <span class={hintClass}>Valfritt. Ett eller flera namn.</span>
-          </label>
-          <input class={`${fieldClass} mt-1.5`} id="konkurrenter" name="konkurrenter" type="text" />
-        </div>
-
-        <div class="flex gap-2.5">
+        <div class="field">
+          <label class={labelClass} for="webbplats">Er webbplats</label>
           <input
-            id="samtycke"
-            name="samtycke"
-            type="checkbox"
+            class="field__input mt-1.5"
+            id="webbplats"
+            name="webbplats"
+            type="text"
             required
-            class="mt-0.5 h-4 w-4 shrink-0 rounded-sm accent-[var(--color-accent-ink)]"
+            inputmode="url"
+            placeholder="exempel.se"
+            autocomplete="url"
+            aria-describedby="webbplats-fel"
           />
-          <label for="samtycke" class="text-[13px] leading-relaxed text-ink-soft">
-            Jag godkänner att Crowdme sparar uppgifterna för att boka mötet
-            och kontakta mig om det. *
-          </label>
+          <span class="field__tick" aria-hidden="true">
+            <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+          </span>
+          <p class="field__error" id="webbplats-fel"></p>
+        </div>
+
+        <details class="group rounded-md border border-line bg-paper-alt/60">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-[13px] font-medium marker:hidden">
+            Berätta gärna mer
+            <span class="flex items-center gap-2 text-[12px] font-normal text-ink-soft">
+              Valfritt
+              <span
+                aria-hidden="true"
+                class="grid h-5 w-5 place-items-center rounded-sm bg-paper-card text-ink-soft transition-transform duration-300 group-open:rotate-45"
+              >
+                <Icon name="plus" weight="bold" class="h-2.5 w-2.5" />
+              </span>
+            </span>
+          </summary>
+
+          <div class="space-y-4 border-t border-line px-4 pb-4 pt-4">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="field">
+                <label class={labelClass} for="foretag">Företagsnamn</label>
+                <input class="field__input mt-1.5" id="foretag" name="foretag" type="text" autocomplete="organization" />
+              </div>
+              <div class="field">
+                <label class={labelClass} for="bransch">Bransch</label>
+                <select class="field__input mt-1.5" id="bransch" name="bransch">
+                  <option value="">Välj bransch</option>
+                  {branscher.map((b) => <option value={b}>{b}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div class="field field--area">
+              <label class={labelClass} for="fragor">
+                Vad söker era kunder på?
+                <span class={hintClass}>
+                  T.ex. "bästa lönesystemet för mindre tillverkande bolag". Vi
+                  använder frågorna för att förbereda mötet.
+                </span>
+              </label>
+              <textarea class="field__input mt-1.5" id="fragor" name="fragor" rows="3"></textarea>
+            </div>
+
+            <div class="field field--area">
+              <label class={labelClass} for="konkurrenter">
+                Konkurrenter att jämföra med
+              </label>
+              <input class="field__input mt-1.5" id="konkurrenter" name="konkurrenter" type="text" />
+            </div>
+          </div>
+        </details>
+
+        <div class="field" data-consent>
+          <div class="flex gap-2.5">
+            <input
+              id="samtycke"
+              name="samtycke"
+              type="checkbox"
+              required
+              class="mt-0.5 h-4 w-4 shrink-0 rounded-sm accent-[var(--color-accent-ink)]"
+              aria-describedby="samtycke-fel"
+            />
+            <label for="samtycke" class="text-[13px] leading-relaxed text-ink-soft">
+              Jag godkänner att Crowdme sparar uppgifterna för att boka mötet
+              och kontakta mig om det.
+            </label>
+          </div>
+          <p class="field__error ml-[1.625rem]" id="samtycke-fel"></p>
         </div>
 
         <p
@@ -160,12 +224,101 @@ const hintClass = "mt-1 block text-[12px] font-normal leading-relaxed text-ink-s
 <script>
   import { submitLead, type Lead } from "../lib/submitLead";
 
+  /**
+   * Validering per fält, inte via reportValidity().
+   *
+   * Webbläsarens egna rutor visar ett fel i taget, försvinner när man
+   * klickar bort och pekar inte ut vilket fält som gäller. För den som
+   * fyller i det här är formuläret första kontakten — det ska kvittera
+   * det som är rätt, inte bara skälla på det som är fel.
+   *
+   * Därför: bocken syns så fort ett fält är giltigt, felet dyker upp
+   * först när man lämnat fältet, och det försvinner medan man rättar.
+   */
+  type Rule = { test: (v: string) => boolean; message: string };
+
+  const rules: Record<string, Rule> = {
+    namn: {
+      test: (v) => v.trim().length >= 2,
+      message: "Skriv ditt namn.",
+    },
+    epost: {
+      // Medvetet tillåtande: ett @ och en punkt efter det räcker.
+      test: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
+      message: "Kontrollera mejladressen.",
+    },
+    webbplats: {
+      test: (v) => /^[^\s]+\.[^\s]{2,}$/.test(v.trim().replace(/^https?:\/\//, "")),
+      message: "Skriv adressen till er sajt, t.ex. exempel.se",
+    },
+  };
+
   const form = document.querySelector<HTMLFormElement>("#lead-form");
   const success = document.querySelector<HTMLElement>("#lead-success");
   const errorBox = document.querySelector<HTMLElement>("#lead-error");
   const submitBtn = document.querySelector<HTMLButtonElement>("#lead-submit");
+  const consent = document.querySelector<HTMLElement>("[data-consent]");
+  const consentBox = document.querySelector<HTMLInputElement>("#samtycke");
 
-  if (form && success && errorBox && submitBtn) {
+  if (form && success && errorBox && submitBtn && consent && consentBox) {
+    /** Fält som visat fel en gång validerar sedan medan man skriver. */
+    const touched = new Set<string>();
+
+    const fieldOf = (input: HTMLInputElement) =>
+      input.closest<HTMLElement>(".field");
+
+    function paint(input: HTMLInputElement, showError: boolean) {
+      const rule = rules[input.name];
+      const wrap = fieldOf(input);
+      if (!rule || !wrap) return true;
+
+      const valid = rule.test(input.value);
+      const message = wrap.querySelector<HTMLElement>(".field__error");
+
+      if (valid) {
+        wrap.dataset.state = "ok";
+        input.removeAttribute("aria-invalid");
+      } else if (showError) {
+        wrap.dataset.state = "error";
+        input.setAttribute("aria-invalid", "true");
+        if (message) message.textContent = rule.message;
+      } else {
+        delete wrap.dataset.state;
+        input.removeAttribute("aria-invalid");
+      }
+      return valid;
+    }
+
+    Object.keys(rules).forEach((name) => {
+      const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      if (!input) return;
+
+      // Bocken ska kvittera direkt, felet först när man lämnat fältet.
+      input.addEventListener("input", () => {
+        paint(input, touched.has(name));
+      });
+      input.addEventListener("blur", () => {
+        touched.add(name);
+        paint(input, true);
+      });
+    });
+
+    function paintConsent(show: boolean) {
+      const message = consent.querySelector<HTMLElement>(".field__error");
+      if (consentBox.checked) {
+        delete consent.dataset.state;
+        consentBox.removeAttribute("aria-invalid");
+        return true;
+      }
+      if (show) {
+        consent.dataset.state = "error";
+        consentBox.setAttribute("aria-invalid", "true");
+        if (message) message.textContent = "Vi behöver ditt godkännande för att kunna höra av oss.";
+      }
+      return false;
+    }
+    consentBox.addEventListener("change", () => paintConsent(true));
+
     const showError = (message: string) => {
       errorBox.textContent = message;
       errorBox.hidden = false;
@@ -183,7 +336,21 @@ const hintClass = "mt-1 block text-[12px] font-normal leading-relaxed text-ink-s
         return;
       }
 
-      if (!form.reportValidity()) return;
+      // Visa alla fel på en gång och hoppa till det första.
+      let firstBad: HTMLElement | null = null;
+      Object.keys(rules).forEach((name) => {
+        const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+        if (!input) return;
+        touched.add(name);
+        if (!paint(input, true) && !firstBad) firstBad = input;
+      });
+      if (!paintConsent(true) && !firstBad) firstBad = consentBox;
+
+      if (firstBad) {
+        firstBad.focus({ preventScroll: true });
+        firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
 
       const lead: Lead = {
         foretag: String(data.get("foretag") ?? "").trim(),
@@ -197,7 +364,7 @@ const hintClass = "mt-1 block text-[12px] font-normal leading-relaxed text-ink-s
 
       submitBtn.disabled = true;
       const originalLabel = submitBtn.textContent;
-      submitBtn.textContent = "Skickar…";
+      submitBtn.textContent = "Bokar…";
 
       try {
         await submitLead(lead);
