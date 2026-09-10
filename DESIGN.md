@@ -253,6 +253,13 @@ transparent → subtle surface on scroll. Top-right pairing: a bordered secondar
 button + a dark solid primary. Implemented in `Header.astro`; the CSS lives in
 the NAVIGERING block of `global.css`.
 
+**The bar goes opaque a few pixels into the scroll, not when the hero ends.**
+The hero is over a screen tall, so "hero out of view" let the whole headline,
+the CTAs and the surface row slide under a transparent bar first. The listener
+also lives in `Header.astro`, not `motion.ts`: that module returns early under
+`prefers-reduced-motion` and only runs on the landing page, while the header is
+on all three.
+
 **Two panel shapes, picked by how much there is to say.**
 
 - `.nav__panel` — full-bleed, for "Lösningar". Three columns: links, the AI
@@ -601,6 +608,31 @@ names identical, so it can be moved back if a framework ever lands. Adding
 this page justifies that.
 
 ### Globe
+
+Three traps here have all shipped as bugs once. Read them before touching it.
+
+**Never parse a token's text.** The globe's colours come from the token layer,
+but `getComputedStyle(root).getPropertyValue("--color-brand-white")` returns
+`#fff` in a production build — Lightning CSS shortens it — and a parser that
+required six hex digits fell through to `[0, 0, 0]`. The result was a **black
+globe in every production build, on every device**, while the dev server looked
+fine. Resolve colours by letting the browser do it: set `color: var(--token)` on
+a throwaway span and read `getComputedStyle(...).color` back as `rgb()`. That
+survives `#fff`, `rgb()`, `oklch()` and anything else CSS grows.
+
+**The labels live in cobe's 1×1 marker nodes, so they have no available width.**
+A label is `position: absolute` inside a 1px box, so shrink-to-fit gives it
+*min-content* — it breaks at every space and stacks three lines high. The narrow
+screen rule that swaps `white-space: nowrap` for `normal` therefore needs
+`width: max-content` beside it, or its `max-width` never gets a say. Without it
+the stack grew tall enough to be cut off by the clip.
+
+**The clip needs label room at the top.** Labels hang above their markers, and
+spinning the globe brings northern cities to the top edge, so `.globe__clip`
+carries `padding-top: 3.25rem` with `box-sizing: content-box` — the aspect ratio
+is then measured on the area below the padding, and the sphere keeps exactly its
+old proportions.
+
 
 `ui/Globe.astro` wraps `cobe`. It sits **directly on the paper** — no card, no
 frame, no header — and is cropped by the section edge so only the upper part of

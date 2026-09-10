@@ -47,14 +47,4 @@ export function initMotion(): void {
 
   targets.forEach((el) => observer.observe(el));
 
-  /* Header byter yta när hero passerats. */
-  const header = document.querySelector<HTMLElement>("[data-header]");
-  const hero = document.querySelector<HTMLElement>("[data-hero]");
-  if (header && hero) {
-    const sentinel = new IntersectionObserver(
-      ([entry]) => header.toggleAttribute("data-scrolled", !entry.isIntersecting),
-      { rootMargin: "-72px 0px 0px 0px", threshold: 0 },
-    );
-    sentinel.observe(hero);
-  }
 }

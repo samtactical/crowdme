@@ -296,12 +296,19 @@
   position: relative;
 }
 
-/* Visar bara den övre delen av den kvadratiska scenen. */
+/* Visar bara den övre delen av den kvadratiska scenen.
+   Vaddringen upptill är etiketternas utrymme: de hänger ovanför sina
+   markörer, och när globen snurras hamnar nordliga städer högst upp.
+   Utan luften klipptes deras etiketter av mot överkanten.
+   box-sizing: content-box gör att bildförhållandet räknas på ytan
+   under vaddringen, så globen behåller exakt sina gamla mått. */
 .globe__clip {
   position: relative;
+  box-sizing: content-box;
   width: 100%;
   max-width: 46rem;
   margin-inline: auto;
+  padding-top: 3.25rem;
   overflow: hidden;
   aspect-ratio: 1 / var(--globe-reveal, 0.58);
 }
@@ -390,10 +397,17 @@
 }
 
 /* På riktigt smala skärmar får etiketten brytas hellre än att
-   klippas av kanten. */
+   klippas av kanten.
+
+   width: max-content är inte valfritt här. Etiketten ligger i en
+   1x1-nod från cobe, så dess tillgängliga bredd är noll — utan den
+   här raden krymper den till min-content och bryter vid VARJE
+   mellanslag, tre rader höga. max-width fick aldrig något att göra.
+   Det var den stapeln som klipptes mot överkanten på mobil. */
 @media (max-width: 30rem) {
   .globe__label {
     white-space: normal;
+    width: max-content;
     max-width: 11rem;
     text-align: center;
   }

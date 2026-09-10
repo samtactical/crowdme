@@ -145,17 +145,29 @@ const config = {
     cycleMs: number;
   };
 
-  /** Färgerna kommer ur tokenlagret, aldrig ur den här filen. */
+  /**
+   * Färgerna kommer ur tokenlagret, aldrig ur den här filen.
+   *
+   * Värdet läses INTE som text. Lightning CSS kortar `#ffffff` till
+   * `#fff` i bygget, och en parser som kräver sex tecken gav då svart
+   * — vilket är precis vad globen blev i produktion, på varje enhet.
+   * Vi låter i stället webbläsaren räkna ut färgen och läser tillbaka
+   * den som rgb(), vilket funkar för hex i alla längder, för rgb(),
+   * för oklch() och för allt annat den kan.
+   */
   function token(name: string): [number, number, number] {
-    const raw = getComputedStyle(document.documentElement)
-      .getPropertyValue(name)
-      .trim()
-      .replace("#", "");
-    if (raw.length !== 6) return [0, 0, 0];
+    const probe = document.createElement("span");
+    probe.style.cssText = `position:absolute;left:-9999px;color:var(${name})`;
+    document.body.append(probe);
+    const resolved = getComputedStyle(probe).color;
+    probe.remove();
+
+    const parts = resolved.match(/[\d.]+/g);
+    if (!parts || parts.length < 3) return [0, 0, 0];
     return [
-      parseInt(raw.slice(0, 2), 16) / 255,
-      parseInt(raw.slice(2, 4), 16) / 255,
-      parseInt(raw.slice(4, 6), 16) / 255,
+      Number(parts[0]) / 255,
+      Number(parts[1]) / 255,
+      Number(parts[2]) / 255,
     ];
   }
 

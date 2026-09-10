@@ -237,6 +237,27 @@ const flatLinks = [
   const header = document.querySelector<HTMLElement>("[data-header]");
 
   if (header) {
+    /* Ytan under baren.
+     *
+     * Headern är genomskinlig över heron och ska bli ogenomskinlig så
+     * fort sidan rullats — annars glider rubrik, knappar och logotyprad
+     * in under en osynlig bar. Tröskeln är några pixlar, inte "heron
+     * passerad": heron är över en skärmhöjd hög, så det villkoret lät
+     * hela sektionen passera under baren först.
+     *
+     * Den ligger här och inte i motion.ts av två skäl: motion.ts
+     * returnerar tidigt vid prefers-reduced-motion, och den körs bara
+     * från startsidan. Headern finns på alla tre sidorna. */
+    let scrolled: boolean | null = null;
+    const syncSurface = () => {
+      const next = window.scrollY > 8;
+      if (next === scrolled) return;
+      scrolled = next;
+      header.toggleAttribute("data-scrolled", next);
+    };
+    window.addEventListener("scroll", syncSurface, { passive: true });
+    syncSurface();
+
     const triggers = Array.from(
       header.querySelectorAll<HTMLButtonElement>("[data-menu-trigger]"),
     );
