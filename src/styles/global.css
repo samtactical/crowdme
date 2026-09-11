@@ -92,6 +92,10 @@
 
   /* --- Mått --- */
   --container-page: 1360px;
+  /* Barens höjd. Den är fixerad, så allt som ska hamna UNDER den —
+     ankarlandningar, mobilpanelens maxhöjd — räknar från det här
+     värdet. Ändras barens vaddring måste det här följa med. */
+  --header-h: 4.375rem;
 
   /* --- Rytm --- */
   --spacing-section: 7rem;
@@ -106,6 +110,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Utan den här landar varje ankare med sina översta 70 px bakom
+       den fixerade baren — rubriken man klickade sig till syns inte.
+       scroll-padding gäller både mjuk och direkt rullning, så den
+       ligger utanför reduced-motion-blocket: den handlar om var man
+       hamnar, inte om hur man tar sig dit. */
+    scroll-padding-top: calc(var(--header-h) + 1.25rem);
     -webkit-text-size-adjust: 100%;
   }
 
@@ -1005,7 +1015,7 @@
 
 /* Mobilpanelen scrollar själv i stället för att växa förbi rutan. */
 .nav__mobile {
-  max-height: calc(100dvh - 4.25rem);
+  max-height: calc(100dvh - var(--header-h));
   overflow-y: auto;
   overscroll-behavior: contain;
 }
