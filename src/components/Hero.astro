@@ -126,27 +126,11 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
         Illustration: exempel på hur svenska köpare formulerar sig när de
         frågar en AI. Frågorna är påhittade exempel, inte uppmätt trafik.
       </figcaption>
-      {/* Inzoomat på Norden.
-
-          scale beskär klotet i sidled — sfären blir bredare än
-          canvasen och kanterna går raka. Vid 1.25 syns kupolen
-          fortfarande upptill; vid 1.4 är silhuetten i praktiken en
-          rektangel och hela klotkänslan är borta. Gå inte högre.
-
-          mapSamples följer med uppåt: samma antal punkter utspridda
-          över en större yta tunnar ut kustlinjerna tills Skandinavien
-          inte går att känna igen.
-
-          sway är nedskruvad så att vaggningen håller sig kring Norden
-          i stället för att svepa dit där kanten är beskuren. */}
       <Globe
         markers={searches}
-        phi={4.05}
         theta={0.86}
-        sway={0.22}
-        scale={1.25}
         reveal={0.58}
-        mapSamples={32000}
+        mapSamples={22000}
         markerSize={0.02}
         dark={0}
         mapBrightness={2.2}

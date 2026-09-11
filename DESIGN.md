@@ -611,6 +611,12 @@ this page justifies that.
 
 Three traps here have all shipped as bugs once. Read them before touching it.
 
+**A globe whose colours will not resolve must not render.** `token()` returns
+`null` rather than a fallback, and `initGlobe` bails out to the same text list it
+uses when WebGL is missing. The old parser fell back to `[0, 0, 0]`, and since
+cobe tints the continent dots from `baseColor`, that produced a smooth black ball
+— which looks like a broken site, where the list does not.
+
 **Never parse a token's text.** The globe's colours come from the token layer,
 but `getComputedStyle(root).getPropertyValue("--color-brand-white")` returns
 `#fff` in a production build — Lightning CSS shortens it — and a parser that
@@ -627,14 +633,15 @@ screen rule that swaps `white-space: nowrap` for `normal` therefore needs
 `width: max-content` beside it, or its `max-width` never gets a say. Without it
 the stack grew tall enough to be cut off by the clip.
 
-**`scale` crops the sphere sideways — 1.25 is the ceiling.** Zooming makes the
-sphere wider than its canvas, so the silhouette goes straight down the sides.
-At 1.25 a dome is still visible across the top and it reads as a globe cropped
-by the section edge; at 1.4 the outline is effectively a rectangle and the whole
-object stops looking round. Raise `mapSamples` with `scale` — the same number of
-dots spread over a larger area thins the coastlines until Scandinavia is
-unrecognisable — and keep `sway` narrow so the rocking stays over the region
-being shown instead of swinging toward the cropped edge.
+**`scale` crops the sphere sideways. Zooming was tried and reverted.** Scale
+makes the sphere wider than its canvas, so the silhouette runs straight down
+both sides. At 1.25 a dome still shows across the top; at 1.4 the outline is
+effectively a rectangle and the object stops reading as a globe. 1.25 was shipped
+briefly to frame the Nordics and taken back out — the globe stays at `scale: 1`,
+round, cut only by the section edge below it. If it is ever zoomed again, 1.25 is
+the ceiling and `mapSamples` has to rise with it, because the same number of dots
+spread over a larger area thins the coastlines until Scandinavia is
+unrecognisable.
 
 **The clip needs label room at the top.** Labels hang above their markers, and
 spinning the globe brings northern cities to the top edge, so `.globe__clip`

@@ -155,7 +155,14 @@ const config = {
    * den som rgb(), vilket funkar för hex i alla längder, för rgb(),
    * för oklch() och för allt annat den kan.
    */
-  function token(name: string): [number, number, number] {
+  function token(name: string): [number, number, number] | null {
+    // Är variabeln inte definierad alls har stilmallen inte hunnit
+    // fram. Då finns ingen färg att läsa och globen ska inte byggas.
+    const declared = getComputedStyle(document.documentElement)
+      .getPropertyValue(name)
+      .trim();
+    if (!declared) return null;
+
     const probe = document.createElement("span");
     probe.style.cssText = `position:absolute;left:-9999px;color:var(${name})`;
     document.body.append(probe);
@@ -163,7 +170,7 @@ const config = {
     probe.remove();
 
     const parts = resolved.match(/[\d.]+/g);
-    if (!parts || parts.length < 3) return [0, 0, 0];
+    if (!parts || parts.length < 3) return null;
     return [
       Number(parts[0]) / 255,
       Number(parts[1]) / 255,
@@ -188,6 +195,17 @@ const config = {
     const base = token(cfg.baseToken);
     const marker = token(cfg.markerToken);
     const glow = token(cfg.glowToken);
+
+    /**
+     * Går någon färg inte att läsa: bygg ingen glob.
+     *
+     * Den gamla parsern föll tillbaka på [0,0,0] när den inte förstod
+     * värdet, och eftersom cobe färgar kontinentprickarna utifrån
+     * baseColor blev hela klotet ett svart, slätt klot. Ett svart klot
+     * ser ut som en trasig sajt; textlistan under gör det inte. Den
+     * här vägen är densamma som när WebGL saknas.
+     */
+    if (!base || !marker || !glow) return;
 
     let globe: ReturnType<typeof createGlobe> | null = null;
     let frame = 0;
