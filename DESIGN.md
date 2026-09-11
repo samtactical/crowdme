@@ -627,6 +627,15 @@ screen rule that swaps `white-space: nowrap` for `normal` therefore needs
 `width: max-content` beside it, or its `max-width` never gets a say. Without it
 the stack grew tall enough to be cut off by the clip.
 
+**`scale` crops the sphere sideways — 1.25 is the ceiling.** Zooming makes the
+sphere wider than its canvas, so the silhouette goes straight down the sides.
+At 1.25 a dome is still visible across the top and it reads as a globe cropped
+by the section edge; at 1.4 the outline is effectively a rectangle and the whole
+object stops looking round. Raise `mapSamples` with `scale` — the same number of
+dots spread over a larger area thins the coastlines until Scandinavia is
+unrecognisable — and keep `sway` narrow so the rocking stays over the region
+being shown instead of swinging toward the cropped edge.
+
 **The clip needs label room at the top.** Labels hang above their markers, and
 spinning the globe brings northern cities to the top edge, so `.globe__clip`
 carries `padding-top: 3.25rem` with `box-sizing: content-box` — the aspect ratio
