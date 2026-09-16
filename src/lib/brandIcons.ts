@@ -27,9 +27,6 @@ export const AI_SURFACES = {
   perplexity: { file: "perplexity", label: "Perplexity" },
   copilot: { file: "copilot", label: "Microsoft Copilot", short: "Copilot" },
   claude: { file: "claude", label: "Claude" },
-  grok: { file: "grok", label: "Grok" },
-  deepseek: { file: "deepseek", label: "DeepSeek" },
-  lechat: { file: "mistral", label: "Mistral Le Chat" },
 } as const;
 
 export type AiSurface = keyof typeof AI_SURFACES;

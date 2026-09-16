@@ -115,12 +115,13 @@ justera:
 - Bokningen frågar bara efter webbplats, namn och mejl. Steg 2 (mål, bransch,
   fritext) är helt valfritt — inget där får bli obligatoriskt utan att
   konverteringen mäts först.
-- Listan över AI-tjänster: tio ytor, definierade en gång i `AI_SURFACES`.
+- Listan över AI-tjänster: sju ytor, definierade en gång i `AI_SURFACES`.
   Hero-raden, det roterande ordet i rubriken och FAQ läser alla ur den
   listan, så de kan inte glida isär; `Analysis.astro` visar fem av dem som
-  grafik. Listan gick från sex till elva och sedan till tio på ägarens
-  begäran (Meta AI togs bort). Den utlovar att vi faktiskt tittar i alla
-  tio — ändra `AI_SURFACES`, inte kopian.
+  grafik. Listan gick från sex till elva, sedan till tio (Meta AI togs
+  bort) och sedan till sju (Grok, DeepSeek och Mistral Le Chat togs bort),
+  alla på ägarens begäran. Den utlovar att vi faktiskt tittar i alla
+  sju — ändra `AI_SURFACES`, inte kopian.
 
 ## Konverteringsmålet är ett bokat möte
 

@@ -27,7 +27,7 @@ const searches = [
 /**
  * AI-ytorna under knapparna. Raden säger vad vi mäter i — inte vem vi
  * samarbetar med och inte vilka som är kunder. Håll rubriken över raden
- * explicit; utan den blir tio logotyper en logotypvägg, och sådana är
+ * explicit; utan den blir sju logotyper en logotypvägg, och sådana är
  * förbjudna (AGENTS.md).
  */
 const surfaces = AI_SURFACE_ORDER;
@@ -101,7 +101,7 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
 
       <div class="mt-10 flex flex-col items-center md:mt-12">
         <p class="sr-only">Ytorna vi mäter er synlighet i</p>
-        <ul class="flex w-full max-w-[34rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 sm:gap-x-3">
+        <ul class="flex w-full max-w-[34rem] md:max-w-[48rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 sm:gap-x-3">
           {
             surfaces.map((name) => (
               <li class="surface" data-surface={name}>

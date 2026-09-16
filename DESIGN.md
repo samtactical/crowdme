@@ -524,7 +524,7 @@ with it.
 - **The H1 is aria-hidden where it rotates**, with the full list as `sr-only`
   text after it. A heading whose text changes under a screen reader is a
   genuine problem; a heading that reads "…syns i ChatGPT, Perplexity, Google
-  Gemini … och Mistral Le Chat" is not.
+  Gemini … och Claude" is not.
 - **`prefers-reduced-motion` stops the rotation entirely** — not just the
   transition. The headline holds the first word, which is a complete sentence.
 - **The timer stops when it is not being watched**: an IntersectionObserver on
