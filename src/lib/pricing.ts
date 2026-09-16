@@ -2,8 +2,9 @@
  * Crowdmes fyra tjänster, med priser.
  *
  * Priserna kommer från ägaren, inte från oss. AGENTS.md förbjuder
- * påhittade siffror — de här är uppgivna och märkta som vägledande,
- * precis som i underlaget ("Indicative price", "From"). Ändra aldrig en
+ * påhittade siffror — de här är uppgivna, och vägledande i underlaget
+ * ("Indicative price", "From"). Märkningen i copyn togs bort på ägarens
+ * begäran. Ändra aldrig en
  * siffra utan att ägaren har sagt det.
  *
  * Listan ligger här och inte i Pricing.astro eftersom tre ytor läser

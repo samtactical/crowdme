@@ -71,8 +71,9 @@ DESIGN.md                     ← designsystemet, källan för allt ovan
 
 ## Priserna i `lib/pricing.ts`
 
-Uppgivna av ägaren, inte framräknade av oss. De är märkta **vägledande** i
-copyn, precis som i underlaget ("Indicative price", "From").
+Uppgivna av ägaren, inte framräknade av oss. Underlaget kallar dem vägledande
+("Indicative price", "From"), men ordet står inte längre i copyn: ägaren
+bad att få det borttaget.
 
 Två avvikelser från underlaget, båda medvetna:
 
