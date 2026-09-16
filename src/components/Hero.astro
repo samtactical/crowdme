@@ -79,13 +79,11 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
         <span class="sr-only">{srList}.</span>
       </h1>
 
-      {/* Meningen definierar entiteten: vem, vad, för vem, var. Den är
-          skriven för att kunna citeras ordagrant av en AI — håll den
-          faktisk och fri från superlativ. */}
-      <p class="mx-auto mt-6 max-w-[36rem] text-lg leading-relaxed text-ink-soft">
-        Crowdme är en AI SEO-byrå i Stockholm. Vi hjälper svenska
-        B2B-företag att synas och citeras när köpare frågar ChatGPT, Google
-        AI Overviews och Perplexity om leverantörer.
+      {/* Vem och var bärs av etiketten ovanför rubriken ("AI SEO-byrå i
+          Stockholm"); den här meningen bär vad vi gör. */}
+      <p class="mx-auto mt-6 max-w-[34rem] text-lg leading-relaxed text-ink-soft">
+        Era köpare frågar AI innan de googlar. Crowdme gör ert företag
+        lätthittat, lättförstått och lättciterat i AI-svar.
       </p>
 
       <div class="mt-9 flex flex-col items-center justify-center gap-2 sm:flex-row">
@@ -99,13 +97,20 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
           href="#analysen"
           class="inline-flex w-full items-center justify-center rounded-md border border-line-strong px-5 py-3 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-alt hover:text-ink sm:w-auto"
         >
-          Så arbetar vi
+          Hur det fungerar
         </a>
       </div>
 
+      <p class="mt-3 text-[13px] text-ink-soft">
+        Snabbt, gratis och utan bindning.
+      </p>
+
+      {/* md:max-w-[30rem] lägger de sju ytorna på två rader (4 + 3) på
+          desktop, på ägarens begäran. Ändras antalet ytor måste bredden
+          provas om. */}
       <div class="mt-10 flex flex-col items-center md:mt-12">
         <p class="sr-only">Ytorna vi mäter er synlighet i</p>
-        <ul class="flex w-full max-w-[34rem] md:max-w-[48rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 sm:gap-x-3">
+        <ul class="flex w-full max-w-[34rem] md:max-w-[30rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 sm:gap-x-3">
           {
             surfaces.map((name) => (
               <li class="surface" data-surface={name}>

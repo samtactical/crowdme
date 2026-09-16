@@ -1,0 +1,181 @@
+---
+import Icon from "../Icon.astro";
+import { TIERS } from "../../lib/pricing";
+
+/**
+ * "Vilket paket passar oss?" — tre korta frågor som pekar på ett paket.
+ *
+ * Frivillig med flit: den ligger stängd under priskorten och ska aldrig
+ * stå i vägen för bokningen. Förslaget är just ett förslag, och texten
+ * säger att upplägget bestäms på mötet.
+ *
+ * Svarsalternativen på fråga 2 är ägarens egna "Passar för"-rader i
+ * lib/pricing.ts, omskrivna till vi-form. Inga påhittade gränser som
+ * antal anställda eller omsättning.
+ *
+ * Logiken, i ordning:
+ *   1. Vill de driva arbetet själva       → AI Visibility Audit
+ *   2. Flera marknader / reglerad bransch → Enterprise
+ *   3. Tydlig kategori, eller vill ha hjälp med innehåll → AI Search Growth
+ *   4. Annars                              → AI SEO Foundation
+ *
+ * Alla fyra resultat renderas vid bygget; skriptet växlar bara `hidden`.
+ * Utan JS går frågorna att klicka i men inget förslag visas, och
+ * priskorten ovanför bär fortfarande allt.
+ */
+const questions = [
+  {
+    name: "arbete",
+    legend: "Hur vill ni arbeta med AI-synlighet?",
+    options: [
+      { value: "sjalva", label: "Vi vill ha en analys och driva arbetet själva" },
+      { value: "lopande", label: "Vi vill att ni gör arbetet löpande" },
+    ],
+  },
+  {
+    name: "lage",
+    legend: "Vad beskriver er bäst?",
+    options: [
+      { value: "fokuserad", label: "Mindre bolag eller en fokuserad webbplats" },
+      { value: "kategori", label: "Vi konkurrerar i en tydlig kategori" },
+      { value: "stor", label: "Flera marknader, varumärken eller en reglerad bransch" },
+    ],
+  },
+  {
+    name: "innehall",
+    legend: "Vill ni ha hjälp att ta fram innehåll och omnämnanden?",
+    options: [
+      { value: "nej", label: "Nej, det har vi resurser för" },
+      { value: "ja", label: "Ja, gärna" },
+    ],
+  },
+];
+---
+
+<details class="group card-soft mt-3" data-finder>
+  <summary class="flex cursor-pointer list-none items-center justify-between gap-6 p-6 marker:hidden">
+    <span>
+      <span class="flex items-center gap-2.5 text-[1.0625rem] font-medium">
+        <Icon name="compass" weight="light" class="h-5 w-5 text-accent-ink" />
+        Osäkra på vilket paket som passar?
+      </span>
+      <span class="mt-1 block text-sm leading-relaxed text-ink-soft">
+        Svara på tre korta frågor så föreslår vi ett.
+      </span>
+    </span>
+    <span
+      aria-hidden="true"
+      class="grid h-8 w-8 shrink-0 place-items-center rounded-pill border border-line-strong text-ink-soft transition-transform duration-300 ease-out group-open:rotate-45"
+    >
+      <Icon name="plus" weight="bold" class="h-3.5 w-3.5" />
+    </span>
+  </summary>
+
+  <form
+    class="grid gap-8 border-t border-line p-6 lg:grid-cols-[1.35fr_1fr] lg:gap-10"
+    data-finder-form
+    onsubmit="return false"
+  >
+    <div class="space-y-6">
+      {
+        questions.map((q, i) => (
+          <fieldset data-finder-question={q.name}>
+            <legend class="text-sm font-medium">
+              <span class="text-ink-soft">{i + 1}.</span> {q.legend}
+            </legend>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {q.options.map((o) => (
+                <label class="chip">
+                  <input type="radio" name={q.name} value={o.value} />
+                  <span class="chip__mark" aria-hidden="true">
+                    <Icon name="check" weight="bold" class="h-2.5 w-2.5" />
+                  </span>
+                  {o.label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))
+      }
+    </div>
+
+    <div class="rounded-md bg-paper-alt p-5" aria-live="polite">
+      <p class="text-sm leading-relaxed text-ink-soft" data-finder-empty>
+        Svara på frågorna så visas vårt förslag här.
+      </p>
+
+      {
+        TIERS.map((tier) => (
+          <div hidden data-finder-result={tier.id}>
+            <p class="eyebrow">Vårt förslag</p>
+            <p class="mt-3 text-[1.0625rem] font-medium">{tier.name}</p>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{tier.summary}</p>
+            <p class="mt-4 text-xl font-medium tracking-tight">
+              {tier.price} <span class="text-[13px] font-normal text-ink-soft">{tier.unit}</span>
+            </p>
+            <p class="mt-4 text-[13px] leading-relaxed text-ink-soft">
+              Ett förslag utifrån era svar. Vilket upplägg som passar bestämmer
+              vi tillsammans på mötet.
+            </p>
+            <a
+              href="/boka"
+              class="mt-5 inline-flex items-center gap-1.5 rounded-md bg-solid px-4 py-2.5 text-sm font-medium text-ink-invert transition-colors hover:bg-solid-hover"
+            >
+              Boka ett möte
+              <Icon name="arrow-right" class="h-3.5 w-3.5" />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </form>
+</details>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-finder-form]");
+
+  if (form) {
+    const value = (name: string) =>
+      form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value;
+
+    const question = (name: string) =>
+      form.querySelector<HTMLElement>(`[data-finder-question="${name}"]`);
+
+    function pick(): string | null {
+      const arbete = value("arbete");
+      if (!arbete) return null;
+      if (arbete === "sjalva") return "audit";
+
+      const lage = value("lage");
+      if (!lage) return null;
+      if (lage === "stor") return "enterprise";
+      if (lage === "kategori") return "growth";
+
+      const innehall = value("innehall");
+      if (!innehall) return null;
+      return innehall === "ja" ? "growth" : "foundation";
+    }
+
+    function update() {
+      // Driver de arbetet själva spelar resten av frågorna ingen roll —
+      // dölj dem hellre än att låta dem se ut att påverka förslaget.
+      const selfDriven = value("arbete") === "sjalva";
+      const lage = value("lage");
+      const lageQ = question("lage");
+      const innehallQ = question("innehall");
+      if (lageQ) lageQ.hidden = selfDriven;
+      if (innehallQ) {
+        innehallQ.hidden = selfDriven || lage === "stor" || lage === "kategori";
+      }
+
+      const chosen = pick();
+      form
+        .querySelectorAll<HTMLElement>("[data-finder-result]")
+        .forEach((el) => (el.hidden = el.dataset.finderResult !== chosen));
+      const empty = form.querySelector<HTMLElement>("[data-finder-empty]");
+      if (empty) empty.hidden = chosen !== null;
+    }
+
+    form.addEventListener("change", update);
+  }
+</script>

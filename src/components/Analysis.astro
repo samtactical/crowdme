@@ -51,7 +51,7 @@ const fixes = [
   { icon: "article", label: "Omskrivna nyckelsidor" },
   { icon: "brackets-curly", label: "Strukturerad data (schema)" },
   { icon: "robot", label: "Tekniska hinder för AI-crawlare" },
-  { icon: "link-simple", label: "Externa omnämnanden" },
+  { icon: "note-pencil", label: "Innehåll för era köpfrågor" },
 ];
 
 /** Det som rapporteras varje månad. Inga värden, bara vad som mäts. */
@@ -86,13 +86,14 @@ const coverage = [
     <div class="max-w-2xl" data-reveal-group>
       <Eyebrow data-reveal>Så arbetar vi</Eyebrow>
       <h2 class="display-2 mt-8" data-reveal>
-        AI SEO i fyra steg.<br /><span class="text-ink-faint">Från mätning till citerbar webbplats.</span>
+        AI SEO i fyra steg.<br /><span class="text-ink-faint">Från att knappt synas till att bli nämnda.</span>
       </h2>
       <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
-        Vi mäter först hur ni syns i AI-svar idag. Sedan åtgärdar vi det som
-        hindrar AI-tjänsterna från att nämna er, och följer upp varje månad.
-        Arbetet görs på era köpfrågor och er bransch, inte med en generell
-        rapport ur ett verktyg.
+        Först gör vi en grundlig analys av hur ni syns i AI-svar idag. Sedan
+        åtgärdar vi det som hindrar AI-tjänsterna från att nämna och citera er.
+        Varje månad följer vi upp, så att ni fortsätter att synas. Arbetet
+        utgår från era köpfrågor, er bransch och ert varumärke, så att ni vet
+        exakt vad som behöver göras.
       </p>
     </div>
 
@@ -121,7 +122,8 @@ const coverage = [
           <p class="mt-3 text-sm leading-relaxed text-ink-soft">
             Vi ställer de frågor era köpare ställer till ChatGPT, Google AI
             Overviews och AI Mode, Gemini, Perplexity, Copilot och Claude. Vi dokumenterar
-            om ni nämns, hur ni beskrivs och vilka källor som citeras.
+            om ni nämns, hur ni beskrivs och vilka källor som citeras, fråga
+            för fråga.
           </p>
         </div>
       </article>
@@ -139,8 +141,10 @@ const coverage = [
             2. Vi kartlägger vilka som nämns i stället
           </h3>
           <p class="mt-3 text-sm leading-relaxed text-ink-soft">
-            Ni ser vilka konkurrenter AI-tjänsterna föreslår på era frågor och
-            vilka källor modellerna lutar sig mot när de gör det.
+            Ni ser vilka konkurrenter AI-tjänsterna föreslår på era frågor,
+            vilka källor modellerna lutar sig mot och vad konkurrenterna gör
+            annorlunda. Ni får en prioriterad åtgärdsplan för hur ni tar er
+            in i svaren.
           </p>
         </div>
       </article>
@@ -164,9 +168,10 @@ const coverage = [
             3. Vi granskar er webbplats
           </h3>
           <p class="mt-3 text-sm leading-relaxed text-ink-soft">
-            Vi går igenom hur era fakta är formulerade, hur innehållet är
-            strukturerat och vilka tekniska hinder som stoppar AI-crawlare
-            från att läsa sajten.
+            Vi går igenom hur er webbplats och era sociala kanaler beskriver
+            er, hur innehållet är strukturerat och vilka tekniska, språkliga
+            och strukturella hinder som gör det svårt för AI att läsa och
+            förstå er.
           </p>
         </div>
       </article>
@@ -184,9 +189,10 @@ const coverage = [
             <p class="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">
               Vi skriver om nyckelsidor så att de blir lätta att citera, lägger
               till strukturerad data (schema), tar bort tekniska hinder för
-              AI-crawlare och bygger externa omnämnanden. Varje månad
-              rapporterar vi synlighet, citeringsfrekvens och share of voice
-              mot utgångsläget.
+              AI-crawlare och skapar innehåll för de frågor era kunder
+              ställer. Varje månad rapporterar vi synlighet, citeringsfrekvens
+              och share of voice, jämfört med era konkurrenter och med
+              föregående månad.
             </p>
           </div>
 
@@ -216,7 +222,7 @@ const coverage = [
                       <li class="border-b border-line-invert py-2 text-[13px] text-ink-invert last:border-b-0">
                         {item}
                         <span class="mt-0.5 block text-[11px] text-ink-invert-soft">
-                          mot baseline
+                          mot konkurrenter och förra månaden
                         </span>
                       </li>
                     ))

@@ -28,15 +28,15 @@ const enterprise = price("enterprise");
 const faqs = [
   {
     q: "Vad är AI SEO?",
-    a: `AI SEO, eller AI Search Optimization, är arbetet med att göra ett företag synligt och citerat i AI-genererade svar. Det gäller bland annat ${surfaceList}. Målet är att AI-tjänsten nämner företaget, beskriver det korrekt och hänvisar till rätt källor.`,
+    a: `AI SEO, eller AI Search Optimization, är arbetet med att göra ett företag synligt och citerat i AI-genererade svar. Det gäller bland annat ${surfaceList}, men även andra AI-tjänster. Målet är att AI-tjänsten nämner företaget, beskriver det korrekt och hänvisar till rätt källor. Det är det arbetet Crowdme gör.`,
   },
   {
     q: "Vad är GEO (Generative Engine Optimization)?",
-    a: "GEO står för Generative Engine Optimization: optimering för sökmotorer som svarar med genererad text i stället för en lista med länkar. I praktiken används GEO, AI SEO och AI Search Optimization om samma arbete.",
+    a: "GEO står för Generative Engine Optimization: optimering för tjänster som svarar med genererad text i stället för en lista med länkar. Det gäller AI-sökningar som ChatGPT Search, Perplexity och Google AI Mode, och AI-webbläsare som Perplexitys Comet och OpenAIs ChatGPT Atlas. Begreppen GEO, AI SEO och AI Search Optimization används ofta om samma arbete.",
   },
   {
     q: "Vad är skillnaden mellan SEO och AI SEO?",
-    a: "Klassisk SEO optimerar för placeringar och klick i Googles resultatlista. AI SEO optimerar för att bli nämnd och citerad i AI-tjänsternas svar. Grunden överlappar — teknik, struktur och innehåll — men AI SEO lägger till entitetsoptimering, citerbara faktapåståenden, externa omnämnanden och mätning av AI-synlighet.",
+    a: "Klassisk SEO optimerar för placeringar och klick i Googles resultatlista, och är fortfarande viktigt. AI SEO optimerar för att bli nämnd och citerad i AI-tjänsternas svar. Grunden överlappar — teknik, struktur och innehåll — men AI SEO lägger till entitetsoptimering, citerbara faktapåståenden, externa omnämnanden och mätning av AI-synlighet. Crowdme arbetar med båda.",
   },
   {
     q: "Hur syns man i ChatGPT och Google AI Overviews?",
@@ -48,35 +48,31 @@ const faqs = [
   },
   {
     q: "Vilka företag arbetar Crowdme med?",
-    a: "Crowdme arbetar med svenska B2B-företag, främst medelstora och större bolag, där köpare jämför leverantörer innan de tar kontakt. Vi finns i Stockholm och tar uppdrag i hela Sverige.",
+    a: "Crowdme arbetar med svenska små och medelstora företag, och med större organisationer genom ett skräddarsytt upplägg. Vi finns i Stockholm och tar uppdrag i hela Sverige.",
   },
   {
     q: "Vad kostar AI SEO?",
-    a: `${audit.name} kostar ${audit.price} kr som engångsuppdrag. Löpande AI SEO kostar ${foundation.price.toLowerCase()} ${foundation.unit} (${foundation.name}) eller ${growth.price.toLowerCase()} ${growth.unit} (${growth.name}). ${enterprise.name} offereras ${enterprise.unit}. Alla priser är vägledande och exklusive moms.`,
+    a: `${audit.name} kostar ${audit.price} kr som engångsuppdrag. Löpande AI SEO kostar ${foundation.price.toLowerCase()} ${foundation.unit} med ${foundation.name} och ${growth.price.toLowerCase()} ${growth.unit} med ${growth.name}. ${enterprise.name} kostar ${enterprise.price.toLowerCase()} kr/mån och offereras efter behov. Alla priser är vägledande och exklusive moms.`,
   },
   {
     q: "Vad kostar ett första möte?",
-    a: "Ingenting. Vi bokar det för att se om vi passar er — och ni oss. Ni får våra tankar om er synlighet oavsett om ni väljer att gå vidare.",
+    a: "Ingenting. På mötet lär vi känna ert företag och vad ni vill uppnå, och berättar hur vi kan hjälpa er att synas i AI-svar. Ni bestämmer själva om ni vill gå vidare.",
   },
   {
-    q: "Kan ni garantera att vi syns i ChatGPT?",
-    a: "Nej. Ingen kan garantera vad en AI-tjänst svarar. Vi mäter ert utgångsläge, åtgärdar det som påverkar synligheten och rapporterar utvecklingen mot utgångsläget varje månad.",
+    q: "Kan ni garantera att vi syns i AI?",
+    a: "Ingen kan garantera exakt vad en AI-tjänst svarar, och den som lovar det lovar för mycket. Det vi kan lova är ett tydligt arbetssätt: vi mäter var ni står, åtgärdar det som påverkar synligheten och visar varje månad hur ni ligger till jämfört med konkurrenterna.",
   },
   {
     q: "Hur lång tid tar det innan något händer?",
-    a: "Det varierar med hur ofta modellerna uppdaterar sitt underlag och hur er sajt ser ut idag. Vi lovar inga datum — vi mäter utgångsläget först och följer upp mot det.",
+    a: "Tekniska hinder och otydliga sidor kan åtgärdas direkt. AI-tjänster som söker på webben, som ChatGPT Search och Perplexity, läser webben löpande och kan plocka upp förändringar snabbt. Modellernas inbyggda kunskap uppdateras mer sällan. Därför mäter vi ert utgångsläge först och visar utvecklingen varje månad.",
   },
   {
     q: "Behöver vi byta webbplats?",
-    a: "Nästan aldrig. Det mesta av arbetet görs på den sajt ni redan har, med det innehåll ni redan har. Om plattformen står i vägen säger vi det rakt ut.",
+    a: "Nej. Arbetet görs på den webbplats ni redan har, med det innehåll ni redan har. Vi fyller på och justerar det som behövs.",
   },
   {
     q: "Hur skiljer sig det här från vår nuvarande SEO-byrå?",
-    a: "Det ersätter inte SEO — det ligger bredvid. Vi jobbar gärna mot er befintliga byrå och lämnar åtgärderna i en form de kan genomföra.",
-  },
-  {
-    q: "Vad gör ni med våra uppgifter?",
-    a: "Vi använder dem bara för att boka och förbereda mötet, och för att kontakta er om det. Inga uppgifter säljs vidare, och ni kan när som helst be oss radera dem.",
+    a: "AI SEO ersätter inte SEO — det ligger bredvid. Vi arbetar gärna tillsammans med er befintliga byrå och lämnar åtgärderna i en form de kan genomföra. Vill ni samla allt på ett ställe gör Crowdme både klassisk SEO och AI SEO.",
   },
 ];
 
@@ -95,10 +91,10 @@ const faqSchema = {
   <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
     <div data-reveal-group>
       <Eyebrow data-reveal>Vanliga frågor</Eyebrow>
-      <h2 class="display-2 mt-8" data-reveal>Frågor om AI SEO och GEO.</h2>
+      <h2 class="display-2 mt-8" data-reveal>Frågor om AI SEO, GEO och Crowdme.</h2>
       <p class="mt-6 max-w-xs text-sm leading-relaxed text-ink-soft" data-reveal>
-        Hittar ni inte svaret här tar vi det gärna på mötet — ni
-        bestämmer er efteråt.
+        Hittar ni inte svaret här tar vi det gärna på mötet, eller mejla oss
+        på <a href="mailto:hej@crowdme.se" class="text-ink underline decoration-line-strong underline-offset-4 transition-colors hover:decoration-ink">hej@crowdme.se</a>.
       </p>
     </div>
 

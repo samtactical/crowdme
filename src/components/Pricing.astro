@@ -1,6 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 import Eyebrow from "./ui/Eyebrow.astro";
+import PackageFinder from "./ui/PackageFinder.astro";
 
 import { TIERS } from "../lib/pricing";
 
@@ -14,13 +15,14 @@ const tiers = TIERS;
     <div class="max-w-2xl" data-reveal-group>
       <Eyebrow data-reveal>Tjänster och priser</Eyebrow>
       <h2 class="display-2 mt-8" data-reveal>
-        Fyra sätt att arbeta med AI SEO.<br />
+        Ett upplägg för varje läge.<br />
         <span class="text-ink-faint">Med priserna utskrivna.</span>
       </h2>
       <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
-        En engångsanalys, två löpande uppdrag och ett skräddarsytt upplägg för
-        större organisationer. Alla uppdrag börjar med ett möte där vi går
-        igenom hur ni syns i AI-svar idag och vilket upplägg som passar er.
+        En engångsanalys som ni kan arbeta vidare med själva, två löpande
+        uppdrag med personlig kontakt och ett skräddarsytt upplägg för större
+        organisationer. Alla uppdrag börjar med ett möte där vi lär känna ert
+        företag och hittar det upplägg som passar er.
       </p>
     </div>
 
@@ -44,9 +46,11 @@ const tiers = TIERS;
                     : "card-soft"
               }`}
             >
+              {/* Inte "Vanligast": det påstår att kunder har valt paketet,
+                  och Crowdme har inga kunder att räkna på (AGENTS.md). */}
               {featured && (
                 <span class="absolute -top-2.5 left-6 rounded-sm bg-accent px-2 py-0.5 text-[11px] font-medium text-accent-ink">
-                  Vanligast
+                  Rekommenderas
                 </span>
               )}
 
@@ -70,11 +74,14 @@ const tiers = TIERS;
                 {tier.summary}
               </p>
               <p
-                class={`mt-2 text-[13px] leading-snug xl:min-h-[2.5rem] ${
+                class={`mt-2 text-[13px] leading-snug xl:min-h-[4.25rem] ${
                   dark ? "text-ink-invert-soft" : "text-ink-soft"
                 }`}
               >
-                <span class="sr-only">Passar för: </span>{tier.bestFor}
+                <span class={`block text-[11px] font-medium ${dark ? "text-ink-invert" : "text-ink"}`}>
+                  Passar för
+                </span>
+                {tier.bestFor}
               </p>
 
               <p
@@ -136,6 +143,8 @@ const tiers = TIERS;
         })
       }
     </div>
+
+    <PackageFinder />
 
     <p class="mt-6 text-[13px] text-ink-soft">
       Alla priser är exklusive moms och vägledande. Ingen bindningstid utöver

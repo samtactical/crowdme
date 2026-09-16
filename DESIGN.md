@@ -395,11 +395,12 @@ negotiable:
 1. Every figure must be findable in the linked source. No rounding up, no
    "roughly", no figure carried over from memory.
 2. No figure may describe Crowdme's own results, clients or performance.
-3. Source, year and population must be printed somewhere on the surface, and
-   the source link visible and real (`target="_blank"` +
-   `rel="noopener noreferrer"`). They now sit once on the source line rather
-   than repeating under every figure — but they are not optional, and a figure
-   without its population is a figure that can be read to mean anything.
+3. Source and year must be printed on the surface, and the source link
+   visible and real (`target="_blank"` + `rel="noopener noreferrer"`). They
+   sit once on the source line; the year lives in the report's name. The
+   population ("svenskar 8 år och äldre") was removed from that line at the
+   owner's request. Keep each figure's own scope label ("av svenskarna", "av
+   AI-användarna") — without it a figure can be read to mean anything.
 4. **Measured values only — never forecasts.** Gartner's widely-quoted
    prediction that search volume would fall 25 % by 2026 did not happen, and a
    falsified forecast on a marketing page is worse than no figure at all.

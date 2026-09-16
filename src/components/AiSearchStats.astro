@@ -10,8 +10,9 @@ import Icon from "./Icon.astro";
  *
  *   1. Varje siffra ska gå att slå upp i den länkade källan.
  *   2. Ingen siffra får handla om Crowdmes egna resultat eller kunder.
- *   3. Källa, år och urval ska stå utskrivet — numera samlat på
- *      källraden i stället för att upprepas på varje kort.
+ *   3. Källa och år ska stå utskrivet på källraden. Året ligger i
+ *      rapportens namn. Urvalet ("svenskar 8 år och äldre") togs bort ur
+ *      den synliga raden på ägarens begäran — det står kvar i källan.
  *   4. Prognoser används inte — bara uppmätta värden. (Gartners
  *      förutsägelse om 25 % tapp i söktrafik till 2026 slog inte in
  *      och ska inte citeras här.)
@@ -60,13 +61,16 @@ const stats = [
   <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-24">
     <div class="max-w-3xl" data-reveal-group>
       <h2 class="display-2 text-ink-invert" data-reveal>
-        AI-sökningen är inte på väg.<br />
-        <span class="text-ink-invert-soft">Den är redan här.</span>
+        Idag söker kunderna annorlunda.<br />
+        <span class="text-ink-invert-soft">Halka inte efter.</span>
       </h2>
 
+      {/* "sökmotor", inte "Google": källan säger sökmotor, och siffran
+          måste gå att slå upp ordagrant (DESIGN.md §7). */}
       <p class="mt-6 text-lg leading-relaxed text-ink-invert-soft" data-reveal>
         Var femte svensk ställer sina frågor till en AI i stället för att
-        använda en sökmotor. Det är där svaret om er bransch formuleras.
+        använda en sökmotor. Hur ni syns där kan avgöra om ni får kunden —
+        eller om konkurrenten får den.
       </p>
     </div>
 
@@ -98,7 +102,7 @@ const stats = [
     </dl>
 
     <p class="mt-6 text-right text-[12px] text-ink-invert-soft">
-      Svenskar 8 år och äldre, 2025. Källa:{" "}
+      Källa:{" "}
       <a
         href={source.href}
         target="_blank"

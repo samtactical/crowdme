@@ -143,14 +143,31 @@ AI Overviews". Tre saker bär det:
 Påståenden i den copyn som är affärsbeslut och måste stämma:
 
 - Crowdme **finns i Stockholm** och tar uppdrag i hela Sverige.
-- Målgruppen är **främst medelstora och större** svenska B2B-bolag. Paketet
-  AI SEO Foundation säger samtidigt "Mindre bolag" (ägarens underlag).
+- Målgruppen är **svenska små och medelstora företag**, och större
+  organisationer via Enterprise (ägarens formulering i FAQ).
+- **Crowdme gör även klassisk SEO.** Problemsektionen, FAQ och schema-datan
+  säger det, men inget paket i `lib/pricing.ts` nämner SEO. Lägg till det i
+  paketen eller i en egen rad innan lansering.
 - **Steg 1–2 ingår i AI Visibility Audit, steg 3–4 är det löpande arbetet**
-  (under processen i `Analysis.astro`). Tekniska granskningen ligger alltså i
-  Foundation, som har "Entitets- och teknikgenomgång".
-- "Kan ni garantera att vi syns i ChatGPT? Nej." (FAQ)
-- Etiketten **"Vanligast"** på AI Search Growth antyder att kunder har valt
-  den. Crowdme har inga kunder än — byt eller ta bort den före lansering.
+  (under processen i `Analysis.astro`). Steg 3 omfattar numera även sociala
+  kanaler, och steg 4 skapar innehåll och rapporterar mot konkurrenter och
+  föregående månad.
+- "Ingen kan garantera exakt vad en AI-tjänst svarar" (FAQ).
+- FAQ nämner **Comet** (Perplexity) och **ChatGPT Atlas** (OpenAI) som
+  exempel på AI-webbläsare. Kontrollera att båda fortfarande finns.
+- Etiketten över AI Search Growth är **"Rekommenderas"**, inte "Vanligast".
+  "Vanligast" påstod att kunder har valt paketet, och Crowdme har inga kunder
+  att räkna på.
+- **Priset för AI Visibility Audit** står kvar som spannet 5 000–10 000 kr.
+  Ägaren vill ha ett fast pris (eller startavgift + rapport) men har inte
+  angett siffran. Den får inte hittas på.
+- Mötet beskrivs som **ett första samtal**, inte som en genomgång av er
+  synlighet — ägarens beslut, så att CTA:n inte lovar det paketen levererar.
+
+**Paketväljaren** (`ui/PackageFinder.astro`) ligger stängd under priskorten.
+Tre frågor ger ett förslag; logiken står överst i filen och svaren på fråga 2
+är paketens egna "Passar för"-rader. Den ändrar inga priser och bokar
+ingenting — den länkar till `/boka` som alla andra CTA:er.
 
 ## Konverteringsmålet är ett bokat möte
 
@@ -180,8 +197,9 @@ källan i sidfoten på sektionen:
 | 21 % | "drygt var femte svensk ställer frågor till ett AI-verktyg istället för att använda en sökmotor" |
 | 50 %+ | "bland de som använder AI-verktyg är det drygt hälften" |
 
-Urvalet (svenskar 8 år och äldre) och året står på källraden i sektionen, inte
-under varje siffra. Flyttar du den raden måste kvalificeringen med.
+Källan och året (i rapportens namn) står på källraden i sektionen. Urvalet
+(svenskar 8 år och äldre) togs bort ur den synliga raden på ägarens begäran;
+det står i källan och i tabellen ovan.
 
 Det här är marknadsdata om svenskarnas beteende — **inte** Crowdmes resultat,
 och därför inget brott mot förbudet mot påhittade mätvärden i `AGENTS.md`.
@@ -192,36 +210,13 @@ Reglerna för ytan står i `DESIGN.md` §7. Två saker att hålla ögonen på:
 - **Använd inte Gartners prognos** om 25 % tapp i söktrafik till 2026. Den
   slog inte in, och en falsifierad prognos skadar mer än den övertygar.
 
-## Jämförelsematrisen krockar med ett FAQ-svar
+## Jämförelsematrisen och FAQ om SEO-byrån
 
-`Comparison.astro` visar att arbetet med AI-synlighet omfattar **allt** som
-klassisk SEO gör, plus sju rader till. Det positionerar tjänsten som en
-ersättare.
-
-FAQ-svaret "Hur skiljer sig det här från vår nuvarande SEO-byrå?" säger
-tvärtom: *"Det ersätter inte SEO — det ligger bredvid. Vi jobbar gärna mot er
-befintliga byrå."*
-
-Båda står på samma sida. Välj en linje innan lansering — antingen tas de rader
-bort ur matrisen där ni inte gör SEO-arbetet själva, eller så skrivs
-FAQ-svaret om. Jag har inte valt åt er, eftersom det är ett
-positioneringsbeslut och `README` listar FAQ-raden som ett affärslöfte.
-
-## Påståenden som tillkom i analyssektionen
-
-Två kort i bentot beskriver arbetet mer konkret än sajten gjorde tidigare.
-Inget av dem visar siffror, men båda är löften som bör bekräftas:
-
-1. **"Teknisk granskning av er webbplats"** — citerbara faktapåståenden,
-   struktur och rubriker, teknik som blockerar läsning.
-2. **"Vi åtgärdar och följer upp"** — omskrivna nyckelsidor, strukturerad data
-   (schema), tekniska hinder för AI-crawlare, externa omnämnanden, och
-   månadsrapportering av synlighet, citeringsfrekvens och share of voice mot
-   baseline.
-
-**Observera:** punkt 2 beskriver det löpande uppdraget, inte den kostnadsfria
-analysen — men kortet ligger i sektionen "Steg 2 · Analysen". Ligger de kvar
-sida vid sida bör det framgå tydligare var gränsen går.
+Tidigare krockade de: matrisen visade att arbetet omfattar allt klassisk SEO
+gör, medan FAQ sa att det bara ligger bredvid. Ägaren har valt linje —
+Crowdme gör både klassisk SEO och AI SEO, och arbetar gärna tillsammans med en
+befintlig byrå. FAQ-svaret och problemsektionen säger nu det, så matrisen
+stämmer.
 
 ## Ikoner
 

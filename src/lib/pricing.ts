@@ -22,13 +22,14 @@ export const TIERS = [
     name: "AI Visibility Audit",
     kind: "Engångsuppdrag",
     summary:
-      "En analys av hur ni syns i AI-svar idag, med en prioriterad åtgärdsplan.",
-    bestFor: "Företag som vill veta var de står innan de investerar löpande.",
+      "En analys av hur ni syns i AI-svar idag, hur era konkurrenter syns och en prioriterad åtgärdsplan.",
+    bestFor:
+      "Företag som vill veta var de står innan de investerar löpande, eller som vill driva arbetet själva.",
     price: "5 000–10 000",
     unit: "kr · engångs",
     features: [
       "Genomgång av er synlighet i AI-svar",
-      "Jämförelse mot konkurrenter",
+      "Konkurrensanalys",
       "Prioriterad åtgärdsplan",
     ],
     tone: "plain",
@@ -75,8 +76,8 @@ export const TIERS = [
     summary:
       "Ett skräddarsytt upplägg för flera marknader, varumärken eller reglerade branscher.",
     bestFor: "Större, flermarknads- eller reglerade varumärken.",
-    price: "Offert",
-    unit: "från 40 000 kr/mån",
+    price: "Från 40 000",
+    unit: "kr/mån · offert",
     features: [
       "Skräddarsydd strategi",
       "Implementationsstöd",
