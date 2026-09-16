@@ -56,7 +56,7 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
     data-reveal-group
   >
     <div class="text-center" data-reveal>
-      <Eyebrow align="center" rule={false}>AI-synlighet för svensk B2B</Eyebrow>
+      <Eyebrow align="center" rule={false}>AI SEO-byrå i Stockholm för svensk B2B</Eyebrow>
 
       <h1 class="display-1 mt-5 text-balance">
         <span class="block">Bli företaget som syns i</span>
@@ -79,9 +79,13 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
         <span class="sr-only">{srList}.</span>
       </h1>
 
-      <p class="mx-auto mt-6 max-w-[34rem] text-lg leading-relaxed text-ink-soft">
-        Era köpare frågar ChatGPT innan de googlar. Där finns inga tio blå
-        länkar — bara ett svar, med ett fåtal namn i.
+      {/* Meningen definierar entiteten: vem, vad, för vem, var. Den är
+          skriven för att kunna citeras ordagrant av en AI — håll den
+          faktisk och fri från superlativ. */}
+      <p class="mx-auto mt-6 max-w-[36rem] text-lg leading-relaxed text-ink-soft">
+        Crowdme är en AI SEO-byrå i Stockholm. Vi hjälper svenska
+        B2B-företag att synas och citeras när köpare frågar ChatGPT, Google
+        AI Overviews och Perplexity om leverantörer.
       </p>
 
       <div class="mt-9 flex flex-col items-center justify-center gap-2 sm:flex-row">
@@ -95,7 +99,7 @@ const srList = `${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
           href="#analysen"
           class="inline-flex w-full items-center justify-center rounded-md border border-line-strong px-5 py-3 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-alt hover:text-ink sm:w-auto"
         >
-          Vad vi tittar på
+          Så arbetar vi
         </a>
       </div>
 

@@ -2,14 +2,69 @@
 import Icon from "./Icon.astro";
 import Eyebrow from "./ui/Eyebrow.astro";
 
+import { TIERS } from "../lib/pricing";
+import { AI_SURFACE_ORDER, AI_SURFACES } from "../lib/brandIcons";
+
+/**
+ * Svaren är skrivna för att kunna citeras var för sig av en AI: första
+ * meningen svarar på frågan, resten ger fakta. Ingen mening får luta sig
+ * mot en annan fråga ("som ovan"), och inga superlativ.
+ *
+ * De tre första frågorna definierar begreppen, eftersom det är de
+ * sökningarna ("vad är GEO") som både Google och AI-tjänsterna besvarar
+ * med ett utdrag. Samma lista blir FAQPage-data längst ned.
+ *
+ * Tjänstelistan och priserna läses ur lib/ — skriv aldrig in dem för hand.
+ */
+const surfaceNames = AI_SURFACE_ORDER.map((n) => AI_SURFACES[n].label);
+const surfaceList = `${surfaceNames.slice(0, -1).join(", ")} och ${surfaceNames.at(-1)}`;
+
+const price = (id: string) => TIERS.find((t) => t.id === id)!;
+const audit = price("audit");
+const foundation = price("foundation");
+const growth = price("growth");
+const enterprise = price("enterprise");
+
 const faqs = [
+  {
+    q: "Vad är AI SEO?",
+    a: `AI SEO, eller AI Search Optimization, är arbetet med att göra ett företag synligt och citerat i AI-genererade svar. Det gäller bland annat ${surfaceList}. Målet är att AI-tjänsten nämner företaget, beskriver det korrekt och hänvisar till rätt källor.`,
+  },
+  {
+    q: "Vad är GEO (Generative Engine Optimization)?",
+    a: "GEO står för Generative Engine Optimization: optimering för sökmotorer som svarar med genererad text i stället för en lista med länkar. I praktiken används GEO, AI SEO och AI Search Optimization om samma arbete.",
+  },
+  {
+    q: "Vad är skillnaden mellan SEO och AI SEO?",
+    a: "Klassisk SEO optimerar för placeringar och klick i Googles resultatlista. AI SEO optimerar för att bli nämnd och citerad i AI-tjänsternas svar. Grunden överlappar — teknik, struktur och innehåll — men AI SEO lägger till entitetsoptimering, citerbara faktapåståenden, externa omnämnanden och mätning av AI-synlighet.",
+  },
+  {
+    q: "Hur syns man i ChatGPT och Google AI Overviews?",
+    a: "AI-tjänster nämner företag som de kan beskriva med säkerhet. Det kräver tydliga fakta på den egna webbplatsen, strukturerad data, att AI-crawlare kan läsa sajten och att andra källor bekräftar samma uppgifter. Det är de fyra områden Crowdme arbetar med.",
+  },
+  {
+    q: "Vilka AI-tjänster mäter ni synlighet i?",
+    a: `Vi mäter synlighet i ${surfaceList}. Vilka som väger tyngst beror på er bransch, och vi lägger tiden där era köpare faktiskt frågar.`,
+  },
+  {
+    q: "Vilka företag arbetar Crowdme med?",
+    a: "Crowdme arbetar med svenska B2B-företag, främst medelstora och större bolag, där köpare jämför leverantörer innan de tar kontakt. Vi finns i Stockholm och tar uppdrag i hela Sverige.",
+  },
+  {
+    q: "Vad kostar AI SEO?",
+    a: `${audit.name} kostar ${audit.price} kr som engångsuppdrag. Löpande AI SEO kostar ${foundation.price.toLowerCase()} ${foundation.unit} (${foundation.name}) eller ${growth.price.toLowerCase()} ${growth.unit} (${growth.name}). ${enterprise.name} offereras ${enterprise.unit}. Alla priser är vägledande och exklusive moms.`,
+  },
   {
     q: "Vad kostar ett första möte?",
     a: "Ingenting. Vi bokar det för att se om vi passar er — och ni oss. Ni får våra tankar om er synlighet oavsett om ni väljer att gå vidare.",
   },
   {
-    q: "Vilka AI-tjänster tittar ni på?",
-    a: "ChatGPT, Googles AI Overviews och AI Mode, Gemini, Perplexity, Microsoft Copilot och Claude. Vilka som är mest relevanta beror på er bransch och era köpare — vi lägger tiden där era köpare faktiskt frågar.",
+    q: "Kan ni garantera att vi syns i ChatGPT?",
+    a: "Nej. Ingen kan garantera vad en AI-tjänst svarar. Vi mäter ert utgångsläge, åtgärdar det som påverkar synligheten och rapporterar utvecklingen mot utgångsläget varje månad.",
+  },
+  {
+    q: "Hur lång tid tar det innan något händer?",
+    a: "Det varierar med hur ofta modellerna uppdaterar sitt underlag och hur er sajt ser ut idag. Vi lovar inga datum — vi mäter utgångsläget först och följer upp mot det.",
   },
   {
     q: "Behöver vi byta webbplats?",
@@ -20,21 +75,27 @@ const faqs = [
     a: "Det ersätter inte SEO — det ligger bredvid. Vi jobbar gärna mot er befintliga byrå och lämnar åtgärderna i en form de kan genomföra.",
   },
   {
-    q: "Hur lång tid tar det innan något händer?",
-    a: "Det varierar med hur ofta modellerna uppdaterar sitt underlag och hur er sajt ser ut idag. Vi lovar inga datum — vi mäter utgångsläget först och följer upp mot det.",
-  },
-  {
     q: "Vad gör ni med våra uppgifter?",
     a: "Vi använder dem bara för att boka och förbereda mötet, och för att kontakta er om det. Inga uppgifter säljs vidare, och ni kan när som helst be oss radera dem.",
   },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 ---
 
 <section id="fragor" class="border-b border-line">
   <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
     <div data-reveal-group>
       <Eyebrow data-reveal>Vanliga frågor</Eyebrow>
-      <h2 class="display-2 mt-8" data-reveal>Det ni brukar undra.</h2>
+      <h2 class="display-2 mt-8" data-reveal>Frågor om AI SEO och GEO.</h2>
       <p class="mt-6 max-w-xs text-sm leading-relaxed text-ink-soft" data-reveal>
         Hittar ni inte svaret här tar vi det gärna på mötet — ni
         bestämmer er efteråt.
@@ -60,4 +121,6 @@ const faqs = [
       }
     </div>
   </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </section>

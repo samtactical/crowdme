@@ -34,6 +34,7 @@ src/
     AuditReport.astro         granskningen som föremål, avskuren nedtill
     BrandIcon.astro           logotyper, inlinade vid bygget
   lib/brandIcons.ts           ← allowlist: bara AI-svarsytor
+  lib/pricing.ts              ← paket och priser (kort, FAQ och schema läser den)
   lib/phosphor.ts             ← ikonladdaren (läser @phosphor-icons/core)
   lib/submitLead.ts           ← enda stället som behöver backend-koppling
   scripts/motion.ts           ← scroll-reveal (IntersectionObserver)
@@ -122,6 +123,34 @@ justera:
   bort) och sedan till sju (Grok, DeepSeek och Mistral Le Chat togs bort),
   alla på ägarens begäran. Den utlovar att vi faktiskt tittar i alla
   sju — ändra `AI_SURFACES`, inte kopian.
+
+## Copyn är skriven för sökord, AI-citat och entitet
+
+Copyn riktar sig mot sökningar som "AI SEO", "GEO", "Generative Engine
+Optimization", "AI SEO-byrå Stockholm", "synas i ChatGPT" och "synas i Google
+AI Overviews". Tre saker bär det:
+
+- **Entitetsmeningen** i hero, sidfoten och schema-datan: "Crowdme är en AI
+  SEO-byrå i Stockholm som hjälper svenska B2B-företag att synas och citeras
+  i AI-svar." Håll de tre likalydande.
+- **Definitionerna** av AI SEO, GEO och klassisk SEO i `Comparison.astro`,
+  och de tre första FAQ-svaren. De är skrivna för att kunna lyftas ut
+  ordagrant: första meningen svarar, inga superlativ.
+- **Strukturerad data:** `ProfessionalService` i `index.astro` och `FAQPage`
+  i `Faq.astro`. Bara uppgifter som står synligt på sidan får ligga där —
+  ingen gatuadress, inga betyg, inga priser.
+
+Påståenden i den copyn som är affärsbeslut och måste stämma:
+
+- Crowdme **finns i Stockholm** och tar uppdrag i hela Sverige.
+- Målgruppen är **främst medelstora och större** svenska B2B-bolag. Paketet
+  AI SEO Foundation säger samtidigt "Mindre bolag" (ägarens underlag).
+- **Steg 1–2 ingår i AI Visibility Audit, steg 3–4 är det löpande arbetet**
+  (under processen i `Analysis.astro`). Tekniska granskningen ligger alltså i
+  Foundation, som har "Entitets- och teknikgenomgång".
+- "Kan ni garantera att vi syns i ChatGPT? Nej." (FAQ)
+- Etiketten **"Vanligast"** på AI Search Growth antyder att kunder har valt
+  den. Crowdme har inga kunder än — byt eller ta bort den före lansering.
 
 ## Konverteringsmålet är ett bokat möte
 

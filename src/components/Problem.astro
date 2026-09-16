@@ -13,27 +13,27 @@ import Eyebrow from "./ui/Eyebrow.astro";
 const points = [
   {
     icon: "chat-centered-text",
-    title: "Köparen ser ett svar, inte en resultatsida",
+    title: "AI-svaret har ingen sida två",
     body:
-      "I ett AI-svar finns ingen sida två. Modellen väljer ut ett fåtal företag och motiverar varför. Är ni inte med i urvalet är ni inte med i upphandlingen.",
+      "ChatGPT och Google AI Overviews svarar med en sammanfattning och ett fåtal företagsnamn. Nämns ni inte där, är ni inte med när köparen gör sin första lista över leverantörer.",
     href: "#ai-sokningen",
     linkLabel: "Se hur många svenskar som redan frågar AI",
     feature: false,
   },
   {
     icon: "text-aa",
-    title: "AI:n läser er sajt annorlunda än Google",
+    title: "AI läser er webbplats annorlunda än Google",
     body:
-      "Språkmodeller plockar upp konkreta, tydligt formulerade fakta: vad ni gör, för vem, var, till vilket pris. Snygg men vag marknadsföringstext ger dem ingenting att citera.",
+      "Språkmodeller letar efter konkreta fakta: vad ni gör, för vem, var och till vilket pris. Vag marknadsföringstext ger dem inget att citera — även om sidan rankar bra i Google.",
     href: "#analysen",
-    linkLabel: "Se vad analysen går igenom",
+    linkLabel: "Se hur vi arbetar",
     feature: false,
   },
   {
     icon: "warning-circle",
-    title: "Det som sägs om er kan vara fel",
+    title: "AI kan ha fel uppgifter om er",
     body:
-      "Modellerna svarar även när underlaget är tunt. Då fylls luckorna med gammal information, sammanblandningar eller konkurrenters beskrivningar.",
+      "Modellerna svarar även när underlaget är tunt. Luckorna fylls med gammal information, sammanblandningar med andra bolag eller konkurrenters beskrivningar.",
     href: "/boka",
     linkLabel: "Boka ett möte om er synlighet",
     feature: true,
@@ -44,13 +44,15 @@ const points = [
 <section id="problemet" class="border-b border-line">
   <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
     <div class="max-w-2xl" data-reveal-group>
-      <Eyebrow data-reveal>Steg 1 · Vet var ni står</Eyebrow>
+      <Eyebrow data-reveal>Problemet</Eyebrow>
       <h2 class="display-2 mt-8" data-reveal>
-        Sökningen har flyttat.<br /><span class="text-ink-faint">SEO-arbetet har inte hängt med.</span>
+        Att ranka i Google räcker inte.<br /><span class="text-ink-faint">AI-svaren nämner bara ett fåtal namn.</span>
       </h2>
       <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
-        Att ranka högt på Google betyder inte längre automatiskt att ni nämns
-        när någon ställer samma fråga till en AI. Det är två olika spelplaner.
+        B2B-köpare frågar AI innan de kontaktar leverantörer. En hög placering
+        i Google betyder inte att ni nämns när samma fråga ställs till
+        ChatGPT, Perplexity eller Google AI Mode. Det är två olika system, och
+        de väljer källor på olika sätt.
       </p>
     </div>
 

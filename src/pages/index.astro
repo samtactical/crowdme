@@ -10,13 +10,79 @@ import BookingCta from "../components/BookingCta.astro";
 import Pricing from "../components/Pricing.astro";
 import Faq from "../components/Faq.astro";
 import Footer from "../components/Footer.astro";
+import { TIERS } from "../lib/pricing";
 
-const title = "Crowdme — syns ditt företag i ChatGPT och AI-sökningar?";
+const title = "AI SEO-byrå i Stockholm – GEO för svensk B2B | Crowdme";
 const description =
-  "Crowdme får svenska B2B-företag att synas och citeras i ChatGPT, Perplexity, Gemini och Googles AI-svar. Boka ett möte om hur ni syns idag.";
+  "Crowdme är en AI SEO- och GEO-byrå i Stockholm. Vi hjälper svenska B2B-företag att synas i ChatGPT, Google AI Overviews och Perplexity. Boka ett möte.";
+
+/**
+ * Entiteten Crowdme, uttryckt så att Google och AI-tjänster kan läsa den
+ * utan att tolka copy: vem, vad, var, för vem och vilka tjänster.
+ *
+ * Bara uppgifter som redan står synligt på sidan får ligga här. Ingen
+ * gatuadress (den finns inte), inga betyg, inga kunder. Priser tas inte
+ * med — de är vägledande, och ett Offer med pris läses som ett fast pris.
+ * `url` följer `site` i astro.config.mjs, som ännu inte är bekräftad.
+ */
+const site = Astro.site?.href ?? "/";
+const organisation = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": `${site}#crowdme`,
+  name: "Crowdme",
+  url: site,
+  logo: new URL("icon-512.png", site).href,
+  email: "hej@crowdme.se",
+  description:
+    "Crowdme är en AI SEO-byrå i Stockholm som hjälper svenska B2B-företag att synas och citeras i AI-genererade svar, bland annat i ChatGPT, Google AI Overviews, Google AI Mode, Perplexity, Gemini, Microsoft Copilot och Claude.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Stockholm",
+    addressCountry: "SE",
+  },
+  areaServed: { "@type": "Country", name: "Sverige" },
+  audience: {
+    "@type": "BusinessAudience",
+    audienceType: "Svenska B2B-företag",
+  },
+  knowsAbout: [
+    "AI SEO",
+    "AI Search Optimization",
+    "Generative Engine Optimization",
+    "GEO",
+    "AI-synlighet",
+    "ChatGPT",
+    "Google AI Overviews",
+    "Google AI Mode",
+    "Perplexity",
+    "Gemini",
+    "Microsoft Copilot",
+    "Claude",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "AI SEO-tjänster",
+    itemListElement: TIERS.map((t) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: t.name,
+        description: t.summary,
+        serviceType: "AI SEO",
+        areaServed: { "@type": "Country", name: "Sverige" },
+      },
+    })),
+  },
+};
 ---
 
 <Layout title={title} description={description}>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(organisation)}
+  />
   <Header />
   <main id="innehall" class="w-full max-w-full">
     <Hero />

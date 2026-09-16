@@ -9,6 +9,26 @@ import Eyebrow from "./ui/Eyebrow.astro";
  * Det här är en beskrivning av två discipliners omfattning, inte en
  * mätning: inga siffror, inga påståenden om resultat.
  */
+/**
+ * Definitionerna är sidans svar på "vad är AI SEO / GEO". De är skrivna
+ * för att kunna lyftas ut ordagrant av en AI eller som utdrag i Google:
+ * en term, en mening som definierar den, inga superlativ.
+ */
+const definitions = [
+  {
+    term: "AI SEO (AI Search Optimization)",
+    text: "Arbetet med att göra ett företag synligt, korrekt beskrivet och citerat i AI-genererade svar, till exempel i ChatGPT, Google AI Overviews och Perplexity.",
+  },
+  {
+    term: "GEO (Generative Engine Optimization)",
+    text: "Samma arbete under ett annat namn. Termen betonar att svaret skrivs av en generativ AI i stället för att visas som en lista med länkar.",
+  },
+  {
+    term: "Klassisk SEO",
+    text: "Optimering för placeringar och klick i Googles resultatlista. AI SEO bygger vidare på samma grund men mäts i omnämnanden och citeringar.",
+  },
+];
+
 const rows = [
   { label: "Sökordsarbete", seo: true },
   { label: "Teknisk optimering", seo: true },
@@ -32,14 +52,21 @@ const rows = [
 <section id="skillnaden" class="border-b border-line">
   <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
     <div class="lg:sticky lg:top-28 lg:self-start" data-reveal-group>
-      <Eyebrow data-reveal>Skillnaden</Eyebrow>
+      <Eyebrow data-reveal>AI SEO, GEO och SEO</Eyebrow>
       <h2 class="display-2 mt-8" data-reveal>
-        Allt klassisk SEO gör.<br /><span class="text-ink-faint">Plus det som avgör i <span class="whitespace-nowrap">AI-svaren.</span></span>
+        Vad är AI SEO och GEO?<br /><span class="text-ink-faint">Allt klassisk SEO gör, plus det som avgör i <span class="whitespace-nowrap">AI-svaren.</span></span>
       </h2>
-      <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
-        Mycket av grundarbetet överlappar. Skillnaden ligger i vad som händer
-        när svaret formuleras av en modell i stället för av en resultatsida.
-      </p>
+
+      <dl class="mt-8 space-y-5 border-t border-line pt-6" data-reveal>
+        {
+          definitions.map((d) => (
+            <div>
+              <dt class="text-[0.9375rem] font-medium">{d.term}</dt>
+              <dd class="mt-1.5 text-sm leading-relaxed text-ink-soft">{d.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
 
     <div class="card-soft overflow-hidden" data-reveal>
