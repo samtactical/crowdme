@@ -11,10 +11,9 @@
  * datan (schema.org) på startsidan. Skrivs priset på ett ställe kan de
  * inte glida isär.
  *
- * OBS: underlaget angav "Free or 5 000–10 000 SEK" för analysen. Den
- * gratis varianten är medvetet inte med här — gratisanalysen ska enligt
- * tidigare beslut inte marknadsföras, den görs som förberedelse inför
- * mötet. Se README.
+ * AI Visibility Audit har ett fast pris, 10 000 kr (ägarens beslut). Det
+ * ersatte spannet 5 000–10 000 kr. Den gratis analysen som görs inför
+ * mötet marknadsförs inte och hör inte hemma här. Se README.
  */
 export const TIERS = [
   {
@@ -25,7 +24,7 @@ export const TIERS = [
       "En analys av hur ni syns i AI-svar idag, hur era konkurrenter syns och en prioriterad åtgärdsplan.",
     bestFor:
       "Företag som vill veta var de står innan de investerar löpande, eller som vill driva arbetet själva.",
-    price: "5 000–10 000",
+    price: "10 000",
     unit: "kr · engångs",
     features: [
       "Genomgång av er synlighet i AI-svar",

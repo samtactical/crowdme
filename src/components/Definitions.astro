@@ -1,0 +1,63 @@
+---
+import Icon from "./Icon.astro";
+import Eyebrow from "./ui/Eyebrow.astro";
+
+/**
+ * Sidans svar på "vad är AI SEO / GEO". Definitionerna är skrivna för att
+ * kunna lyftas ut ordagrant av en AI eller som utdrag i Google: en term,
+ * en definition, inga superlativ.
+ *
+ * Sektionen ersatte en jämförelsematris mot klassisk SEO. Crowdme säljer
+ * inte klassisk SEO, och matrisen fick AI-synlighet att se ut att omfatta
+ * allt SEO-arbete — nämn inte vanlig SEO som något vi gör.
+ *
+ * Ankaret heter fortfarande #skillnaden, eftersom headerns meny länkar hit.
+ */
+const definitions = [
+  {
+    icon: "magnifying-glass",
+    term: "AI SEO (AI Search Optimization)",
+    text: "Arbetet med att göra ett företag synligt, korrekt beskrivet och citerat i AI-genererade svar, till exempel i ChatGPT, Google AI Overviews och Perplexity. Det är det Crowdme gör för er.",
+  },
+  {
+    icon: "text-aa",
+    term: "GEO (Generative Engine Optimization)",
+    text: "Den del av arbetet som får er att synas i själva svaret. När en generativ AI skriver sitt svar som text är målet att ni nämns i texten, inte bara listas som en källa bredvid.",
+  },
+  {
+    icon: "chart-line-up",
+    term: "AI-synlighet",
+    text: "Hur ofta, hur korrekt och i vilket sammanhang ett företag nämns när köpare ställer frågor till AI-tjänster. Det är det vi mäter varje månad: synlighet, citeringsfrekvens och share of voice.",
+  },
+];
+---
+
+<section id="skillnaden" class="border-b border-line">
+  <div class="mx-auto grid max-w-page gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal-group>
+      <Eyebrow data-reveal>AI SEO och GEO</Eyebrow>
+      <h2 class="display-2 mt-8" data-reveal>
+        Vad är AI SEO och GEO?<br /><span class="text-ink-faint">Arbetet som får AI att nämna <span class="whitespace-nowrap">er.</span></span>
+      </h2>
+      <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>
+        Begreppen är nya, och de används om varandra. Så här använder vi dem.
+      </p>
+    </div>
+
+    <dl class="grid gap-3" data-reveal-group>
+      {
+        definitions.map((d) => (
+          <div data-reveal class="card-soft p-6 sm:p-7">
+            <dt class="flex items-center gap-3 text-[1.0625rem] font-medium leading-snug">
+              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-lime-50 text-accent-ink">
+                <Icon name={d.icon} weight="light" class="h-5 w-5" />
+              </span>
+              {d.term}
+            </dt>
+            <dd class="mt-4 text-sm leading-relaxed text-ink-soft">{d.text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

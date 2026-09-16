@@ -5,7 +5,7 @@ import Hero from "../components/Hero.astro";
 import AiSearchStats from "../components/AiSearchStats.astro";
 import Problem from "../components/Problem.astro";
 import Analysis from "../components/Analysis.astro";
-import Comparison from "../components/Comparison.astro";
+import Definitions from "../components/Definitions.astro";
 import BookingCta from "../components/BookingCta.astro";
 import Pricing from "../components/Pricing.astro";
 import Faq from "../components/Faq.astro";
@@ -35,7 +35,7 @@ const organisation = {
   logo: new URL("icon-512.png", site).href,
   email: "hej@crowdme.se",
   description:
-    "Crowdme är en AI SEO-byrå i Stockholm som hjälper svenska B2B-företag att synas och citeras i AI-genererade svar, bland annat i ChatGPT, Google AI Overviews, Google AI Mode, Perplexity, Gemini, Microsoft Copilot och Claude. Crowdme arbetar även med klassisk SEO.",
+    "Crowdme är en AI SEO-byrå i Stockholm som hjälper svenska B2B-företag att synas och citeras i AI-genererade svar, bland annat i ChatGPT, Google AI Overviews, Google AI Mode, Perplexity, Gemini, Microsoft Copilot och Claude.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Stockholm",
@@ -52,7 +52,6 @@ const organisation = {
     "Generative Engine Optimization",
     "GEO",
     "AI-synlighet",
-    "SEO",
     "ChatGPT",
     "Google AI Overviews",
     "Google AI Mode",
@@ -90,7 +89,7 @@ const organisation = {
     <AiSearchStats />
     <Problem />
     <Analysis />
-    <Comparison />
+    <Definitions />
     <Pricing />
     <Faq />
     <BookingCta />

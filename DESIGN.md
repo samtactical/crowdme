@@ -761,6 +761,11 @@ nobody is trapped by a question they cannot answer.
 
 ### Comparison matrix
 
+> **Not in use.** The landing page's matrix compared classic SEO with AI
+> visibility and was removed: Crowdme does not sell classic SEO, and the
+> matrix made AI visibility look like it covered all of it. The pattern is
+> kept here in case a comparison that does not imply that returns.
+
 A feature grid with one column per discipline. Light version of the dark
 reference pattern:
 

@@ -20,7 +20,7 @@ src/
     AiSearchStats.astro       källbelagd statistik (mörkgrönt kapitel)
     Problem.astro             varför AI-sökning skiljer sig
     Analysis.astro            vad analysen omfattar
-    Comparison.astro          klassisk SEO vs synlighet i AI-svar
+    Definitions.astro         vad AI SEO, GEO och AI-synlighet är
     Pricing.astro             fyra paket, vägledande priser
     BookingCta.astro          avslutande CTA -> /boka (mörkgrönt kapitel)
     Faq.astro                 sex frågor
@@ -69,17 +69,17 @@ DESIGN.md                     ← designsystemet, källan för allt ovan
    mörkgrön platta (`favicon-32.png`, `apple-touch-icon.png`, `icon-512.png`).
    Finns en riktig vektorversion av märket är en `favicon.svg` att föredra.
 
-## Priserna i `Pricing.astro`
+## Priserna i `lib/pricing.ts`
 
 Uppgivna av ägaren, inte framräknade av oss. De är märkta **vägledande** i
 copyn, precis som i underlaget ("Indicative price", "From").
 
 Två avvikelser från underlaget, båda medvetna:
 
-1. **"Free or 5 000–10 000 SEK" blev bara "5 000–10 000 kr".** Gratisvarianten
-   är utelämnad eftersom gratisanalysen enligt tidigare beslut inte ska
-   marknadsföras — den görs som förberedelse inför mötet. Vill ni ändå visa
-   den är det en rad att lägga till.
+1. **"Free or 5 000–10 000 SEK" blev "10 000 kr".** Gratisvarianten är
+   utelämnad eftersom gratisanalysen enligt tidigare beslut inte ska
+   marknadsföras — den görs som förberedelse inför mötet. Spannet ersattes
+   senare av ett fast pris på ägarens begäran.
 2. **Ingen års- eller kvartalsväxling.** Paketen har olika grund (ett engångs,
    tre löpande per månad), så en gemensam periodväxlare hade inte gått ihop.
    Varje kort anger sin egen grund i stället.
@@ -133,8 +133,8 @@ AI Overviews". Tre saker bär det:
 - **Entitetsmeningen** i hero, sidfoten och schema-datan: "Crowdme är en AI
   SEO-byrå i Stockholm som hjälper svenska B2B-företag att synas och citeras
   i AI-svar." Håll de tre likalydande.
-- **Definitionerna** av AI SEO, GEO och klassisk SEO i `Comparison.astro`,
-  och de tre första FAQ-svaren. De är skrivna för att kunna lyftas ut
+- **Definitionerna** av AI SEO, GEO och AI-synlighet i `Definitions.astro`,
+  och de två första FAQ-svaren. De är skrivna för att kunna lyftas ut
   ordagrant: första meningen svarar, inga superlativ.
 - **Strukturerad data:** `ProfessionalService` i `index.astro` och `FAQPage`
   i `Faq.astro`. Bara uppgifter som står synligt på sidan får ligga där —
@@ -145,22 +145,18 @@ Påståenden i den copyn som är affärsbeslut och måste stämma:
 - Crowdme **finns i Stockholm** och tar uppdrag i hela Sverige.
 - Målgruppen är **svenska små och medelstora företag**, och större
   organisationer via Enterprise (ägarens formulering i FAQ).
-- **Crowdme gör även klassisk SEO.** Problemsektionen, FAQ och schema-datan
-  säger det, men inget paket i `lib/pricing.ts` nämner SEO. Lägg till det i
-  paketen eller i en egen rad innan lansering.
+- **Crowdme säljer inte klassisk SEO.** Sidan får inte beskriva vanlig SEO
+  som något vi gör. Jämförelsematrisen mot klassisk SEO och FAQ-svaren om
+  SEO-skillnaden och "vår nuvarande SEO-byrå" är borttagna av det skälet.
 - **Steg 1–2 ingår i AI Visibility Audit, steg 3–4 är det löpande arbetet**
   (under processen i `Analysis.astro`). Steg 3 omfattar numera även sociala
   kanaler, och steg 4 skapar innehåll och rapporterar mot konkurrenter och
   föregående månad.
 - "Ingen kan garantera exakt vad en AI-tjänst svarar" (FAQ).
-- FAQ nämner **Comet** (Perplexity) och **ChatGPT Atlas** (OpenAI) som
-  exempel på AI-webbläsare. Kontrollera att båda fortfarande finns.
 - Etiketten över AI Search Growth är **"Rekommenderas"**, inte "Vanligast".
   "Vanligast" påstod att kunder har valt paketet, och Crowdme har inga kunder
   att räkna på.
-- **Priset för AI Visibility Audit** står kvar som spannet 5 000–10 000 kr.
-  Ägaren vill ha ett fast pris (eller startavgift + rapport) men har inte
-  angett siffran. Den får inte hittas på.
+- **AI Visibility Audit kostar 10 000 kr**, fast pris (ägarens beslut).
 - Mötet beskrivs som **ett första samtal**, inte som en genomgång av er
   synlighet — ägarens beslut, så att CTA:n inte lovar det paketen levererar.
 
@@ -209,14 +205,6 @@ Reglerna för ytan står i `DESIGN.md` §7. Två saker att hålla ögonen på:
   utgåvan och byt årtal i etiketterna.
 - **Använd inte Gartners prognos** om 25 % tapp i söktrafik till 2026. Den
   slog inte in, och en falsifierad prognos skadar mer än den övertygar.
-
-## Jämförelsematrisen och FAQ om SEO-byrån
-
-Tidigare krockade de: matrisen visade att arbetet omfattar allt klassisk SEO
-gör, medan FAQ sa att det bara ligger bredvid. Ägaren har valt linje —
-Crowdme gör både klassisk SEO och AI SEO, och arbetar gärna tillsammans med en
-befintlig byrå. FAQ-svaret och problemsektionen säger nu det, så matrisen
-stämmer.
 
 ## Ikoner
 
