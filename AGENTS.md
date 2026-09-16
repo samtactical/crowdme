@@ -153,7 +153,7 @@ Section order on the landing page, and the ground each sits on:
 | AiSearchStats | dark green |
 | Problem | paper |
 | Analysis | tint |
-| Definitions | paper |
+| Comparison | paper |
 | Pricing | tint |
 | Faq | paper |
 | BookingCta | dark green |

@@ -20,7 +20,7 @@ src/
     AiSearchStats.astro       källbelagd statistik (mörkgrönt kapitel)
     Problem.astro             varför AI-sökning skiljer sig
     Analysis.astro            vad analysen omfattar
-    Definitions.astro         vad AI SEO, GEO och AI-synlighet är
+    Comparison.astro          klassisk SEO vs AI SEO: definitioner + matris
     Pricing.astro             fyra paket, vägledande priser
     BookingCta.astro          avslutande CTA -> /boka (mörkgrönt kapitel)
     Faq.astro                 sex frågor
@@ -133,7 +133,7 @@ AI Overviews". Tre saker bär det:
 - **Entitetsmeningen** i hero, sidfoten och schema-datan: "Crowdme är en AI
   SEO-byrå i Stockholm som hjälper svenska B2B-företag att synas och citeras
   i AI-svar." Håll de tre likalydande.
-- **Definitionerna** av AI SEO, GEO och AI-synlighet i `Definitions.astro`,
+- **Definitionerna** av AI SEO, GEO och klassisk SEO i `Comparison.astro`,
   och de två första FAQ-svaren. De är skrivna för att kunna lyftas ut
   ordagrant: första meningen svarar, inga superlativ.
 - **Strukturerad data:** `ProfessionalService` i `index.astro` och `FAQPage`
@@ -146,8 +146,11 @@ Påståenden i den copyn som är affärsbeslut och måste stämma:
 - Målgruppen är **svenska små och medelstora företag**, och större
   organisationer via Enterprise (ägarens formulering i FAQ).
 - **Crowdme säljer inte klassisk SEO.** Sidan får inte beskriva vanlig SEO
-  som något vi gör. Jämförelsematrisen mot klassisk SEO och FAQ-svaren om
-  SEO-skillnaden och "vår nuvarande SEO-byrå" är borttagna av det skälet.
+  som något vi gör; FAQ-svaren om SEO-skillnaden och "vår nuvarande
+  SEO-byrå" är borttagna av det skälet. Jämförelsen i `Comparison.astro`
+  togs bort och återställdes på ägarens begäran — den förklarar vad AI SEO
+  är i förhållande till SEO. Kolumnen "AI-synlighet" bockar även för
+  SEO-raderna, vilket kan läsas som att vi gör det arbetet.
 - **Steg 1–2 ingår i AI Visibility Audit, steg 3–4 är det löpande arbetet**
   (under processen i `Analysis.astro`). Steg 3 omfattar numera även sociala
   kanaler, och steg 4 skapar innehåll och rapporterar mot konkurrenter och
