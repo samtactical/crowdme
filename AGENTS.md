@@ -10,7 +10,7 @@ genomföra verifieringar.
 ## What this is
 
 A Swedish marketing site for Crowdme, an AI-search-visibility service for
-Swedish B2B companies (getting clients surfaced and cited in ChatGPT,
+Swedish companies of any kind — not only B2B (getting clients surfaced and cited in ChatGPT,
 Perplexity, Gemini, Copilot, Claude and Google's AI answers).
 
 This repo is the whole of Crowdme. Earlier Crowdme work — a Next.js SaaS app,

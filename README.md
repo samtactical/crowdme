@@ -131,7 +131,7 @@ Optimization", "AI SEO-byrå Stockholm", "synas i ChatGPT" och "synas i Google
 AI Overviews". Tre saker bär det:
 
 - **Entitetsmeningen** i hero, sidfoten och schema-datan: "Crowdme är en AI
-  SEO-byrå i Stockholm som hjälper svenska B2B-företag att synas och citeras
+  SEO-byrå i Stockholm som hjälper svenska företag att synas och citeras
   i AI-svar." Håll de tre likalydande.
 - **Definitionerna** av AI SEO, GEO och klassisk SEO i `Comparison.astro`,
   och de två första FAQ-svaren. De är skrivna för att kunna lyftas ut
@@ -143,8 +143,9 @@ AI Overviews". Tre saker bär det:
 Påståenden i den copyn som är affärsbeslut och måste stämma:
 
 - Crowdme **finns i Stockholm** och tar uppdrag i hela Sverige.
-- Målgruppen är **svenska små och medelstora företag**, och större
-  organisationer via Enterprise (ägarens formulering i FAQ).
+- Målgruppen är **alla svenska företag, inte bara B2B** — små och
+  medelstora, och större organisationer via Enterprise. Sidan nämner inte
+  B2B någonstans (ägarens beslut).
 - **Crowdme säljer inte klassisk SEO.** Sidan får inte beskriva vanlig SEO
   som något vi gör; FAQ-svaren om SEO-skillnaden och "vår nuvarande
   SEO-byrå" är borttagna av det skälet. Jämförelsen i `Comparison.astro`
