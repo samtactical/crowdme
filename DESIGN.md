@@ -609,13 +609,24 @@ this page justifies that.
 
 ### Globe
 
-Three traps here have all shipped as bugs once. Read them before touching it.
+Four traps here have all shipped as bugs once. Read them before touching it.
 
 **A globe whose colours will not resolve must not render.** `token()` returns
 `null` rather than a fallback, and `initGlobe` bails out to the same text list it
 uses when WebGL is missing. The old parser fell back to `[0, 0, 0]`, and since
 cobe tints the continent dots from `baseColor`, that produced a smooth black ball
 — which looks like a broken site, where the list does not.
+
+**Unresolved on the first try is not the same as unresolvable.** WebKit — Safari
+and every browser on iPhone — runs module scripts without waiting for
+stylesheets still in flight, and the cross-origin Google Fonts sheet is often
+last on a phone connection. The token layer is then empty when `initGlobe`
+runs, and the bail-out above left the globe as the text list for good, on
+every iPhone, while desktop Chrome and localhost always had the CSS in time.
+If the tokens are missing and `document.readyState` is not `complete`,
+`initGlobe` waits for `load` and tries once more. Reproduce it with Playwright
+WebKit plus a route that delays `.css` by a few seconds; headless Chrome never
+shows it.
 
 **Never parse a token's text.** The globe's colours come from the token layer,
 but `getComputedStyle(root).getPropertyValue("--color-brand-white")` returns

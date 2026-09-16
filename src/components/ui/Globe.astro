@@ -186,15 +186,24 @@ const config = {
     const cfg: Cfg = JSON.parse(root.dataset.globeConfig ?? "{}");
     if (!cfg.markers?.length) return;
 
-    // Ingen WebGL — behåll listan, rör inte canvasen.
-    const probe = document.createElement("canvas");
-    if (!probe.getContext("webgl") && !probe.getContext("experimental-webgl")) return;
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const base = token(cfg.baseToken);
     const marker = token(cfg.markerToken);
     const glow = token(cfg.glowToken);
+
+    /**
+     * Stilmallen har inte hunnit fram: försök igen vid load.
+     *
+     * WebKit (Safari och alla webbläsare på iPhone) kör modulskript
+     * utan att vänta på stilmallar som fortfarande laddas. Googles
+     * typsnittsmall är cross-origin och ofta sist, så på en riktig
+     * mobiluppkoppling var tokenlagret tomt när skriptet körde — och
+     * globen gav upp för gott. Lokalt och i Chrome syntes det aldrig,
+     * för där hinner CSS:en alltid före.
+     */
+    if ((!base || !marker || !glow) && document.readyState !== "complete") {
+      window.addEventListener("load", () => initGlobe(root), { once: true });
+      return;
+    }
 
     /**
      * Går någon färg inte att läsa: bygg ingen glob.
@@ -206,6 +215,12 @@ const config = {
      * här vägen är densamma som när WebGL saknas.
      */
     if (!base || !marker || !glow) return;
+
+    // Ingen WebGL — behåll listan, rör inte canvasen.
+    const probe = document.createElement("canvas");
+    if (!probe.getContext("webgl") && !probe.getContext("experimental-webgl")) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let globe: ReturnType<typeof createGlobe> | null = null;
     let frame = 0;
