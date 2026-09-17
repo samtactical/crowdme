@@ -906,3 +906,18 @@ stora fält.
 Favikonerna (`favicon-32.png`, `apple-touch-icon.png`, `icon-512.png`) är
 genererade ur `crowdme-icon-lime.webp` på en mörkgrön platta, så märket är
 läsbart i både ljus och mörk flikrad. `theme-color` är `#0b2220`.
+
+**Citatkortet på om-sidan.** Ett kort, inte två spalter: porträttet ligger
+inuti citatet, som i referensbilden ägaren skickade. Formen lånar det
+framhävda kortet i `Problem.astro` — `rounded-md` plus ETT överdrivet hörn
+(`rounded-tr-[4.5rem]`, `sm:rounded-tr-[6rem]`). Fler överdrivna hörn och
+formen slutar läsas som avsiktlig.
+
+Plattan är mörkgrön mitt på en pappersbotten, inte en mörkgrön sektion:
+headern är genomskinlig innan man rullar och bär mörk ordbild och mörk
+navigation, så en mörk botten högst upp på sidan gör dem osynliga. Limen
+bär citattecknet, som är ett tecken (`&ldquo;`) och ingen bild.
+
+Porträttet (1000x1654) ligger absolut i en 4:5-ruta med `object-cover`.
+Utan rutan sätter bildens egen höjd radens höjd, och kortet sträcks till en
+tom pelare bredvid.

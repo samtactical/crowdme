@@ -90,57 +90,49 @@ const person = {
         <div data-reveal-group>
           <Eyebrow data-reveal>Om Crowdme</Eyebrow>
 
-          <div class="mt-8 grid gap-6 lg:grid-cols-[1.35fr_0.65fr] lg:items-stretch">
-            <figure
-              data-invert
-              class="relative flex flex-col justify-center rounded-md bg-paper-invert p-8 text-ink-invert md:p-12 lg:min-h-[26rem]"
-              data-reveal
-            >
+          {/* Ett kort, inte två spalter: porträttet ligger inuti citatet.
+              Det överdrivna hörnet är samma grepp som det framhävda kortet
+              i Problem.astro — ett hörn, aldrig fler. */}
+          <figure
+            data-invert
+            class="mt-8 grid items-center gap-8 rounded-md rounded-tr-[4.5rem] bg-paper-invert p-8 text-ink-invert sm:rounded-tr-[6rem] md:grid-cols-[auto_1fr] md:gap-12 md:p-12"
+            data-reveal
+          >
+            <div class="w-40 sm:w-48 md:w-56">
+              {/* Originalet är 1000x1654. Rutan bär 4:5 och bilden ligger
+                  absolut i den, så utsnittet håller oavsett spaltbredd. */}
+              <div class="relative aspect-[4/5] overflow-hidden rounded-md bg-paper-alt">
+                <img
+                  src={founder.image}
+                  alt={`${founder.name}, ${founder.role.toLowerCase()} av Crowdme`}
+                  width="1000"
+                  height="1654"
+                  loading="eager"
+                  fetchpriority="high"
+                  class="absolute inset-0 h-full w-full object-cover object-[50%_42%]"
+                />
+              </div>
+              <figcaption class="mt-4">
+                <span class="block text-sm font-medium text-ink-invert">{founder.name}</span>
+                <span class="mt-0.5 block text-[13px] text-ink-invert-soft">
+                  {founder.role} av Crowdme
+                </span>
+              </figcaption>
+            </div>
+
+            <blockquote>
               {/* Citattecknet är ett tecken, inte en bild: det skalar med
                   typsnittet och kostar ingen begäran. Limen bär det mot
                   mörkgrönt, där den har kontrast. */}
               <span
                 aria-hidden="true"
-                class="block text-[5rem] leading-[0.5] text-accent md:text-[7rem]"
+                class="block text-[4rem] leading-[0.5] text-accent md:text-[5rem]"
               >
                 &ldquo;
               </span>
-
-              <blockquote class="mt-4">
-                <h1 class="display-3 text-balance text-ink-invert">{quote}</h1>
-              </blockquote>
-
-              <figcaption class="mt-8 flex items-center gap-3 text-sm text-ink-invert-soft">
-                <img
-                  src="/logo/crowdme-icon-lime.webp"
-                  alt=""
-                  width="471"
-                  height="516"
-                  class="h-4 w-auto"
-                />
-                {founder.name}, {founder.role.toLowerCase()} av Crowdme
-              </figcaption>
-            </figure>
-
-            {/* Originalet är 1000x1654. Bilden ligger absolut i rutan, annars
-                sätter dess egen höjd radens höjd och citatplattan sträcks
-                till en tom pelare bredvid. I mobil bär rutan 4:5, i desktop
-                följer den citatets höjd. Filen rörs inte. */}
-            <div
-              class="relative aspect-[5/4] overflow-hidden rounded-md bg-paper-alt sm:aspect-[16/9] lg:aspect-auto"
-              data-reveal
-            >
-              <img
-                src={founder.image}
-                alt={`${founder.name}, ${founder.role.toLowerCase()} av Crowdme`}
-                width="1000"
-                height="1654"
-                loading="eager"
-                fetchpriority="high"
-                class="absolute inset-0 h-full w-full object-cover object-[50%_58%] lg:object-[50%_32%]"
-              />
-            </div>
-          </div>
+              <h1 class="display-3 mt-6 text-balance text-ink-invert">{quote}</h1>
+            </blockquote>
+          </figure>
         </div>
       </div>
     </section>
