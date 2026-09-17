@@ -19,8 +19,8 @@ const founder = {
 };
 
 const intro = [
-  "Jag är personen bakom Crowdme. Ingen säljavdelning och inget team mellan oss: det är mig ni träffar på mötet, och mig ni har kvar sedan.",
-  "AI-sökning är nytt för alla. Jag har lagt min tid på att lära mig det på djupet, prompt engineering och AI SEO, och provat det i egna projekt för att förstå vad som faktiskt påverkar hur modellerna svarar.",
+  "Jag är personen bakom Crowdme. Det är mig ni träffar på mötet, och det är jag som ansvarar för att öka er synlighet i AI.",
+  "AI-sökning är nytt, och det är just därför det är läge att hoppa på tåget nu. Jag har lagt min tid på att lära mig AI SEO och GEO på djupet, och med en bakgrund inom hemsidor och UX kommer jag med ett unikt perspektiv. Jag har provat, testat och förstår hur AI-modellerna svarar. I de svaren ser jag till att ni syns.",
 ];
 
 /**
@@ -28,25 +28,26 @@ const intro = [
  * samma tes som startsidan.
  */
 const story = [
-  "Allt fler ställer sina frågor till ChatGPT, Perplexity eller Googles AI i stället för att klicka sig igenom en lista med länkar. Svaret de får nämner ett fåtal företag. Resten syns inte alls, oavsett hur bra de är på det de gör.",
-  "Företagen har förstått att det händer. Det de saknar är någon som kan visa var de ska börja. Kunskapen finns hos få och behovet hos många, och mellan de två fanns ingen som tog det på allvar för svenska företag.",
-  "Crowdme finns för att fylla det gapet. För att svenska företag ska vara med i svaren, inte bara de största, utan alla som har något att erbjuda.",
-  "Att området är nytt är hela poängen. Ingen har en tioårig meritlista i AI-sökning, för den har inte funnits i tio år. Det går fortfarande att vara tidig, och det är där jag lägger min tid.",
+  "Allt fler ställer sina frågor till ChatGPT, Perplexity, Googles AI eller någon annan modell i stället för att klicka sig igenom den lista med länkar vi är vana vid. Svaret de får nämner ett fåtal företag. Resten syns inte alls, oavsett hur bra de är på det de gör.",
+  "Det beror på hur AI-modellerna hämtar sin information. Er information måste vara ordentligt sökbar för dem. Det räcker inte längre att ligga på första sidan i Google.",
+  "Många företag tänker inte på att det här kostar dem kunder. Vi ser till att kunderna hittar er i stället.",
+  "Crowdme startades för att fylla det gapet. För att svenska företag ska vara med i svaren, inte bara de största, utan alla som har något att erbjuda. Där ska ni synas.",
+  "Att området är nytt är det bästa med att arbeta med Crowdme. Det är bra att vara tidig i en AI-värld som växer snabbt.",
 ];
 
-/** Hur Samuel arbetar. Löften, inte meriter — se README. */
+/** Grundprinciperna. Löften, inte meriter — se README. */
 const principles = [
   {
     title: "Personligt",
-    body: "Ni har en kontakt, inte ett ärendenummer. Jag lär känna ert företag och ni vet alltid vem ni ringer.",
+    body: "Ni får personlig service, från start till slut.",
   },
   {
-    title: "Rakt",
-    body: "Jag säger vad jag ser. Även när svaret är att ni klarar er utan hjälp ett tag till.",
+    title: "Effektivt",
+    body: "Den här branschen kräver att man är snabb och justerar taktiken när ytorna ändrar sig. Det sköter vi.",
   },
   {
-    title: "Nyfiket",
-    body: "AI-ytorna ändrar sig hela tiden. Jag testar och läser på löpande, så att ni slipper.",
+    title: "Professionellt",
+    body: "Vi garanterar ett professionellt utfört arbete, för er, era leverantörer och alla inblandade.",
   },
 ];
 
@@ -113,10 +114,10 @@ const person = {
     <section id="varfor" class="border-t border-line bg-paper-alt">
       <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
         <div class="max-w-2xl" data-reveal-group>
-          <Eyebrow data-reveal>Varför Crowdme finns</Eyebrow>
+          <Eyebrow data-reveal>Varför Crowdme startades</Eyebrow>
           <h2 class="display-2 mt-8" data-reveal>
             Kunderna frågar AI nu.<br />
-            <span class="text-ink-faint">Många företag syns inte i svaren.</span>
+            <span class="text-ink-faint">Många företag saknas i svaren.</span>
           </h2>
           {story.map((p) => (
             <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>{p}</p>
@@ -128,7 +129,7 @@ const person = {
     <section id="sa-arbetar-jag" class="border-y border-line bg-paper">
       <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
         <div class="max-w-2xl" data-reveal-group>
-          <Eyebrow data-reveal>Så arbetar jag</Eyebrow>
+          <Eyebrow data-reveal>Våra grundprinciper</Eyebrow>
           <h2 class="display-2 mt-8" data-reveal>
             Tre saker ni kan räkna med.
           </h2>

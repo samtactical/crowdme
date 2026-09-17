@@ -95,8 +95,8 @@ mätvärden — gäller fortfarande.
 ## Om oss
 
 `/om-oss` handlar om grundaren, Samuel Norström. Bakgrunden (SEO, AI, prompt
-engineering) och anledningen till att Crowdme startades är hans egna ord,
-lämnade av honom. Crowdme är hans första företag, och sidan är medvetet
+engineering, hemsidor och UX) och anledningen till att Crowdme startades är
+hans egna ord, lämnade av honom. Crowdme är hans första företag, och sidan är medvetet
 skriven utan yrkesmeriter: den säljer personen och hållningen, inte ett cv.
 Bygg aldrig ut den med erfarenheter, resultat, kunder eller titlar han inte
 har uppgett. Porträttet ligger i `public/om-oss/`. Menyn och
@@ -117,10 +117,11 @@ justera:
 - "Vi återkommer med tider som passar" (formuläret) — förutsätter att någon
   faktiskt gör det, eller att ett bokningsverktyg kopplas in
 - "Vi tittar på hur den syns i AI-svar innan vi ses" (steg 1 i bokningen)
-- Om-sidans tre löften: "Ni har en kontakt, inte ett ärendenummer",
-  "Jag säger vad jag ser. Även när svaret är att ni klarar er utan hjälp
-  ett tag till" och att AI-ytorna bevakas löpande. De binder Samuel vid
-  att själv vara kontakten i varje uppdrag.
+- Om-sidan: "det är jag som ansvarar för att öka er synlighet i AI",
+  "Ni får personlig service, från start till slut" och "Vi garanterar ett
+  professionellt utfört arbete". Ordet *garanterar* är det starkaste på
+  hela sajten — det binder vid ett utfört arbete, inte vid ett resultat,
+  och bör läsas som sådant innan lansering.
 - Bokningen frågar bara efter webbplats, namn och mejl. Steg 2 (mål, bransch,
   fritext) är helt valfritt — inget där får bli obligatoriskt utan att
   konverteringen mäts först.
