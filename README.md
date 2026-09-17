@@ -92,12 +92,12 @@ sida är det ett medvetet val att göra — säg till om de ska översättas.
 er. Resten av regeln — inga kunder, case, testimonials eller påhittade
 mätvärden — gäller fortfarande.
 
-## Menyn lovar en sida som inte finns
+## Om oss är ett utkast
 
-`Header.astro` har en "Om oss"-post med `href="#"` — den beställdes med
-navbaren, men det finns ingen om-sida att peka på. Den scrollar till toppen och
-ser trasig ut. Antingen skrivs `/om-oss`, eller så tas posten bort; låt den inte
-gå till lansering som den är.
+`/om-oss` handlar om grundaren, Samuel Norström. Uppgifterna om hans bakgrund
+och varför han startade Crowdme är `[FYLL I]`-platshållare, eftersom de bara
+kan komma från honom. Sidan är `noindex` och bär en synlig utkastbanner tills
+de är ifyllda. Menyn och footern länkar redan dit.
 
 "Resurser" pekar på tre ankare på startsidan (vanliga frågor, jämförelsen med
 SEO, statistiken). Det är ärligt så länge sajten är en sida, men en resursmeny
