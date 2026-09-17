@@ -92,12 +92,13 @@ sida är det ett medvetet val att göra — säg till om de ska översättas.
 er. Resten av regeln — inga kunder, case, testimonials eller påhittade
 mätvärden — gäller fortfarande.
 
-## Om oss är ett utkast
+## Om oss
 
-`/om-oss` handlar om grundaren, Samuel Norström. Uppgifterna om hans bakgrund
-och varför han startade Crowdme är `[FYLL I]`-platshållare, eftersom de bara
-kan komma från honom. Sidan är `noindex` och bär en synlig utkastbanner tills
-de är ifyllda. Menyn och footern länkar redan dit.
+`/om-oss` handlar om grundaren, Samuel Norström. Bakgrunden (SEO, AI, prompt
+engineering) och anledningen till att Crowdme startades är hans egna ord,
+lämnade av honom. Bygg aldrig ut dem med erfarenheter, resultat eller
+meriter han inte har uppgett. Porträttet ligger i `public/om-oss/`. Menyn och
+footern länkar dit.
 
 "Resurser" pekar på tre ankare på startsidan (vanliga frågor, jämförelsen med
 SEO, statistiken). Det är ärligt så länge sajten är en sida, men en resursmeny
@@ -114,6 +115,8 @@ justera:
 - "Vi återkommer med tider som passar" (formuläret) — förutsätter att någon
   faktiskt gör det, eller att ett bokningsverktyg kopplas in
 - "Vi tittar på hur den syns i AI-svar innan vi ses" (steg 1 i bokningen)
+- "Ni pratar med mig, inte med ett formulär och en rapport i mejlen"
+  (om-sidan) — utlovar att Samuel själv är kontakten i varje uppdrag
 - Bokningen frågar bara efter webbplats, namn och mejl. Steg 2 (mål, bransch,
   fritext) är helt valfritt — inget där får bli obligatoriskt utan att
   konverteringen mäts först.
