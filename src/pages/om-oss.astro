@@ -18,17 +18,9 @@ const founder = {
   image: "/om-oss/samuel-norstrom.webp",
 };
 
-/** Korta fakta bredvid porträttet. Bara sådant som stämmer. */
-const facts = [
-  { label: "Roll", value: "Grundare av Crowdme" },
-  { label: "Bas", value: "Stockholm" },
-  { label: "Inriktning", value: "AI SEO, GEO och prompt engineering" },
-];
-
 const intro = [
   "Jag är personen bakom Crowdme. Ingen säljavdelning och inget team mellan oss: det är mig ni träffar på mötet, och mig ni har kvar sedan.",
   "AI-sökning är nytt för alla. Jag har lagt min tid på att lära mig det på djupet, prompt engineering och AI SEO, och provat det i egna projekt för att förstå vad som faktiskt påverkar hur modellerna svarar.",
-  "Crowdme är mitt första företag, och det märks på hur jag arbetar. Inget uppdrag är rutin och ingen kund är en i mängden.",
 ];
 
 /**
@@ -84,7 +76,7 @@ const person = {
   <main id="innehall" class="w-full max-w-full">
     <section class="bg-paper">
       <div class="mx-auto max-w-page px-4 pb-20 pt-28 sm:px-6 md:pb-28 md:pt-32">
-        <div class="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div class="grid items-center gap-12 lg:grid-cols-[1fr_auto] lg:gap-20">
           <div class="max-w-2xl" data-reveal-group>
             <Eyebrow data-reveal>Om oss</Eyebrow>
             <h1 class="display-2 mt-8" data-reveal>
@@ -94,18 +86,11 @@ const person = {
             {intro.map((p) => (
               <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>{p}</p>
             ))}
-
-            <dl class="mt-10 grid gap-x-8 gap-y-5 border-t border-line pt-8 sm:grid-cols-3" data-reveal>
-              {facts.map((fact) => (
-                <div>
-                  <dt class="eyebrow">{fact.label}</dt>
-                  <dd class="mt-1.5 text-sm text-ink">{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
-          <figure class="mx-auto w-full max-w-md" data-reveal>
+          {/* Porträttet är högt (1000x1654). Utan tak blir det dubbelt så
+              högt som texten bredvid och spalten ser tom ut. */}
+          <figure class="mx-auto w-full max-w-sm" data-reveal>
             <img
               src={founder.image}
               alt={`${founder.name}, ${founder.role.toLowerCase()} av Crowdme`}
