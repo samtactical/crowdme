@@ -182,8 +182,9 @@ repo.
 
 Three things are permitted that look like exceptions but are not:
 
-- **Pricing**, in `Pricing.astro` — supplied by the owner, labelled
-  indicative. Do not invent or adjust a figure.
+- **Pricing**, in `Pricing.astro` — supplied by the owner (indicative in the
+  source, no longer labelled so in the copy, at the owner's request). Do not
+  invent or adjust a figure.
 - **Market statistics**, in `AiSearchStats.astro` — published third-party data
   about how Swedes search, never Crowdme's own results. Every figure must be
   findable in the linked source, with source, year and population printed.
