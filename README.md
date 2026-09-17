@@ -99,7 +99,9 @@ engineering, hemsidor och UX) och anledningen till att Crowdme startades är
 hans egna ord, lämnade av honom. Crowdme är hans första företag, och sidan är medvetet
 skriven utan yrkesmeriter: den säljer personen och hållningen, inte ett cv.
 Bygg aldrig ut den med erfarenheter, resultat, kunder eller titlar han inte
-har uppgett. Porträttet ligger i `public/om-oss/`. Menyn och
+har uppgett. Ägarens utkast till copyn sa "svenska B2B-företag"; det är ändrat
+till "svenska företag", eftersom B2B togs bort från hela sajten i commit
+aa6d077. Porträttet ligger i `public/om-oss/`. Menyn och
 footern länkar dit.
 
 "Resurser" pekar på tre ankare på startsidan (vanliga frågor, jämförelsen med
@@ -117,11 +119,12 @@ justera:
 - "Vi återkommer med tider som passar" (formuläret) — förutsätter att någon
   faktiskt gör det, eller att ett bokningsverktyg kopplas in
 - "Vi tittar på hur den syns i AI-svar innan vi ses" (steg 1 i bokningen)
-- Om-sidan: "det är jag som ansvarar för att öka er synlighet i AI",
-  "Ni får personlig service, från start till slut" och "Vi garanterar ett
-  professionellt utfört arbete". Ordet *garanterar* är det starkaste på
-  hela sajten — det binder vid ett utfört arbete, inte vid ett resultat,
-  och bör läsas som sådant innan lansering.
+- Om-sidan: citatet ("den som ansvarar för att öka er synlighet i AI-sök"),
+  "Crowdme ser till att kunderna hittar er i AI", "Ni får personlig
+  service, från start till slut" och "Vi garanterar ett professionellt
+  utfört arbete". Ordet *garanterar* är det starkaste på hela sajten —
+  det binder vid ett utfört arbete, inte vid ett resultat, och bör läsas
+  som sådant innan lansering.
 - Bokningen frågar bara efter webbplats, namn och mejl. Steg 2 (mål, bransch,
   fritext) är helt valfritt — inget där får bli obligatoriskt utan att
   konverteringen mäts först.
