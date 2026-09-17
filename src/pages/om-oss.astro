@@ -22,23 +22,40 @@ const founder = {
 const facts = [
   { label: "Roll", value: "Grundare av Crowdme" },
   { label: "Bas", value: "Stockholm" },
-  { label: "Bakgrund", value: "SEO, AI och prompt engineering" },
+  { label: "Inriktning", value: "AI SEO, GEO och prompt engineering" },
 ];
 
 const intro = [
-  "Jag har min bakgrund i SEO och i AI. De senaste åren har tiden gått till prompt engineering och AI SEO, både för företag och i egna projekt.",
-  "Det jag drivs av är den personliga servicen. Varje företag har sin egen situation, och den vill jag förstå innan jag föreslår något.",
+  "Jag är personen bakom Crowdme. Ingen säljavdelning och inget team mellan oss: det är mig ni träffar på mötet, och mig ni har kvar sedan.",
+  "AI-sökning är nytt för alla. Jag har lagt min tid på att lära mig det på djupet, prompt engineering och AI SEO, och provat det i egna projekt för att förstå vad som faktiskt påverkar hur modellerna svarar.",
+  "Crowdme är mitt första företag, och det märks på hur jag arbetar. Inget uppdrag är rutin och ingen kund är en i mängden.",
 ];
 
 /**
- * Varför Crowdme finns. Första stycket är Samuels egen anledning, resten
- * bygger på samma tes som startsidan.
+ * Varför Crowdme finns. Gapet är Samuels egen anledning, resten bygger på
+ * samma tes som startsidan.
  */
 const story = [
-  "Jag såg ett gap. Företag vill synas i AI-svaren, men vet inte hur de ska börja. Kunskapen finns hos få, och behovet hos många. Det gapet startade jag Crowdme för att fylla.",
   "Allt fler ställer sina frågor till ChatGPT, Perplexity eller Googles AI i stället för att klicka sig igenom en lista med länkar. Svaret de får nämner ett fåtal företag. Resten syns inte alls, oavsett hur bra de är på det de gör.",
-  "Crowdme finns för att svenska företag ska vara med i de svaren. Inte bara de största, utan alla som har något att erbjuda.",
-  "Och det ska göras personligt. Ni pratar med mig, inte med ett formulär och en rapport i mejlen.",
+  "Företagen har förstått att det händer. Det de saknar är någon som kan visa var de ska börja. Kunskapen finns hos få och behovet hos många, och mellan de två fanns ingen som tog det på allvar för svenska företag.",
+  "Crowdme finns för att fylla det gapet. För att svenska företag ska vara med i svaren, inte bara de största, utan alla som har något att erbjuda.",
+  "Att området är nytt är hela poängen. Ingen har en tioårig meritlista i AI-sökning, för den har inte funnits i tio år. Det går fortfarande att vara tidig, och det är där jag lägger min tid.",
+];
+
+/** Hur Samuel arbetar. Löften, inte meriter — se README. */
+const principles = [
+  {
+    title: "Personligt",
+    body: "Ni har en kontakt, inte ett ärendenummer. Jag lär känna ert företag och ni vet alltid vem ni ringer.",
+  },
+  {
+    title: "Rakt",
+    body: "Jag säger vad jag ser. Även när svaret är att ni klarar er utan hjälp ett tag till.",
+  },
+  {
+    title: "Nyfiket",
+    body: "AI-ytorna ändrar sig hela tiden. Jag testar och läser på löpande, så att ni slipper.",
+  },
 ];
 
 /**
@@ -106,7 +123,7 @@ const person = {
       </div>
     </section>
 
-    <section id="varfor" class="border-y border-line bg-paper-alt">
+    <section id="varfor" class="border-t border-line bg-paper-alt">
       <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
         <div class="max-w-2xl" data-reveal-group>
           <Eyebrow data-reveal>Varför Crowdme finns</Eyebrow>
@@ -116,6 +133,26 @@ const person = {
           </h2>
           {story.map((p) => (
             <p class="mt-6 text-lg leading-relaxed text-ink-soft" data-reveal>{p}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="sa-arbetar-jag" class="border-y border-line bg-paper">
+      <div class="mx-auto max-w-page px-4 py-20 sm:px-6 md:py-28">
+        <div class="max-w-2xl" data-reveal-group>
+          <Eyebrow data-reveal>Så arbetar jag</Eyebrow>
+          <h2 class="display-2 mt-8" data-reveal>
+            Tre saker ni kan räkna med.
+          </h2>
+        </div>
+
+        <div class="mt-12 grid gap-3 md:mt-16 md:grid-cols-3" data-reveal-group>
+          {principles.map((item) => (
+            <article class="card-soft rounded-md p-6" data-reveal>
+              <h3 class="text-[1.0625rem] font-medium">{item.title}</h3>
+              <p class="mt-2 text-[15px] leading-relaxed text-ink-soft">{item.body}</p>
+            </article>
           ))}
         </div>
       </div>
